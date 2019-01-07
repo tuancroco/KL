@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KL_SMOFModelStoreContainer" CdmEntityContainer="KL_SMOFEntities">
+    <EntitySetMapping Name="CongVans">
+      <EntityTypeMapping TypeName="KL_SMOFModel.CongVan">
+        <MappingFragment StoreEntitySet="CongVan">
+          <ScalarProperty Name="IdCongVan" ColumnName="IdCongVan" />
+          <ScalarProperty Name="TenCongVan" ColumnName="TenCongVan" />
+          <ScalarProperty Name="FileCongVan" ColumnName="FileCongVan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NhanViens">
+      <EntityTypeMapping TypeName="KL_SMOFModel.NhanVien">
+        <MappingFragment StoreEntitySet="NhanVien">
+          <ScalarProperty Name="IdNhanVien" ColumnName="IdNhanVien" />
+          <ScalarProperty Name="TenNhanVien" ColumnName="TenNhanVien" />
+          <ScalarProperty Name="Tuoi" ColumnName="Tuoi" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PhongBans">
+      <EntityTypeMapping TypeName="KL_SMOFModel.PhongBan">
+        <MappingFragment StoreEntitySet="PhongBan">
+          <ScalarProperty Name="IdPhongBan" ColumnName="IdPhongBan" />
+          <ScalarProperty Name="TenPhongBan" ColumnName="TenPhongBan" />
+          <ScalarProperty Name="IdTruong" ColumnName="IdTruong" />
+          <ScalarProperty Name="IdTruongPhong" ColumnName="IdTruongPhong" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Truongs">
+      <EntityTypeMapping TypeName="KL_SMOFModel.Truong">
+        <MappingFragment StoreEntitySet="Truong">
+          <ScalarProperty Name="IdTruong" ColumnName="IdTruong" />
+          <ScalarProperty Name="TenTruong" ColumnName="TenTruong" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuanLies">
+      <EntityTypeMapping TypeName="KL_SMOFModel.QuanLy">
+        <MappingFragment StoreEntitySet="QuanLy">
+          <ScalarProperty Name="IdNhanVien" ColumnName="IdNhanVien" />
+          <ScalarProperty Name="IdTruong" ColumnName="IdTruong" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

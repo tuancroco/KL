@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KL_SMOFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CongVan">
+    <Key>
+      <PropertyRef Name="IdCongVan" />
+    </Key>
+    <Property Name="IdCongVan" Type="int" Nullable="false" />
+    <Property Name="TenCongVan" Type="nchar" MaxLength="10" />
+    <Property Name="FileCongVan" Type="varbinary(max)" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'KL_SMOF.dbo.CongVan_Truong' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="CongVan_Truong">
+          <Property Name="IdCongVan" Type="int" />
+          <Property Name="IdTruong" Type="int" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'KL_SMOF.dbo.CongViec' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="CongViec">
+          <Property Name="CviecID" Type="nchar" MaxLength="10" />
+          <Property Name="TenCongViec" Type="nchar" MaxLength="10" />
+        </EntityType>-->
+  <EntityType Name="NhanVien">
+    <Key>
+      <PropertyRef Name="IdNhanVien" />
+    </Key>
+    <Property Name="IdNhanVien" Type="int" Nullable="false" />
+    <Property Name="TenNhanVien" Type="nchar" MaxLength="10" />
+    <Property Name="Tuoi" Type="int" />
+    <Property Name="DiaChi" Type="ntext" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'KL_SMOF.dbo.NhanVienPhong' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="NhanVienPhong">
+          <Property Name="IdNhanVien" Type="int" />
+          <Property Name="IdPhongBan" Type="int" />
+        </EntityType>-->
+  <EntityType Name="PhongBan">
+    <Key>
+      <PropertyRef Name="IdPhongBan" />
+    </Key>
+    <Property Name="IdPhongBan" Type="int" Nullable="false" />
+    <Property Name="TenPhongBan" Type="nchar" MaxLength="10" />
+    <Property Name="IdTruong" Type="int" />
+    <Property Name="IdTruongPhong" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'KL_SMOF.dbo.QuanLy' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="QuanLy">
+    <Key>
+      <PropertyRef Name="IdNhanVien" />
+    </Key>
+    <Property Name="IdNhanVien" Type="int" Nullable="false" />
+    <Property Name="IdTruong" Type="int" />
+  </EntityType>
+  <EntityType Name="Truong">
+    <Key>
+      <PropertyRef Name="IdTruong" />
+    </Key>
+    <Property Name="IdTruong" Type="int" Nullable="false" />
+    <Property Name="TenTruong" Type="nchar" MaxLength="10" />
+    <Property Name="DiaChi" Type="ntext" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'KL_SMOF.dbo.TruongPhong' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TruongPhong">
+          <Property Name="IdNhanVien" Type="int" />
+          <Property Name="IdPhongBan" Type="int" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'KL_SMOF.dbo.VanThu' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="VanThu">
+          <Property Name="IdNhanVien" Type="int" />
+          <Property Name="IdTruong" Type="int" />
+        </EntityType>-->
+  <EntityContainer Name="KL_SMOFModelStoreContainer">
+    <EntitySet Name="CongVan" EntityType="Self.CongVan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PhongBan" EntityType="Self.PhongBan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Truong" EntityType="Self.Truong" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QuanLy" EntityType="Self.QuanLy" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [QuanLy].[IdNhanVien] AS [IdNhanVien], 
+    [QuanLy].[IdTruong] AS [IdTruong]
+    FROM [dbo].[QuanLy] AS [QuanLy]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

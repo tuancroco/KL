@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KL_SMOFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CongVan">
+    <Key>
+      <PropertyRef Name="IdCongVan" />
+    </Key>
+    <Property Name="IdCongVan" Type="Int32" Nullable="false" />
+    <Property Name="TenCongVan" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="FileCongVan" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NhanVien">
+    <Key>
+      <PropertyRef Name="IdNhanVien" />
+    </Key>
+    <Property Name="IdNhanVien" Type="Int32" Nullable="false" />
+    <Property Name="TenNhanVien" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Tuoi" Type="Int32" />
+    <Property Name="DiaChi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="PhongBan">
+    <Key>
+      <PropertyRef Name="IdPhongBan" />
+    </Key>
+    <Property Name="IdPhongBan" Type="Int32" Nullable="false" />
+    <Property Name="TenPhongBan" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="IdTruong" Type="Int32" />
+    <Property Name="IdTruongPhong" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Truong">
+    <Key>
+      <PropertyRef Name="IdTruong" />
+    </Key>
+    <Property Name="IdTruong" Type="Int32" Nullable="false" />
+    <Property Name="TenTruong" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="QuanLy">
+    <Key>
+      <PropertyRef Name="IdNhanVien" />
+    </Key>
+    <Property Name="IdNhanVien" Type="Int32" Nullable="false" />
+    <Property Name="IdTruong" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="KL_SMOFEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CongVans" EntityType="Self.CongVan" />
+    <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+    <EntitySet Name="PhongBans" EntityType="Self.PhongBan" />
+    <EntitySet Name="Truongs" EntityType="Self.Truong" />
+    <EntitySet Name="QuanLies" EntityType="Self.QuanLy" />
+  </EntityContainer>
+</Schema>
