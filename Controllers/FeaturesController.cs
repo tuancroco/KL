@@ -11,7 +11,7 @@ namespace KL.Controllers
         // GET: Features
         public ActionResult Index()
         {
-            H
+            
             return View();
         }
         public ActionResult Search()

@@ -9,7 +9,11 @@ namespace KL.Controllers
     public class JobController : Controller
     {
         // GET: Job
-        public ActionResult Index()
+        public ActionResult CreateJob()
+        {
+            return View();
+        }
+        public ActionResult CreateNew()
         {
             return View();
         }

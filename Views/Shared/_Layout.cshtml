@@ -34,32 +34,92 @@
                             <span data-feather="plus-circle"></span>
                         </a>
                     </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Current month
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Last quarter
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Social engagement
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span>
-                                Year-end sale
-                            </a>
-                        </li>
-                    </ul>
+                    @if (this.ViewContext.RouteData.Values["action"].ToString() == "CreateJob")
+                    {
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <div class="btn btn-group dropright" >
+                                    <button type="button" >
+                                        <span data-feather="home"></span>
+                                        CreateNew<span class="sr-only">(current)</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="">Create Folder</a>
+                                        <a class="dropdown-item" href="">Upload File</a>
+                                        <a class="dropdown-item" href="">Create a Job</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    <span data-feather="home"></span>
+                                    Create New<span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    <span data-feather="home"></span>
+                                    JobView<span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    <span data-feather="home"></span>
+                                    JobDone<span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    <span data-feather="home"></span>
+                                    JobInProcess<span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    <span data-feather="home"></span>
+                                    Recent<span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <button id="CreateNew">
+                                    <span data-feather="home"></span>
+                                    Important<span class="sr-only">(current)</span>
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <div class="btn-group">
+                                    <button type = "button" class="btn btn-danger">Action</button>
+                                    <button type = "button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Separated link</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    <span data-feather="home"></span>
+                                    CreateSearch <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">
+                                    <span data-feather="home"></span>
+                                    ViewSearch <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </nav>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -78,26 +138,7 @@
                 </div>
                 <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
                 <h2>Section title</h2>
-                @if (this.ViewContext.RouteData.Values["action"].ToString() == "Job")
-                {
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <span data-feather="home"></span>
-                            CreateJob <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <span data-feather="home"></span>
-                            ViewJob <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                </ul>
-                }
-                else
-                {
-                }
+                @RenderSection("D:\\Projects\\KL\\View\\Job\\CreateNew.cshtml")
 </main>
             </div>
         </div>
@@ -115,6 +156,10 @@
         </script>
         <!-- Graphs -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+        
+        $('.dropdown-toggle').dropdown();
+    </script>
         <script>
             var ctx = document.getElementById("myChart");
             var myChart = new Chart(ctx, {
@@ -144,5 +189,10 @@
                 }
             });
         </script>
+    <script>
+        $("#CreateNew").on('click', function () {
+
+        });
+    </script>
     </body>
 </html>
