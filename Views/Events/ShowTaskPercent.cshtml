@@ -1,0 +1,30 @@
+﻿@model List<KL.Models.taskTimeModel>
+<ul class="dropdown-menu dropdown-tasks">
+    @foreach (var item in Model)
+    {
+        <li>
+            <a href="#">
+                <div>
+                    <p>
+                        <strong>@item.jobName</strong>
+                        <span class="pull-right text-muted">@item.percent % Complete</span>
+                    </p>
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="@item.percent" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                            <span class="sr-only">@item.percent % Complete (success)</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </li>
+
+        <li class="divider"></li>
+    }
+    <li>
+        <a class="text-center" href="#">
+            <strong>See All Tasks</strong>
+            <i class="fa fa-angle-right"></i>
+        </a>
+    </li>
+
+</ul>

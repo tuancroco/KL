@@ -82,3 +82,13 @@ C:\Users\smart\source\repos\KL\obj\Debug\KL.csproj.CoreCompileInputs.cache
 C:\Users\smart\source\repos\KL\obj\Debug\KL.csproj.CopyComplete
 C:\Users\smart\source\repos\KL\obj\Debug\KL.dll
 C:\Users\smart\source\repos\KL\obj\Debug\KL.pdb
+C:\Users\smart\source\repos\KL1\KL\obj\Debug\KL.dll
+C:\Users\smart\source\repos\KL1\KL\obj\Debug\KL.pdb
+C:\Users\smart\source\repos\KL1\KL\bin\KL.dll.config
+C:\Users\smart\source\repos\KL1\KL\bin\KL.dll
+C:\Users\smart\source\repos\KL1\KL\bin\KL.pdb
+C:\Users\smart\source\repos\KL1\KL\bin\Newtonsoft.Json.dll
+C:\Users\smart\source\repos\KL1\KL\obj\Debug\KL.csprojAssemblyReference.cache
+C:\Users\smart\source\repos\KL1\KL\obj\Debug\KL.csproj.CoreCompileInputs.cache
+C:\Users\smart\source\repos\KL1\KL\obj\Debug\KL.csproj.CopyComplete
+C:\Users\smart\source\repos\KL1\KL\bin\Newtonsoft.Json.xml
