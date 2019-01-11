@@ -17,7 +17,7 @@ namespace KL.Controllers
         public ActionResult ClickLogin()
         {
 
-            return PartialView();
+            return View();
         }
         public ActionResult ShowTaskPercent()
         {

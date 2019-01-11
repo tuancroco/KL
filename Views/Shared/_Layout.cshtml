@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE html>
+@{ 
+    var chucvu = new List<string>() { "Nhân Viên", "Trưởng Phòng", "Lãnh Đạo" };
+}
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -85,24 +88,36 @@
                     <!-- /.dropdown-alerts -->
                 </li>
                 <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
+                @if (1==2)
+                {
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a id="clLogin" href="@Url.Action("ClickLogin","Events")">
+                            Login
+                        </a>
+                    </li>
+                }
+
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
@@ -119,17 +134,26 @@
                                 </span>
                             </div>
                         </li>
+                        @foreach (var item in chucvu)
+                        {
+                            <li>
+                                <a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc @item<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="blank.html">Công Việc Mới</a>
+                                    </li>
+                                    <li>
+                                        <a href="login.html">Công Việc Đã Hoàn Thành</a>
+                                    </li>
+                                    <li>
+                                        <a href="login.html">Công Việc Đang Làm</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> My Jobs</a>
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Thong ke<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="blank.html">Blank Page</a>
@@ -153,6 +177,9 @@
         </div>
         <!-- /.row -->
     </div>
+    <div id="loginForm">
+
+    </div>
     @RenderBody()
     <!-- /#wrapper -->
     <!-- jQuery -->
@@ -167,5 +194,6 @@
     <script src="~/Assets/data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="~/Assets/dist/js/sb-admin-2.js"></script>
+    <script src="~/Assets/dist/js/taskShow.js"></script>
 </body>
 </html>
