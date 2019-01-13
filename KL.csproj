@@ -138,11 +138,13 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChucVuController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountantController.cs" />
     <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -162,6 +164,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DatabaseModels\ChucVu.cs" />
+    <Compile Include="Models\DatabaseModels\CongViec.cs" />
+    <Compile Include="Models\DatabaseModels\CongViecCaNhan.cs" />
+    <Compile Include="Models\DatabaseModels\CongViecPhong.cs" />
+    <Compile Include="Models\DatabaseModels\DonVi.cs" />
+    <Compile Include="Models\DatabaseModels\HoSoNhanSu.cs" />
+    <Compile Include="Models\DatabaseModels\LoaiCongViec.cs" />
+    <Compile Include="Models\DatabaseModels\PhongBan.cs" />
+    <Compile Include="Models\DatabaseModels\Smof.cs" />
+    <Compile Include="Models\DatabaseModels\sysdiagram.cs" />
+    <Compile Include="Models\DatabaseModels\User.cs" />
+    <Compile Include="Models\DatabaseModels\User_Role.cs" />
+    <Compile Include="Models\DatabaseModels\ViTriViecLam.cs" />
+    <Compile Include="Models\Login.cs" />
     <Compile Include="Models\taskTimeModel.cs" />
     <Compile Include="NhanVien.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -381,6 +397,8 @@
     <Content Include="Assets\vendor\font-awesome\scss\_spinning.scss" />
     <Content Include="Assets\vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="Assets\vendor\font-awesome\scss\_variables.scss" />
+    <Content Include="Views\ChucVu\ShowNhanVien.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
