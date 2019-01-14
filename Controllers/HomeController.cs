@@ -16,23 +16,8 @@ namespace KL.Controllers
             var hoSoNhanSu = user.HoSoNhanSu;
             var chucVu = hoSoNhanSu.ChucVu;
             var listJob = new List<dynamic>();
-            for(int i = 1; i < 3; i++)
-            {
-                if (Int32.Parse(chucVu.MaChucVu) > 0)
-                {
-                    listJob.Add(hoSoNhanSu.CongViecCaNhans.Count(m => m.TrangThai == i));
-                }
-                if (Int32.Parse(chucVu.MaChucVu) > 1)
-                {
-                    listJob.Add(hoSoNhanSu.CongViecPhongs.Count(m=>m.TrangThai==i));
-                }
-                if (Int32.Parse(chucVu.MaChucVu) > 2)
-                {
-                    listJob.Add(hoSoNhanSu.CongViecs.Count(m => m.TrangThai == i));
-                }
-            }
             
-            return View(listJob);
+            return View(hoSoNhanSu);
         }
 
         public ActionResult About()

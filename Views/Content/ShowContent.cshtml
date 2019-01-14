@@ -1,0 +1,169 @@
+﻿@model KL.Models.DatabaseModels.HoSoNhanSu
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Dashboard</h1>
+            <div class="">
+                <input type="radio" id="toggle-on" name="toggle" checked>
+                <label for="toggle-on">Chủ trì</label>
+                <input type="radio" id="toggle-off" name="toggle">
+                <label for="toggle-off">Tham Gia</label>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Cong Viec Moi
+                </div>
+
+                <div class="card-body " id="toggle-ontable">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Stt</th>
+                                    <th>Ten Cong Viec</th>
+                                    <th>Noi Dung Tom Tat</th>
+                                    <th>File Dinh Kem</th>
+                                    <th>Thoi Gian Hoan Thanh</th>
+                                </tr>
+                            </thead>
+                            @foreach (var cv in Model.CongViecPhongs.ToList().FindAll(m => m.ChuTri == 1))
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>@(Model.CongViecPhongs.ToList().IndexOf(cv) + 1)</td>
+                                        <td>@cv.NoiDungChitiet</td>
+                                        <td>@cv.NoiDungChitiet</td>
+                                        <td>@cv.NgayHoanThanh</td>
+
+                                        <td>2011/04/25</td>
+                                        <td><button id="add">add plan</button></td>
+                                    </tr>
+                                </tbody>
+                            }
+
+
+                        </table>
+                    </div>
+                </div>
+                <div class="card-body " style="display: none;" id="toggle-offtable">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Stt</th>
+                                    <th>Ten Cong Viec</th>
+                                    <th>Noi Dung Tom Tat</th>
+                                    <th>File Dinh Kem</th>
+                                    <th>Thoi Gian Hoan Thanh</th>
+                                </tr>
+                            </thead>
+                            @foreach (var cv in Model.CongViecCaNhans.ToList())
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>@(Model.CongViecCaNhans.ToList().IndexOf(cv) + 1)</td>
+                                        <td>@cv.NoiDungCongViec</td>
+                                        <td>@cv.NoiDungCongViec</td>
+                                        <td>@cv.ThoiGianHoanThanh</td>
+
+                                        <td>@DateTime.Now</td>
+                                        <td><button class="edit">edit</button></td>
+                                    </tr>
+                                </tbody>
+                            }
+
+
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div id="tt"></div>
+</div>
+
+<link href="~/Assets/dist/css/Style.css" rel="stylesheet" />
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="card-body toggle-on" id="0">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Stt</th>
+                            <th>Ten Cong Viec</th>
+                            <th>Noi Dung Tom Tat</th>
+                            <th>Nguoi tham gia</th>
+                            <th>Thoi Gian Hoan Thanh</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td><input type="text" id="noidung" /></td>
+                            <td></td>
+                            <td id="dropdownlist"> @Html.DropDownList("THELOAI", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "select one")</td>
+                            <td>2011/04/25</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <button id="addTask">Add task</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<dialog></dialog>
+<!-- Modal content -->
+<script>
+
+    $('input:radio').change(function () {
+
+        var radioButtons = $("input:radio[name='toggle']");
+        var selectedIndex = radioButtons.index(radioButtons.find(':checked'));
+        var idRadio = $(this).attr('id');
+        if (idRadio == 'toggle-on') {
+            idTable2 = '#' + 'toggle-off' + 'table';
+        }
+        else {
+            idTable2 = '#' + 'toggle-on' + 'table';
+        }
+        var idTable = '#' + $(this).attr('id') + 'table';
+        if (this.checked) {
+            $(idTable).show();
+            $(idTable2).hide();
+        }
+        else {
+            $(idTable2).show();
+            $(idTable1).hide();
+        }
+    });
+</script>
+<script>
+    $('#addTask').click(function () {
+        var data1 = $('#dropdownlist').clone().html();
+        var data = "<input type='text' id='noidung' />" + data1;
+        
+        $('#tt').append(data1);
+        alert(data1);
+        //$('#myModal tbody').append(data1);
+
+
+    });
+</script>
+<script>
+    $('button#add').click(function () {
+        $('#myModal').show();
+
+    });
+</script>
+
+
+

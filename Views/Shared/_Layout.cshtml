@@ -2,6 +2,7 @@
 @{
     var chucvu = new List<string>() { "Nhân Viên", "Trưởng Phòng", "Lãnh Đạo" };
 }
+@model KL.Models.DatabaseModels.HoSoNhanSu
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -9,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    
+
     <style type=”text/css”>
         label {
             background-color: #9C3;
@@ -41,6 +42,18 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="~/Assets/vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="~/Assets/vendor/metisMenu/metisMenu.min.js"></script>
+    <!-- Morris Charts JavaScript -->
+    <script src="~/Assets/vendor/raphael/raphael.min.js"></script>
+    <script src="~/Assets/vendor/morrisjs/morris.min.js"></script>
+    <script src="~/Assets/vendor/morrisjs/morris.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Assets/dist/js/sb-admin-2.js"></script>
+    <script src="~/Assets/dist/js/taskShow.js"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -135,43 +148,26 @@
 
                 <!-- /.dropdown -->
             </ul>
+
+
+
             <!-- /.navbar-top-links -->
-            @RenderBody()
+
         </nav>
 
         <!-- /.row -->
     </div>
     <div id="table">
-
+        @RenderBody()
+        <div id="tal"></div>
     </div>
 
     <!-- /#wrapper -->
     <!-- jQuery -->
 
-    <script src="~/Assets/vendor/jquery/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="~/Assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="~/Assets/vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <script src="~/Assets/vendor/raphael/raphael.min.js"></script>
-    <script src="~/Assets/vendor/morrisjs/morris.min.js"></script>
-    <script src="~/Assets/vendor/morrisjs/morris.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="~/Assets/dist/js/sb-admin-2.js"></script>
-    <script src="~/Assets/dist/js/taskShow.js"></script>
-    <script>
-        $("#newCn").click(function () {
-            $.ajax({
-                type:"POST",
-                url: "/Job/CreateNew?userName=tuan",
-                success: function (data) {
-                    $('#table').replaceWith($(data));
-                }
-            });
-            
-        });
-    </script>
+    
+
+    
     
 </body>
 </html>
