@@ -8,6 +8,8 @@ namespace KL.Models.DatabaseModels
 
     public partial class User
     {
+        [Key]
+        [Column(Order = 0)]
         public string ID { get; set; }
 
         public string Username { get; set; }
@@ -18,11 +20,16 @@ namespace KL.Models.DatabaseModels
 
         public string LastName { get; set; }
 
-        public int? Gender { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Gender { get; set; }
 
         public string Phone { get; set; }
 
-        public DateTime? DateOfBirth { get; set; }
+        [Key]
+        [Column(Order = 2)]
+        public DateTime DateOfBirth { get; set; }
 
         public string Email { get; set; }
 

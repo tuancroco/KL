@@ -16,7 +16,7 @@ namespace KL.Controllers
             var hoSoNhanSu = user.HoSoNhanSu;
             var chucVu = hoSoNhanSu.ChucVu;
             var listJob = new List<dynamic>();
-            
+            TempData["userName"] = userName;
             return View(hoSoNhanSu);
         }
 

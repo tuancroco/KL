@@ -45,9 +45,18 @@ namespace KL.Models.DatabaseModels
 
         public string CongVanDinhKem { get; set; }
 
+        public int? ChuTri { get; set; }
+
         public int? TrangThai { get; set; }
 
-        public int? ChuTri { get; set; }
+        public int? KeHoach { get; set; }
+
+        [StringLength(128)]
+        public string Ten { get; set; }
+
+        public DateTime? Datecreate { get; set; }
+
+        public int? New { get; set; }
 
         public virtual CongViec CongViec { get; set; }
 

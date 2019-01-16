@@ -20,7 +20,7 @@ namespace KL.Models.DatabaseModels
 
         public string NguoiThamGia { get; set; }
 
-        public int? TrangThai { get; set; }
+        public int Kieu { get; set; }
 
         public DateTime? ThoiGianHoanThanh { get; set; }
 
@@ -28,6 +28,15 @@ namespace KL.Models.DatabaseModels
 
         [StringLength(128)]
         public string IDCongViecPhong { get; set; }
+
+        public int? TrangThai { get; set; }
+
+        [StringLength(128)]
+        public string Ten { get; set; }
+
+        public DateTime? Datecreate { get; set; }
+
+        public int? New { get; set; }
 
         public virtual CongViecPhong CongViecPhong { get; set; }
 

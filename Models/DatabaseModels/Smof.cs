@@ -19,11 +19,12 @@ namespace KL.Models.DatabaseModels
         public virtual DbSet<DonVi> DonVis { get; set; }
         public virtual DbSet<HoSoNhanSu> HoSoNhanSus { get; set; }
         public virtual DbSet<LoaiCongViec> LoaiCongViecs { get; set; }
+        public virtual DbSet<PhanHoi> PhanHois { get; set; }
         public virtual DbSet<PhongBan> PhongBans { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User_Role> User_Role { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ViTriViecLam> ViTriViecLams { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

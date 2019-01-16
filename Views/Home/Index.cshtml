@@ -4,55 +4,5 @@
 }
 @using Newtonsoft.Json;
 @model KL.Models.DatabaseModels.HoSoNhanSu
-
-<div class="navbar-default sidebar" role="navigation">
-    <div class="sidebar-nav navbar-collapse">
-        <ul class="nav" id="side-menu">
-            <li class="sidebar-search">
-                <div class="input-group custom-search-form">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </li>
-
-            <li>
-                @{
-                    Html.RenderAction("ShowLeftCaNhan", "Left", new { canhan = Model.CongViecCaNhans.ToList() });
-                }
-            </li>
-            <li>
-                @{
-                    Html.RenderAction("ShowLeftTruongPhong", "Left", new { truongphong = Model.CongViecPhongs.ToList() });
-                }
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-files-o fa-fw"></i> Thong ke<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="blank.html">Blank Page</a>
-                    </li>
-                    <li>
-                        <a href="login.html">Login Page</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
+@{Html.RenderAction("Left", "Left", new { hsId = Model.ID });}
 <div id="tab"></div>
-<script>
-    $("#newCn").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "/Content/ShowContent?hosoId=@Model.ID",
-            success: function (data) {
-                $('#tab').replaceWith($(data));
-            }
-        });
-
-    });
-</script>

@@ -137,13 +137,13 @@
     <Compile Include="CongVan.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ChucVuController.cs" />
+    <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountantController.cs" />
     <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\LeftController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -171,12 +171,15 @@
     <Compile Include="Models\DatabaseModels\DonVi.cs" />
     <Compile Include="Models\DatabaseModels\HoSoNhanSu.cs" />
     <Compile Include="Models\DatabaseModels\LoaiCongViec.cs" />
+    <Compile Include="Models\DatabaseModels\PhanHoi.cs" />
     <Compile Include="Models\DatabaseModels\PhongBan.cs" />
     <Compile Include="Models\DatabaseModels\Smof.cs" />
     <Compile Include="Models\DatabaseModels\sysdiagram.cs" />
     <Compile Include="Models\DatabaseModels\User.cs" />
     <Compile Include="Models\DatabaseModels\User_Role.cs" />
     <Compile Include="Models\DatabaseModels\ViTriViecLam.cs" />
+    <Compile Include="Models\DataChanges.cs" />
+    <Compile Include="Models\KHPhongModel.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\taskTimeModel.cs" />
     <Compile Include="NhanVien.cs">
@@ -196,6 +199,7 @@
   <ItemGroup>
     <Content Include="Assets\dist\css\sb-admin-2.css" />
     <Content Include="Assets\dist\css\sb-admin-2.min.css" />
+    <Content Include="Assets\dist\js\modal.js" />
     <Content Include="Assets\dist\js\taskShow.js" />
     <Content Include="Assets\dist\js\sb-admin-2.js" />
     <Content Include="Assets\dist\js\sb-admin-2.min.js" />
@@ -328,7 +332,7 @@
     <Content Include="Assets\vendor\morrisjs\morris.min.js" />
     <Content Include="Assets\vendor\raphael\raphael.js" />
     <Content Include="Assets\vendor\raphael\raphael.min.js" />
-    <Content Include="Views\Job\Style.css" />
+    <Content Include="Assets\dist\css\Style.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -343,10 +347,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Features\Search.cshtml" />
     <Content Include="Views\Features\Statistic.cshtml" />
-    <Content Include="Views\Job\CreateJob.cshtml" />
     <Content Include="Views\Job\CreateNew.cshtml" />
     <Content Include="Views\Shared\login.cshtml" />
     <Content Include="Views\Events\ClickLogin.cshtml" />
@@ -397,12 +399,23 @@
     <Content Include="Assets\vendor\font-awesome\scss\_spinning.scss" />
     <Content Include="Assets\vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="Assets\vendor\font-awesome\scss\_variables.scss" />
-    <Content Include="Views\ChucVu\ShowNhanVien.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Job\CreatePagPerson.cshtml" />
+    <Content Include="Views\Employee\ShowLeft.cshtml" />
+    <Content Include="Views\Employee\ShowContent.cshtml" />
+    <Content Include="Views\Left\ShowLeftDonVi.cshtml" />
+    <Content Include="Views\Left\ShowLeftCaNhan.cshtml" />
+    <Content Include="Views\Left\ShowLeftTruongPhong.cshtml" />
+    <Content Include="Views\Content\ShowContent.cshtml" />
+    <Content Include="Views\Job\SaveNew.cshtml" />
+    <Content Include="Views\Left\Left.cshtml" />
+    <Content Include="Views\Content\ShowWorking.cshtml" />
+    <Content Include="Views\Job\Report.cshtml" />
+    <Content Include="Views\Content\ShowRequest.cshtml" />
+    <Content Include="Views\Content\ShowDone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SendOfDis\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

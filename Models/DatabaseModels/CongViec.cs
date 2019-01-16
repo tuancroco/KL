@@ -57,7 +57,7 @@ namespace KL.Models.DatabaseModels
 
         public DateTime? NgayDieuChinh { get; set; }
 
-        public int? TrangThai { get; set; }
+        public DateTime? Datecreate { get; set; }
 
         public virtual HoSoNhanSu HoSoNhanSu { get; set; }
 
