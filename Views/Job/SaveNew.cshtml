@@ -1,0 +1,39 @@
+﻿@model KL.Models.DatabaseModels.HoSoNhanSu
+<div class="card-body " style="display: none;" id="toggle-offtable">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Stt</th>
+                    <th>Ten Cong Viec</th>
+                    <th>Noi Dung Tom Tat</th>
+                    <th>File Dinh Kem</th>
+                    <th>Thoi Gian Hoan Thanh</th>
+                </tr>
+            </thead>
+            
+            <tbody id="cvcn">
+                @foreach (var cv in Model.CongViecCaNhans.ToList())
+                {
+                    <tr id="@cv.ID">
+                        <td>@(Model.CongViecCaNhans.ToList().IndexOf(cv) + 1)</td>
+                        <td>@cv.NoiDungCongViec</td>
+                        <td>@cv.NoiDungCongViec</td>
+                        <td>@cv.ThoiGianHoanThanh</td>
+
+                        <td>@DateTime.Now</td>
+                        <td><button class="edit">edit</button></td>
+                    </tr>
+                }
+                </tbody>
+
+        </table>
+    </div>
+</div>
+<script>
+    $('.edit').click(function () {
+        alert("tuan");
+        $(this).hide();
+    });
+</script>
+ 

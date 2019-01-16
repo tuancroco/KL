@@ -1,0 +1,76 @@
+﻿@model KL.Models.DatabaseModels.HoSoNhanSu
+@using KL.Models.DatabaseModels;
+@{
+    var db = new Smof();
+    var cvPhong = Model.CongViecCaNhans.Where(m => m.TrangThai == 2).OrderBy(m => m.Datecreate);
+
+}
+<div id="page-wrapper">
+    <div class="row" id="content">
+        <div class="col-lg-12">
+            <h1 class="page-header">Dashboard</h1>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Cong Viec Ca Nhan Dang Lam @cvPhong.Count()
+                </div>
+
+                <div class="card-body " id="toggle-ontable">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Stt</th>
+                                    <th>Ten Cong Viec</th>
+                                    <th>Noi Dung Tom Tat</th>
+                                    <th>File Dinh Kem</th>
+                                    <th>Thoi Gian Hoan Thanh</th>
+                                    <th>Thuoc Cong Viec</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var cv in cvPhong)
+                                {
+                                    <tr class="@cv.ID">
+                                        <td>@(cvPhong.ToList().IndexOf(cv) + 1)</td>
+                                        <td>@cv.Ten</td>
+                                        <td>@cv.NoiDungCongViec</td>
+                                        <td>
+                                            @cv.CongVanDinhKemCaNhan
+                                        </td>
+                                        <td>@cv.ThoiGianHoanThanh</td>
+                                        <td>@db.CongViecPhongs.Where(m => m.ID == cv.IDCongViecPhong).FirstOrDefault().Ten</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+        @db.SaveChanges();
+    </div>
+    <script>
+        
+       
+        $('.report').click(function () {
+            alert("report");
+            var idrow = $(this).closest('tr');
+
+            $(idrow).remove();
+            $.ajax({
+                url: "/Job/Report?idJob=" + idrow.attr('class'),
+                type: "POST",
+                success: function () {
+                }
+            });
+        });
+    </script>
+</div>
