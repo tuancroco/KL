@@ -1,9 +1,8 @@
 ﻿
-@model KL.Models.DatabaseModels.HoSoNhanSu
+@model List<KL.Models.Job>
 @using KL.Models.DatabaseModels;
 @{
     var db = new Smof();
-    var cvPhong = Model.CongViecCaNhans.Where(m => m.TrangThai == 3).OrderBy(m => m.Datecreate);
 
 }
 <div id="page-wrapper">
@@ -13,7 +12,7 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Cong Viec Ca Nhan Dang Lam @cvPhong.Count()
+                    Cong Viec Ca Nhan Dang Lam @Model.Count
                 </div>
 
                 <div class="card-body " id="toggle-ontable">
@@ -25,24 +24,24 @@
                                     <th>Ten Cong Viec</th>
                                     <th>Noi Dung Tom Tat</th>
                                     <th>File Dinh Kem</th>
-                                    <th>Thoi Gian Hoan Thanh</th>
+                                    <th>Thoi Han Hoan Thanh</th>
                                     <th>Thuoc Cong Viec</th>
                                     <th>Thoi Gian Hoan Thanh</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach (var cv in cvPhong)
+                                @foreach (var cv in Model)
                                 {
                                     <tr class="@cv.ID">
-                                        <td>@(cvPhong.ToList().IndexOf(cv) + 1)</td>
+                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
                                         <td>@cv.Ten</td>
                                         <td>@cv.NoiDungCongViec</td>
                                         <td>
-                                            @cv.CongVanDinhKemCaNhan
+                                            @cv.File
                                         </td>
-                                        <td>@cv.ThoiGianHoanThanh</td>
-                                        <td>@db.CongViecPhongs.Where(m => m.ID == cv.IDCongViecPhong).FirstOrDefault().Ten</td>
+                                        <td>@cv.ThoiHanHoanThanh</td>
+                                        <td>@cv.IDkhac</td>
                                         <td>@cv.ThoiGianHoanThanh</td>
 
                                     </tr>

@@ -41,7 +41,7 @@ namespace KL.Models.DatabaseModels
 
         public string NoiDungPhanHoi { get; set; }
 
-        public DateTime? NgayHoanThanh { get; set; }
+        public DateTime? ThoiHanHoanThanh { get; set; }
 
         public string CongVanDinhKem { get; set; }
 

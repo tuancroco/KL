@@ -1,13 +1,20 @@
 ﻿@model int[]
-<a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc Phong <span class="fa arrow"></span></a>
+<a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc <span class="fa arrow"></span></a>
 <ul class="nav nav-second-level">
     <li>
-        <a id="newCn" href="#">Công Việc Mới @Model[0]</a>
+        <a id="newPg" href="#">Công Việc Mới @Model[0]</a>
     </li>
     <li>
-        <a href="login.html">Công Việc Đang Làm @Model[1]</a>
+        <a id="inProPg">Công Việc Đang Làm @Model[1]</a>
     </li>
     <li>
-        <a href="login.html">Công Việc Đã Hoàn Thành @Model[2]</a>
+        <a id="requestPg">Công Việc Cho Request @Model[2]</a>
+    </li>
+    <li>
+        <a id="commitPg">Công Việc Cho Xac Nhan @Model[3]</a>
+    </li>
+    <li>
+        <a id="donePg">Công Việc Đã Hoàn Thành @Model[3]</a>
     </li>
 </ul>
+

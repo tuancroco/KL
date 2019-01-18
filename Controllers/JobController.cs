@@ -26,7 +26,7 @@ namespace KL.Controllers
             var viecChutri = hoSoNhanSu.CongViecPhongs.ToList().FindAll(m => m.ChuTri == 1);
             return View(viecChutri);
         }
-        public ActionResult SaveNew(KhPhongModel kh,string IDNhanSu)
+        public ActionResult SaveNew(KhPhongModel kh)
         {
             if (kh == null)
             {
@@ -36,6 +36,7 @@ namespace KL.Controllers
 
             db.CongViecPhongs.Where(m => m.ID == IDCVPhong).FirstOrDefault().TrangThai = 1;
             db.SaveChanges();
+            var IDNhanSu = db.HoSoNhanSus.Where(m => m.CongViecPhongs.Any(n => n.ID == kh.ID)).FirstOrDefault().ID;
             var hoso = db.HoSoNhanSus.Where(m => m.ID == IDNhanSu).FirstOrDefault();
             var id = Int32.Parse(db.CongViecCaNhans.Max(m => (m.ID)));
             var newPlans = kh.newPlans;

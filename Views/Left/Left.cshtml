@@ -15,7 +15,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li id="leftCn">
                     @{
                         if (Int32.Parse(Model.ChucVu.MaChucVu) >= 0)
                         {
@@ -23,8 +23,77 @@
                         }
 
                     }
+                    <script>
+    $("#newCn").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Content/ShowContent?hosoId=@Model.ID&maChucvu=@Model.ChucVu.MaChucVu",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+
+            }
+        });
+        $.ajax({
+                    type: "POST",
+                    url: "/Left/Left?hosoId=@Model.ID",
+                    success: function (data) {
+                        $('#leftCn').empty();
+                        var liTag = $(data).find('#leftCn');
+                        $('#leftCn').append($(liTag));
+
+                    }
+                });
+        });
+                        $("#inPro").click(function () {
+                            $.ajax({
+                                type: "POST",
+                                url: "/Content/ShowWorking?hosoId=@Model.ID&maChucvu=@Model.ChucVu.MaChucVu",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
+                            var tt = refreshPr();
+                        });
+
+         $("#request").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Content/ShowRequest?hosoId=@Model.ID&maChucvu=@Model.ChucVu.MaChucVu",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+            }
+        });
+         var tt = refreshPr();
+        });
+        $("#done").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Content/ShowDone?hosoId=@Model.ID&maChucvu=@Model.ChucVu.MaChucVu",
+                success: function (data) {
+                    $('#tab').empty();
+                    $('#tab').append($(data));
+                }
+            });
+         var tt = refreshPr();
+            });
+            function refreshPr() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Left/Left?hsId=@Model.ID",
+            success: function (data) {
+                $('#leftCn').empty();
+                var liTag = $(data).find('#leftCn');
+                $('#leftCn').append($(liTag));
+
+                    }
+                });
+            };
+                    </script>
                 </li>
-                <li>
+                <li id="leftPg">
                     @{
                         if (Int32.Parse(Model.ChucVu.MaChucVu) >= 1)
                         {
@@ -32,6 +101,85 @@
                         }
 
                     }
+                    <script>
+        $("#newPg").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Content/ShowContentPg?hosoId=@Model.ID",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+
+            }
+            });
+        var rf = refresh();
+        });
+
+
+
+        $("#inProPg").click(function () {
+            alert("in process");
+        $.ajax({
+            type: "POST",
+
+            url: "/Content/ShowWorkingPg?hosoId=@Model.ID",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+            }
+        });
+         var rf = refresh();
+        });
+
+         $("#requestPg").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Lead/ShowRequest?hosoId=@Model.ID",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+            }
+        });
+         var rf = refresh();
+                        });
+                        
+                        $("#commitPg").click(function () {
+                            $.ajax({
+                                type: "POST",
+                                url: "/Content/ShowCommitPg?hosoId=@Model.ID",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
+                            var rf = refresh();
+                        });
+        $("#donePg").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Lead/ShowDone?hosoId=@Model.ID",
+                success: function (data) {
+                    $('#tab').empty();
+                    $('#tab').append($(data));
+                }
+            });
+         var rf = refresh();
+                            });
+                       function refresh() {
+                            $.ajax({
+                    type: "POST",
+                    url: "/Left/Left?hsId=@Model.ID",
+                    success: function (data) {
+                        $('#leftPg').empty();
+                        var liTag = $(data).find('#leftPg');
+                        $('#leftPg').append($(liTag));
+
+
+                    }
+                });
+       
+                        };
+                    </script>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-files-o fa-fw"></i> Thong ke<span class="fa arrow"></span></a>
@@ -48,50 +196,7 @@
         </div>
     </div>
 
-    <script>
-    $("#newCn").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "/Content/ShowContent?hosoId=@Model.ID",
-            success: function (data) {
-                $('#tab').replaceWith($(data));
-            }
-        });
 
-        });
-        $("#inPro").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "/Content/ShowWorking?hosoId=@Model.ID",
-            success: function (data) {
-                $('#tab').empty();
-                $('#tab').append($(data));
-            }
-        });
-
-        });
-         $("#request").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "/Content/ShowRequest?hosoId=@Model.ID",
-            success: function (data) {
-                $('#tab').empty();
-                $('#tab').append($(data));
-            }
-        });
-
-        });
-        $("#done").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "/Content/ShowDone?hosoId=@Model.ID",
-            success: function (data) {
-                $('#tab').empty();
-                $('#tab').append($(data));
-            }
-        });
-
-    });
-    </script>
+    
 
 </div>

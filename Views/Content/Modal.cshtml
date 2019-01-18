@@ -1,0 +1,184 @@
+﻿@model List<KL.Models.DatabaseModels.CongViecCaNhan>
+
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="chutri" class="close">&times;</span>
+
+        </div>
+        <div class="modal-body">
+            <div class="card-body toggle-on" id="0">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Stt</th>
+                                <th>Ten Cong Viec</th>
+                                <th>Noi Dung Tom Tat</th>
+                                <th>Nguoi tham gia</th>
+                                <th>Thoi Han Hoan Thanh</th>
+                                <th>Thoi Gian Hoan Thanh</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@item.Ten</td>
+                                    <td>@item.NoiDungCongViec</td>
+                                    <td>@item.HoSoNhanSu.TenNhanSu</td>
+                                    <td>@item.ThoiHanHoanThanh</td>
+                                    <td>@item.ThoiGianHoanThanh</td>
+                                    <td>
+                                        @{
+                                            if (item.TrangThai == 2)
+                                            {
+                                                <button class="request" >Request</button>
+                                            }
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                            <tr class="addMore">
+                                <td></td>
+                                <td><input type="text" id="tenCv" class="ten" /></td>
+                                <td><input type="text" id="noidung" class="nd" /></td>
+                                <td id="dropdownlist"> @Html.DropDownList("employee", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "select one")</td>
+                                <td><input type="text" id="tgian" class="nd" /></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                    <button id="addTask">Add task</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn-success" id="savePlan" type="button">Save</button>
+        </div>
+    </div>
+    <script>
+        $(document).click(function (event) {
+            if (event.target == $('#myModal')[0]) {
+
+                $('#myModal').hide();
+
+
+            };
+
+        });
+        $('span#chutri').click(function () {
+            $('#myModal').hide();
+        })
+        $('button#savePlan').click(function () {
+            var data = []; var i = 0;
+            $('#myModal').hide();
+            $('#myModal tbody .addMore').each(function () {
+                var dropList = $(this).find('option:selected').val();
+                var deadline = $(this).find('.tgian').val();
+                data[i] = {
+                    Ten: $(this).find('.ten').val(),
+                    Noidung: $(this).find('.nd').val(),
+                    IDHs: dropList,
+                    DeadLine: deadline
+                };
+                i++;
+            });
+            var kh = new Object();
+            kh.ID = planIndex;
+            kh.newPlans = data;
+            if (data.length > 0) {
+                $.ajax({
+                    url: '/Job/SaveNew',
+                    type: 'POST',
+                    data: { kh: kh },
+
+                    success: function (response) {
+
+
+                        //$('#page-wrapper').replaceWith($(response));
+
+                        //$("html").html($("html", response).html());
+                    }
+                });
+            }
+
+            /*$.ajax({
+                url: '/Left/Left?hsId',
+                type: "POST",
+                success: function (data) {
+                    $('#left').replaceWith(data);
+                }
+            });*/
+
+        });
+        $('#addTask').click(function () {
+            var data1 = "<td>" + $('#dropdownlist').clone().html() + "</td>";
+            var data = "<tr class='addMore'><td></td><td><input type='text'class='ten'/></td><td><input type='text'  class='nd'/></td>" + data1 + "<td>2011/04/25</td>" + "/<tr>";
+            $('#myModal tbody').append(data);
+
+
+        });
+        var t = 1;
+        $(".request").click(function () {
+            ConfirmDialog('Are you sure');
+
+           
+                
+        });
+        function ConfirmDialog(message) {
+            $('<div></div>').appendTo('body')
+                .html('<div><h6>' + message + '?</h6></div>')
+                .dialog({
+                    modal: true, title: 'Delete message', zIndex: 10000, autoOpen: true,
+                    width: 'auto', resizable: false,
+                    buttons: {
+                        Yes: function () {
+
+                            $(this).dialog("close");
+                        },
+                        No: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    close: function (event, ui) {
+                        $(this).remove();
+                    }
+                });
+        };
+            
+    </script>
+</div>
+<div id="phanHoi" class="modal1">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="ph" class="close">&times;</span>
+
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Noi Dung Nhan Xet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="">
+                            <td><textarea rows="4" cols="50"></textarea></td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <button class="btn-success" id="send" type="button">Send</button>
+        </div>
+    </div>
+</div>

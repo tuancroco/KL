@@ -38,6 +38,8 @@ namespace KL.Models.DatabaseModels
 
         public int? New { get; set; }
 
+        public DateTime? ThoiHanHoanThanh { get; set; }
+
         public virtual CongViecPhong CongViecPhong { get; set; }
 
         public virtual HoSoNhanSu HoSoNhanSu { get; set; }

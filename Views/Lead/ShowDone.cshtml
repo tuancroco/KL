@@ -1,7 +1,10 @@
-﻿@model List<KL.Models.Job>
+﻿
+@model KL.Models.DatabaseModels.HoSoNhanSu
 @using KL.Models.DatabaseModels;
 @{
     var db = new Smof();
+    var cvPhong = Model.CongViecCaNhans.Where(m => m.TrangThai == 3).OrderBy(m => m.Datecreate);
+
 }
 <div id="page-wrapper">
     <div class="row" id="content">
@@ -10,7 +13,7 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Cong Viec Ca Nhan Dang Lam @Model.Count
+                    Cong Viec Ca Nhan Dang Lam @cvPhong.Count()
                 </div>
 
                 <div class="card-body " id="toggle-ontable">
@@ -22,27 +25,26 @@
                                     <th>Ten Cong Viec</th>
                                     <th>Noi Dung Tom Tat</th>
                                     <th>File Dinh Kem</th>
-                                    <th>Thoi Han Hoan Thanh</th>
+                                    <th>Thoi Gian Hoan Thanh</th>
                                     <th>Thuoc Cong Viec</th>
+                                    <th>Thoi Gian Hoan Thanh</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach (var cv in Model)
+                                @foreach (var cv in cvPhong)
                                 {
                                     <tr class="@cv.ID">
-                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                        <td>@(cvPhong.ToList().IndexOf(cv) + 1)</td>
                                         <td>@cv.Ten</td>
                                         <td>@cv.NoiDungCongViec</td>
                                         <td>
-                                            <span>File</span>
-                                            <input type="file" id="file" name="file" size="10" />
-                                            <input id="uploadbutton" type="button" value="Upload" />
+                                            @cv.CongVanDinhKemCaNhan
                                         </td>
-                                        <td>@cv.ThoiHanHoanThanh</td>
-                                        <td>@cv.IDkhac</td>
+                                        <td>@cv.ThoiGianHoanThanh</td>
+                                        <td>@db.CongViecPhongs.Where(m => m.ID == cv.IDCongViecPhong).FirstOrDefault().Ten</td>
+                                        <td>@cv.ThoiGianHoanThanh</td>
 
-                                        <td><button class="report">report</button></td>
                                     </tr>
                                 }
                             </tbody>
@@ -59,24 +61,12 @@
         @db.SaveChanges();
     </div>
     <script>
-        $("#uploadbutton").click(function () {
-            var filename = $("#file").val();
-        $.ajax({
-            type: "POST",
-            url: "",
-            enctype: 'multipart/form-data',
-            data: {
-                file: filename
-            },
-            success: function () {
-                alert("Data Uploaded: ");
-            }
-        });
-        });
+
+
         $('.report').click(function () {
             alert("report");
             var idrow = $(this).closest('tr');
-            
+
             $(idrow).remove();
             $.ajax({
                 url: "/Job/Report?idJob=" + idrow.attr('class'),
