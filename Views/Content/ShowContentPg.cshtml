@@ -28,7 +28,10 @@
                             @using KL.Models.DatabaseModels;
                             @{
                                 var db = new Smof();
-
+                                foreach(var item in db.CongViecPhongs)
+                                {
+                                    item.TrangThai = 1;
+                                }
                                 db.SaveChanges();
                             }
                             <tbody>

@@ -11,7 +11,7 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Cong Viec Ca Nhan Dang Lam @Model.Count
+                    Cong Viec Ca Nhan Cho Request @Model.Count
                 </div>
 
                 <div class="card-body " id="toggle-ontable">
@@ -40,7 +40,6 @@
                                         </td>
                                         <td>@cv.ThoiGianHoanThanh</td>
                                         <td>@cv.IDkhac</td>
-
                                     </tr>
                                 }
                             </tbody>
@@ -70,6 +69,9 @@
                 success: function () {
                 }
             });
+        });
+        $(".phanHoi").click(function () {
+
         });
     </script>
 </div>

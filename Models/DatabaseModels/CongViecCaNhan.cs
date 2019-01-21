@@ -9,6 +9,12 @@ namespace KL.Models.DatabaseModels
     [Table("CongViecCaNhan")]
     public partial class CongViecCaNhan
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CongViecCaNhan()
+        {
+            PhanHois = new HashSet<PhanHoi>();
+        }
+
         public string ID { get; set; }
 
         public string NoiDungCongViec { get; set; }
@@ -29,19 +35,24 @@ namespace KL.Models.DatabaseModels
         [StringLength(128)]
         public string IDCongViecPhong { get; set; }
 
+        public int? PhanHoi { get; set; }
+
+        public DateTime? ThoiHanHoanThanh { get; set; }
+
+        public DateTime? Datecreate { get; set; }
+
         public int? TrangThai { get; set; }
 
         [StringLength(128)]
         public string Ten { get; set; }
 
-        public DateTime? Datecreate { get; set; }
-
         public int? New { get; set; }
-
-        public DateTime? ThoiHanHoanThanh { get; set; }
 
         public virtual CongViecPhong CongViecPhong { get; set; }
 
         public virtual HoSoNhanSu HoSoNhanSu { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PhanHoi> PhanHois { get; set; }
     }
 }

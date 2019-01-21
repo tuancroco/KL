@@ -5,16 +5,11 @@
     <div class="row" id="content">
         <div class="col-lg-12">
             <h1 class="page-header">Dashboard</h1>
-            <div class="">
-                <input type="radio" id="toggle-on" name="toggle" >
-                <label for="toggle-on">Chủ trì</label>
-                <input type="radio" id="toggle-off" name="toggle" checked>
-                <label for="toggle-off">Tham Gia</label>
-            </div>
+            
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Cong Viec Moi
+                    Cong Viec Moi 
                 </div>
                 <div class="card-body "  id="toggle-offtable">
                     <div class="table-responsive">
@@ -67,31 +62,7 @@
 <link href="~/Assets/dist/css/Style.css" rel="stylesheet" />
 
 <!-- Modal content -->
-<script>
 
-    $('input:radio').change(function () {
-
-        var radioButtons = $("input:radio[name='toggle']");
-        var selectedIndex = radioButtons.index(radioButtons.find(':checked'));
-        var idRadio = $(this).attr('id');
-        if (idRadio == 'toggle-on') {
-            idTable2 = '#' + 'toggle-off' + 'table';
-        }
-        else {
-            idTable2 = '#' + 'toggle-on' + 'table';
-        }
-        var idTable = '#' + $(this).attr('id') + 'table';
-        if (this.checked) {
-            
-            $(idTable).show();
-            $(idTable2).hide();
-        }
-        else {
-            $(idTable2).show();
-            $(idTable1).hide();
-        }
-    });
-</script>
 
 
 

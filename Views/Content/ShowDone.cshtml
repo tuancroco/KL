@@ -8,11 +8,11 @@
 <div id="page-wrapper">
     <div class="row" id="content">
         <div class="col-lg-12">
-            <h1 class="page-header">Dashboard</h1>
+            <h1 class="page-header"></h1>
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Cong Viec Ca Nhan Dang Lam @Model.Count
+                    Cong Viec Ca Nhan Hoan Thanh @Model.Count
                 </div>
 
                 <div class="card-body " id="toggle-ontable">
@@ -33,18 +33,36 @@
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
-                                    <tr class="@cv.ID">
-                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                        <td>@cv.Ten</td>
-                                        <td>@cv.NoiDungCongViec</td>
-                                        <td>
-                                            @cv.File
-                                        </td>
-                                        <td>@cv.ThoiHanHoanThanh</td>
-                                        <td>@cv.IDkhac</td>
-                                        <td>@cv.ThoiGianHoanThanh</td>
+                                    if (cv.New == "0")
+                                    {
+                                        <tr class="@cv.ID" style="background-color:lightgreen;">
+                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                            <td>@cv.Ten</td>
+                                            <td>@cv.NoiDungCongViec</td>
+                                            <td>
+                                                @cv.File
+                                            </td>
+                                            <td>@cv.ThoiHanHoanThanh</td>
+                                            <td>@cv.IDkhac</td>
+                                            <td>@cv.ThoiGianHoanThanh</td>
 
-                                    </tr>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr class="@cv.ID">
+                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                            <td>@cv.Ten</td>
+                                            <td>@cv.NoiDungCongViec</td>
+                                            <td>
+                                                @cv.File
+                                            </td>
+                                            <td>@cv.ThoiHanHoanThanh</td>
+                                            <td>@cv.IDkhac</td>
+                                            <td>@cv.ThoiGianHoanThanh</td>
+
+                                        </tr>
+                                    }
                                 }
                             </tbody>
 

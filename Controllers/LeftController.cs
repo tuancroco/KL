@@ -39,7 +39,7 @@ namespace KL.Controllers
             t[2] = truongphong.Count(m => m.TrangThai == 2);
             t[3] = truongphong.Count(m => m.TrangThai == 3);
             var db = new Smof();
-            var hoso=truongphong.FirstOrDefault().HoSoNhanSu;
+            //var hoso=truongphong.FirstOrDefault().HoSoNhanSu;
             return View(t);
         }
     }

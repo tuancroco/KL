@@ -8,7 +8,7 @@ namespace KL.Models
 {
     public class DataChanges
     {
-        public  void changeReport(string hsId,string idJob)
+       public void changeReport(string hsId,string idJob)
         {
             var db = new Smof();
             db.CongViecCaNhans.Where(m => m.ID == idJob).FirstOrDefault().TrangThai = 3;

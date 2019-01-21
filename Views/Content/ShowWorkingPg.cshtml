@@ -9,7 +9,7 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Cong Viec Moi @Model.Count
+                    Cong Viec Dang Lam @Model.Count
                 </div>
 
                 <div class="card-body " id="toggle-ontable">
@@ -56,39 +56,39 @@
                 <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
             </div>
         </div>
-        
+
         <!-- /.col-lg-12 -->
         @db.SaveChanges();
         <script>
-        var myModal = $('#myModal').html();
-        var planIndex;
+            var myModal = $('#myModal').html();
+            var planIndex;
 
-        $('#addTask').click(function () {
-            var data1 = "<td>" + $('#dropdownlist').clone().html() + "</td>";
-            var data = "<tr><td></td><td><input type='text'class='ten'/></td><td><input type='text'  class='nd'/></td>" + data1 + "<td>2011/04/25</td>" + "/<tr>";
-            $('#myModal tbody').append(data);
+            $('#addTask').click(function () {
+                var data1 = "<td>" + $('#dropdownlist').clone().html() + "</td>";
+                var data = "<tr><td></td><td><input type='text'class='ten'/></td><td><input type='text'  class='nd'/></td>" + data1 + "<td>2011/04/25</td>" + "/<tr>";
+                $('#myModal tbody').append(data);
 
 
-        });
-        var t = myModal;
-        var modal = document.getElementById('myModal');
-        $('button#add').click(function () {
-
-            planIndex = $(this).closest('tr').attr('class');
-            $.ajax({
-                url: "/Content/Modal?jobId=" + planIndex,
-                type: "POST",
-                success: function (data) {
-                    $("#myModal").replaceWith($(data));
-                    $("#myModal").show();
-                }
             });
-            //$('#myModal').find("tbody").append(tr);
-            
-                //alert($('.modal').attr('id'));
-    });
+            var t = myModal;
+            var modal = document.getElementById('myModal');
+            $('button#add').click(function () {
 
-      
+                planIndex = $(this).closest('tr').attr('class');
+                $.ajax({
+                    url: "/Content/Modal?jobId=" + planIndex,
+                    type: "POST",
+                    success: function (data) {
+                        $("#myModal").replaceWith($(data));
+                        $("#myModal").show();
+                    }
+                });
+                //$('#myModal').find("tbody").append(tr);
+
+                //alert($('.modal').attr('id'));
+            });
+
+
 
         </script>
     </div>
@@ -96,10 +96,11 @@
 </div>
 <link href="~/Assets/dist/css/Style.css" rel="stylesheet" />
 <div id="myModal" class="modal">
-    
-   
+
+
 </div>
 <!-- Modal content -->
+
 
 
 

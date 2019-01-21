@@ -11,6 +11,9 @@
                 <div class="card-header">
                     <i class="fas fa-table"></i>
                     Cong Viec Ca Nhan Dang Lam @Model.Count
+                    <br />
+                    <p>Ban Vua Nhan Them</p>
+
                 </div>
 
                 <div class="card-body " id="toggle-ontable">
@@ -30,20 +33,41 @@
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
-                                    <tr class="@cv.ID">
-                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                        <td>@cv.Ten</td>
-                                        <td>@cv.NoiDungCongViec</td>
-                                        <td>
-                                            <span>File</span>
-                                            <input type="file" id="file" name="file" size="10" />
-                                            <input id="uploadbutton" type="button" value="Upload" />
-                                        </td>
-                                        <td>@cv.ThoiHanHoanThanh</td>
-                                        <td>@cv.IDkhac</td>
+                                    if (cv.TrangThai == "0")
+                                    {
+                                        <tr class="@cv.ID" style="background-color:greenyellow">
+                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                            <td>@cv.Ten</td>
+                                            <td>@cv.NoiDungCongViec</td>
+                                            <td>
+                                                <span>File</span>
+                                                <input type="file" id="file" name="file" size="10" />
+                                                <input id="uploadbutton" type="button" value="Upload" />
+                                            </td>
+                                            <td>@cv.ThoiHanHoanThanh</td>
+                                            <td>@cv.IDkhac</td>
 
-                                        <td><button class="report">report</button></td>
-                                    </tr>
+                                            <td><button class="report">report</button></td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+
+                                        <tr class="@cv.ID" >
+                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                            <td>@cv.Ten</td>
+                                            <td>@cv.NoiDungCongViec</td>
+                                            <td>
+                                                <span>File</span>
+                                                <input type="file" id="file" name="file" size="10" />
+                                                <input id="uploadbutton" type="button" value="Upload" />
+                                            </td>
+                                            <td>@cv.ThoiHanHoanThanh</td>
+                                            <td>@cv.IDkhac</td>
+
+                                            <td><button class="report">report</button></td>
+                                        </tr>
+                                    }
                                 }
                             </tbody>
 

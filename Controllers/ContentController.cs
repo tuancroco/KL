@@ -28,8 +28,12 @@ namespace KL.Controllers
             foreach (var item in db.CongViecCaNhans.Where(m => m.HoSoNhanSu.ID == hosoId))
 
             {
-                if (item.TrangThai < 1) { item.TrangThai = 1; }
-                item.New = 1;
+                if (item.TrangThai < 1)
+                {
+                    item.TrangThai = 1;
+                    item.New = 0;
+                }
+                
             }
             db.SaveChanges();
             return View(Cv);
@@ -38,7 +42,14 @@ namespace KL.Controllers
         {
             var db = new Smof();
             var hoso = db.HoSoNhanSus.ToList().Find(m => m.ID == hosoId);
+            
+            
             var Cv = MakeJobModel(1, hoso, 1);
+            foreach (var item in db.CongViecCaNhans)
+            {
+                item.New = 1;
+            }
+            db.SaveChanges();
             return View(Cv);
         }
         
@@ -47,6 +58,11 @@ namespace KL.Controllers
             var db = new Smof();
             var hoso = db.HoSoNhanSus.ToList().Find(m => m.ID == hosoId);
             var Cv = MakeJobModel(2, hoso, 1);
+            foreach (var item in db.CongViecCaNhans)
+            {
+                item.New = 1;
+            }
+            db.SaveChanges();
             return View(Cv);
         }
         public ActionResult ShowDone(string hosoId)
@@ -54,6 +70,11 @@ namespace KL.Controllers
             var db = new Smof();
             var hoso = db.HoSoNhanSus.ToList().Find(m => m.ID == hosoId);
             var Cv = MakeJobModel(3, hoso, 1);
+            foreach (var item in db.CongViecCaNhans)
+            {
+                item.New = 1;
+            }
+            db.SaveChanges();
             return View(Cv);
         }
 
@@ -61,7 +82,7 @@ namespace KL.Controllers
         {
             var db = new Smof();
             var hoso = db.HoSoNhanSus.ToList().Find(m => m.ID == hosoId);
-            var Cv = MakeJobModel(0, hoso, 1);
+            var Cv = MakeJobModel(0, hoso, 2);
             ViewBag.hsId = hosoId;
             List<HoSoNhanSu> dsPhong = db.HoSoNhanSus.ToList().FindAll(m => m.IDPhongBan == hoso.IDPhongBan).ToList();
 
@@ -70,6 +91,11 @@ namespace KL.Controllers
 
             // Set vào ViewBag
             ViewBag.CategoryList = cateList;
+            foreach (var item in db.CongViecPhongs)
+            {
+                item.New = 1;
+            }
+            db.SaveChanges();
             return View(Cv);
         }
         public ActionResult ShowWorkingPg(string hosoId)
@@ -77,7 +103,11 @@ namespace KL.Controllers
             var db = new Smof();
             var hoso = db.HoSoNhanSus.ToList().Find(m => m.ID == hosoId);
             var Cv = MakeJobModel(1, hoso, 2);
-            
+            foreach (var item in db.CongViecPhongs)
+            {
+                item.New = 1;
+            }
+            db.SaveChanges();
             return View(Cv);
         }
         public ActionResult ShowCommitPg(string hosoId)
@@ -85,7 +115,11 @@ namespace KL.Controllers
             var db = new Smof();
             var hoso = db.HoSoNhanSus.ToList().Find(m => m.ID == hosoId);
             var Cv = CommitJob(hoso);
-
+            foreach (var item in db.CongViecPhongs)
+            {
+                item.New = 1;
+            }
+            db.SaveChanges();
             return View(Cv);
         }
 
@@ -121,15 +155,19 @@ namespace KL.Controllers
                         NoiDungCongViec = cv.NoiDungCongViec,
                         ThoiHanHoanThanh = cv.ThoiHanHoanThanh.ToString(),
                         IDNV = hoso.ID,
-                        TrangThai=trangthai
+                        TrangThai=trangthai,
+                        PhanHoi=(cv.PhanHoi).ToString()
                     });
+                cv.New = 1;
             }
+            db.SaveChanges();
             return CvCommit;
         }
         public List<Job> MakeJobModel(int trangthai,HoSoNhanSu hoso,int maChucvu)
         {
             List<Job> CvCn = new List<Job>();
             List<Job> CvPg = new List<Job>();
+            var db = new Smof();
             foreach (var cv in hoso.CongViecCaNhans)
             {
                 if (cv.TrangThai == trangthai)
@@ -142,9 +180,14 @@ namespace KL.Controllers
                         IDkhac = cv.CongViecPhong.Ten,
                         NoiDungCongViec = cv.NoiDungCongViec,
                         ThoiHanHoanThanh=cv.ThoiHanHoanThanh.ToString(),
-                        IDNV=hoso.ID
+                        IDNV=hoso.ID,
+                        PhanHoi=cv.PhanHoi.ToString(),
+                        TrangThai=cv.New.ToString()
                     });
+                cv.New = 1;
             }
+            db.SaveChanges();
+            
 
             foreach (var cv in hoso.CongViecPhongs)
             {
@@ -159,9 +202,12 @@ namespace KL.Controllers
                         IDkhac = cv.CongViec.Ten,
                         NoiDungCongViec = cv.NoiDungChitiet,
                         ThoiHanHoanThanh=cv.ThoiHanHoanThanh.ToString(),
-                        IDNV=hoso.ID
+                        IDNV=hoso.ID,
+                        TrangThai=cv.New.ToString()
+
                         
                     };
+                cv.New = 1;
                 foreach(var cvcn in CvCn)
                 {
                     if (cvcn.IDkhac == cv.ID)
@@ -171,6 +217,7 @@ namespace KL.Controllers
                 }
                 CvPg.Add(job);
             }
+            db.SaveChanges();
             List<Job> Cv = new List<Job>();
             if (maChucvu == 1) Cv = CvCn;
             else Cv = CvPg;

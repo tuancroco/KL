@@ -2,7 +2,15 @@
 <a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc <span class="fa arrow"></span></a>
 <ul class="nav nav-second-level">
     <li>
-        <a id="newCn" href="#">Công Việc Mới @Model[0]</a>
+        @if (Model[0] > 0)
+        {
+            <a id="newCn" style="background-color:red" href="#">Công Việc Mới @Model[0]</a>
+        }
+        else
+        {
+            <a id="newCn"  href="#">Công Việc Mới @Model[0]</a>
+        }
+
     </li>
     <li>
         <a id="inPro">Công Việc Đang Làm @Model[1]</a>
@@ -10,6 +18,7 @@
     <li>
         <a id="request">Công Việc Cho Request @Model[2]</a>
     </li>
+
     <li>
         <a id="done">Công Việc Đã Hoàn Thành @Model[3]</a>
     </li>

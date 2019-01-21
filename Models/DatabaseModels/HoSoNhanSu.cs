@@ -15,6 +15,8 @@ namespace KL.Models.DatabaseModels
             CongViecs = new HashSet<CongViec>();
             CongViecCaNhans = new HashSet<CongViecCaNhan>();
             CongViecPhongs = new HashSet<CongViecPhong>();
+            PhanHois = new HashSet<PhanHoi>();
+            PhanHoiCVs = new HashSet<PhanHoiCV>();
             Users = new HashSet<User>();
         }
 
@@ -57,6 +59,12 @@ namespace KL.Models.DatabaseModels
         public virtual PhongBan PhongBan { get; set; }
 
         public virtual ViTriViecLam ViTriViecLam { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PhanHoi> PhanHois { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PhanHoiCV> PhanHoiCVs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }

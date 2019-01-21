@@ -18,14 +18,7 @@ namespace KL.Controllers
             return View();
         }
         public Smof db = new Smof();
-        public ActionResult CreateNew (string userName)
-        {
-           
-            var user = db.Users.Single(m => m.Username == userName);
-            var hoSoNhanSu = user.HoSoNhanSu;
-            var viecChutri = hoSoNhanSu.CongViecPhongs.ToList().FindAll(m => m.ChuTri == 1);
-            return View(viecChutri);
-        }
+        
         public ActionResult SaveNew(KhPhongModel kh)
         {
             if (kh == null)
@@ -54,21 +47,52 @@ namespace KL.Controllers
                     HoSoNhanSu=hoSoNhanSu,
                     NoiDungCongViec = item.Noidung,
                     IDHoSoNhanSu=hoSoNhanSu.ID,
-                    Datecreate=DateTime.Now
+                    Datecreate=DateTime.Now,
+                    TrangThai=0
                 };
                 db.CongViecCaNhans.Add(CvCanhan);
                 db.SaveChanges();
             }
 
-            return RedirectToAction("ShowContent","Content",new {hosoId=IDNhanSu });
+            return RedirectToAction("Login","Login");
         }
         public ActionResult Report(string idJob)
         {
             var db = new Smof();
             db.CongViecCaNhans.Where(m => m.ID == idJob).FirstOrDefault().TrangThai = 2;
+            db.CongViecCaNhans.Where(m => m.ID == idJob).FirstOrDefault().New = 0;
             db.SaveChanges();
             return View();
         }
-        
+        public ActionResult SendRequest(string idJob,string request)
+        {
+            var db = new Smof();
+            
+            if (request == "")
+            {
+                db.CongViecCaNhans.Where(m => m.ID == idJob).FirstOrDefault().TrangThai = 3;
+                db.CongViecCaNhans.Where(m => m.ID == idJob).FirstOrDefault().New = 0;
+            }
+            else 
+            {
+                var cncn=db.CongViecCaNhans.Where(m => m.ID == idJob).FirstOrDefault();
+                db.CongViecCaNhans.Where(m => m.ID == idJob).FirstOrDefault().PhanHoi=1;
+                db.CongViecCaNhans.Where(m => m.ID == idJob).FirstOrDefault().New = 0;
+                var idtp = db.HoSoNhanSus.Where(m => m.CongViecCaNhans.Any(n => n.ID == idJob)).First().ID;
+                var Id = db.PhanHois.Max(m => int.Parse(m.ID)) + 1;
+                PhanHoi ph = new PhanHoi
+                {
+                    ID=Id.ToString(),
+                    NoiDung=request,
+                    IDCongviecCaNhan=idJob,
+                    IDTruongPhong=idtp,
+                    TrangThai=0
+                };
+                db.PhanHois.Add(ph);
+            }
+            
+            db.SaveChanges();
+            return View();
+        }
     }
 }

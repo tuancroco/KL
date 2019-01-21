@@ -24,7 +24,8 @@
 
                     }
                     <script>
-    $("#newCn").click(function () {
+                        $("#newCn").click(function () {
+                            var tt = refreshPr();
         $.ajax({
             type: "POST",
             url: "/Content/ShowContent?hosoId=@Model.ID&maChucvu=@Model.ChucVu.MaChucVu",
@@ -102,7 +103,8 @@
 
                     }
                     <script>
-        $("#newPg").click(function () {
+                        $("#newPg").click(function () {
+                            var rf = refresh();
         $.ajax({
             type: "POST",
             url: "/Content/ShowContentPg?hosoId=@Model.ID",
@@ -112,7 +114,7 @@
 
             }
             });
-        var rf = refresh();
+        
         });
 
 
@@ -198,5 +200,5 @@
 
 
     
-
+    
 </div>

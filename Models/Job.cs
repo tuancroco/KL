@@ -17,6 +17,8 @@ namespace KL.Models
         public List<Job> ListJobs { get; set; }
         public string IDNV { get; set; }
         public string TrangThai { get; set; }
+        public string PhanHoi { get; set; }
+        public string New { get; set; }
     }
 }
 

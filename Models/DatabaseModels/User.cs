@@ -20,15 +20,12 @@ namespace KL.Models.DatabaseModels
 
         public string LastName { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Gender { get; set; }
+        public int? Gender { get; set; }
 
         public string Phone { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         public DateTime DateOfBirth { get; set; }
 
         public string Email { get; set; }

@@ -50,7 +50,7 @@ namespace KL.Models.DatabaseModels
 
         public string DinhKemCongVanDi { get; set; }
 
-        public DateTime? ThoiHanHoanThanh { get; set; }
+        public DateTime? NgayHoanThanh { get; set; }
 
         [StringLength(128)]
         public string IDLanhDao { get; set; }
@@ -61,6 +61,12 @@ namespace KL.Models.DatabaseModels
 
         [StringLength(128)]
         public string Ten { get; set; }
+
+        public int? TrangThai { get; set; }
+
+        public int? PhanHoi { get; set; }
+
+        public int? New { get; set; }
 
         public virtual HoSoNhanSu HoSoNhanSu { get; set; }
 
