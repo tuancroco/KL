@@ -11,6 +11,7 @@ namespace KL.Controllers
     public class EventsController : Controller
     {
         // GET: Events
+        public static string userId = "";
         public ActionResult Index()
         {
             return View();
@@ -22,19 +23,50 @@ namespace KL.Controllers
         }
         public ActionResult ShowTaskPercent()
         {
+            var db = new Smof();
+            var hs = db.HoSoNhanSus.Where(m => m.ID == userId).First();
             var listTask = new List<taskTimeModel>();
-            listTask.Add(new taskTimeModel
+            if (int.Parse(hs.ChucVu.MaChucVu) > 0)
             {
-                jobName = "dao tao",
-                percent = 80,
-            });
-            listTask.Add(new taskTimeModel
+                listTask.Add(new taskTimeModel
+                {
+                    jobName = "cong viec ca nhan",
+                    percent = 80,
+                });
+            }
+            if (int.Parse(hs.ChucVu.MaChucVu) > 1)
             {
-                jobName = "khoa luan",
-                percent = 15,
-            });
+                listTask.Add(new taskTimeModel
+                {
+                    jobName = "cong viec phong",
+                    percent = 80,
+                });
+            }
+            
             return View(listTask);
         }
+        public ActionResult Search(string Id)
+        {
+            userId = Id;
+            return View();
+        }
         
+        public ActionResult ShowSearch(Search search)
+        {
+            List<Job> list = new List<Job>();
+            var db = new Smof();
+            var t = new ContentController();
+            var hoso = db.HoSoNhanSus.Where(m => m.ID == userId).First();
+            for(int i = 0; i < 3; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    list.AddRange(t.MakeJobModel(i, hoso, j));
+                }
+                
+            }
+            list = list.Where(m => m.Ten.Contains(search.field)).ToList();
+            return View(list.ToList());
+        }
     }
 }

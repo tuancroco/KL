@@ -5,14 +5,7 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
-                    <div class="input-group custom-search-form">
-                        <input type="text" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
+                    @{Html.RenderAction("Search", "Events",new {Id=Model.ID });}
                 </li>
 
                 <li id="leftCn">
@@ -41,7 +34,7 @@
                         {
                             Html.RenderAction("ShowLeftVanThu", "Left", new { Id = Model.ID });
                         }
-                       
+
                     }
 
                 </li>
@@ -50,7 +43,7 @@
                     {
                         Html.RenderAction("ShowLeftLanhDao", "Left", new { Id = Model.ID });
                     }
-                   
+
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-files-o fa-fw"></i> Thong ke<span class="fa arrow"></span></a>
@@ -111,7 +104,8 @@
 
                     }
                 });
-            };
+        };
+
     </script>
 
 
