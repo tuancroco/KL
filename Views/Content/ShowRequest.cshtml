@@ -11,7 +11,7 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Cong Viec Ca Nhan Cho Request @Model.Count
+                    Cong Viec Cho Request @Model.Count
                 </div>
 
                 <div class="card-body " id="toggle-ontable">
@@ -25,22 +25,58 @@
                                     <th>File Dinh Kem</th>
                                     <th>Thoi Gian Hoan Thanh</th>
                                     <th>Thuoc Cong Viec</th>
+                                    <th>Phan Hoi</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
-                                    <tr class="@cv.ID">
-                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                        <td>@cv.Ten</td>
-                                        <td>@cv.NoiDungCongViec</td>
-                                        <td>
-                                            @cv.File
-                                        </td>
-                                        <td>@cv.ThoiGianHoanThanh</td>
-                                        <td>@cv.IDkhac</td>
-                                    </tr>
+                                    if (cv.New == "0")
+                                    {
+                                        <tr class="@cv.ID" style="background-color:lightgreen;">
+                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                            <td>@cv.Ten</td>
+                                            <td>@cv.NoiDungCongViec</td>
+                                            <td>
+                                                @cv.File
+                                            </td>
+                                            <td>@cv.ThoiGianHoanThanh</td>
+                                            <td>@cv.IDkhac</td>
+                                            @if (cv.TrangThaiPh == 0)
+                                            {
+                                                <td style="background-color:red;">@cv.PhanHoi</td>
+
+                                            }
+                                            else
+                                            {
+                                                <td>@cv.PhanHoi</td>
+                                            }
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr class="@cv.ID">
+                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                            <td>@cv.Ten</td>
+                                            <td>@cv.NoiDungCongViec</td>
+                                            <td>
+                                                @cv.File
+                                            </td>
+                                            <td>@cv.ThoiGianHoanThanh</td>
+                                            <td>@cv.IDkhac</td>
+                                            @if (cv.TrangThaiPh == 0)
+                                            {
+                                                <td style="background-color:red;">@cv.PhanHoi</td>
+
+                                            }
+                                            else
+                                            {
+                                                <td>@cv.PhanHoi</td>
+                                            }
+
+                                        </tr>
+                                    }
                                 }
                             </tbody>
 
@@ -56,20 +92,27 @@
         @db.SaveChanges();
     </div>
     <script>
-        
-       
+
+
         $('.report').click(function () {
             alert("report");
             var idrow = $(this).closest('tr');
-
+            @{ var t = 0;
+                if (Model.Count > 0)
+                {
+                    t = Model[0].vitriCv;
+                }
+                
+                }
             $(idrow).remove();
             $.ajax({
-                url: "/Job/Report?idJob=" + idrow.attr('class'),
+                url: "/Job/Report?ma=@t&idJob=" + idrow.attr('class'),
                 type: "POST",
                 success: function () {
-                }
-            });
+                    }
+                });
         });
+
         $(".phanHoi").click(function () {
 
         });

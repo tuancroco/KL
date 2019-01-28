@@ -19,169 +19,38 @@
                     @{
                         if (Int32.Parse(Model.ChucVu.MaChucVu) >= 0)
                         {
-                            Html.RenderAction("ShowLeftCaNhan", "Left", new { canhan = Model.CongViecCaNhans.ToList() });
+                            Html.RenderAction("ShowLeftCaNhan", "Left", new { Id = Model.ID });
                         }
 
                     }
-                    <script>
-                        $("#newCn").click(function () {
-                            var tt = refreshPr();
-        $.ajax({
-            type: "POST",
-            url: "/Content/ShowContent?hosoId=@Model.ID&maChucvu=@Model.ChucVu.MaChucVu",
-            success: function (data) {
-                $('#tab').empty();
-                $('#tab').append($(data));
 
-            }
-        });
-        $.ajax({
-                    type: "POST",
-                    url: "/Left/Left?hosoId=@Model.ID",
-                    success: function (data) {
-                        $('#leftCn').empty();
-                        var liTag = $(data).find('#leftCn');
-                        $('#leftCn').append($(liTag));
-
-                    }
-                });
-        });
-                        $("#inPro").click(function () {
-                            $.ajax({
-                                type: "POST",
-                                url: "/Content/ShowWorking?hosoId=@Model.ID&maChucvu=@Model.ChucVu.MaChucVu",
-                                success: function (data) {
-                                    $('#tab').empty();
-                                    $('#tab').append($(data));
-                                }
-                            });
-                            var tt = refreshPr();
-                        });
-
-         $("#request").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "/Content/ShowRequest?hosoId=@Model.ID&maChucvu=@Model.ChucVu.MaChucVu",
-            success: function (data) {
-                $('#tab').empty();
-                $('#tab').append($(data));
-            }
-        });
-         var tt = refreshPr();
-        });
-        $("#done").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "/Content/ShowDone?hosoId=@Model.ID&maChucvu=@Model.ChucVu.MaChucVu",
-                success: function (data) {
-                    $('#tab').empty();
-                    $('#tab').append($(data));
-                }
-            });
-         var tt = refreshPr();
-            });
-            function refreshPr() {
-                $.ajax({
-                    type: "POST",
-                    url: "/Left/Left?hsId=@Model.ID",
-            success: function (data) {
-                $('#leftCn').empty();
-                var liTag = $(data).find('#leftCn');
-                $('#leftCn').append($(liTag));
-
-                    }
-                });
-            };
-                    </script>
                 </li>
                 <li id="leftPg">
                     @{
-                        if (Int32.Parse(Model.ChucVu.MaChucVu) >= 1)
+                        if (Int32.Parse(Model.ChucVu.MaChucVu) == 2)
                         {
-                            Html.RenderAction("ShowLeftTruongPhong", "Left", new { truongphong = Model.CongViecPhongs.ToList() });
+                            Html.RenderAction("ShowLeftTruongPhong", "Left", new { Id = Model.ID });
                         }
 
                     }
-                    <script>
-                        $("#newPg").click(function () {
-                            var rf = refresh();
-        $.ajax({
-            type: "POST",
-            url: "/Content/ShowContentPg?hosoId=@Model.ID",
-            success: function (data) {
-                $('#tab').empty();
-                $('#tab').append($(data));
 
-            }
-            });
-        
-        });
-
-
-
-        $("#inProPg").click(function () {
-            alert("in process");
-        $.ajax({
-            type: "POST",
-
-            url: "/Content/ShowWorkingPg?hosoId=@Model.ID",
-            success: function (data) {
-                $('#tab').empty();
-                $('#tab').append($(data));
-            }
-        });
-         var rf = refresh();
-        });
-
-         $("#requestPg").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "/Lead/ShowRequest?hosoId=@Model.ID",
-            success: function (data) {
-                $('#tab').empty();
-                $('#tab').append($(data));
-            }
-        });
-         var rf = refresh();
-                        });
-                        
-                        $("#commitPg").click(function () {
-                            $.ajax({
-                                type: "POST",
-                                url: "/Content/ShowCommitPg?hosoId=@Model.ID",
-                                success: function (data) {
-                                    $('#tab').empty();
-                                    $('#tab').append($(data));
-                                }
-                            });
-                            var rf = refresh();
-                        });
-        $("#donePg").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "/Lead/ShowDone?hosoId=@Model.ID",
-                success: function (data) {
-                    $('#tab').empty();
-                    $('#tab').append($(data));
-                }
-            });
-         var rf = refresh();
-                            });
-                       function refresh() {
-                            $.ajax({
-                    type: "POST",
-                    url: "/Left/Left?hsId=@Model.ID",
-                    success: function (data) {
-                        $('#leftPg').empty();
-                        var liTag = $(data).find('#leftPg');
-                        $('#leftPg').append($(liTag));
-
-
+                </li>
+                <li id="vtleft">
+                    @{
+                        if (Int32.Parse(Model.ChucVu.MaChucVu) == 4)
+                        {
+                            Html.RenderAction("ShowLeftVanThu", "Left", new { Id = Model.ID });
+                        }
+                       
                     }
-                });
-       
-                        };
-                    </script>
+
+                </li>
+                <li id="lanhdao">
+                    @if (Int32.Parse(Model.ChucVu.MaChucVu) == 3)
+                    {
+                        Html.RenderAction("ShowLeftLanhDao", "Left", new { Id = Model.ID });
+                    }
+                   
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-files-o fa-fw"></i> Thong ke<span class="fa arrow"></span></a>
@@ -197,8 +66,54 @@
             </ul>
         </div>
     </div>
+    <script>
+        function refresh() {
+                            $.ajax({
+                                type: "POST",
+                                url: "/Left/ShowLeftTruongPhong/",
+                                data: {Id:@Model.ID},
+                                            success: function (data) {
+
+                                    $('#leftPg').empty();
+                                    $('#leftPg').append($(data));
+                                    }
+                            });
+        };
+        function refreshPr() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Left/ShowLeftCaNhan?Id=@Model.ID",
+            success: function (data) {
+                $('#leftCn').empty();
+                $('#leftCn').append($(data));
+
+                    }
+                });
+        };
+        function refreshld() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Left/ShowLeftLanhDao?Id=@Model.ID",
+            success: function (data) {
+                $('#lanhdao').empty();
+                $('#lanhdao').append($(data));
+
+                    }
+                });
+        };
+        function refreshvt() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Left/ShowLeftVanThu?Id=@Model.ID",
+            success: function (data) {
+                $('#vtleft').empty();
+                $('#vtleft').append($(data));
+
+                    }
+                });
+            };
+    </script>
 
 
-    
-    
+
 </div>

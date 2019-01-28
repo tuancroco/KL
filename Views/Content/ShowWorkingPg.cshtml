@@ -21,7 +21,7 @@
                                     <th>Ten Cong Viec</th>
                                     <th>Noi Dung Tom Tat</th>
                                     <th>File Dinh Kem</th>
-                                    <th>Thoi Gian Hoan Thanh</th>
+                                    <th>Thoi Han Hoan Thanh</th>
                                     <th>Thuoc Cong Viec</th>
                                     <th>% Hoan thanh</th>
                                 </tr>
@@ -35,16 +35,39 @@
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
-                                    <tr class="@cv.ID">
-                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                        <td>@cv.Ten</td>
-                                        <td>@cv.NoiDungCongViec</td>
-                                        <td>@cv.File</td>
-                                        <td>@cv.ThoiGianHoanThanh</td>
-                                        <td>@cv.IDkhac</td>
-                                        <td></td>
-                                        <td><button id="add">see/add plan</button></td>
-                                    </tr>
+
+                                <tr class="@cv.ID">
+                                    <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                    <td>@cv.Ten</td>
+                                    <td>@cv.NoiDungCongViec</td>
+                                    <td>@cv.File</td>
+                                    <td>@cv.ThoiHanHoanThanh</td>
+                                    <td>@cv.IDkhac</td>
+                                    @{
+                                        var t = cv.jobcn.Count;
+                                        if (cv.jobcn.Count == 0) { t = 1; }
+                                        if (cv.jobcn.Count(m => m.TrangThai == 3) == t)
+                                        {
+                                            <td>100%</td>
+                                            <td><button class="report">Report</button></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@(cv.jobcn.Count(m => m.TrangThai == 3)*100 / t)%</td>
+                                            <td></td>
+                                        }
+                                    }
+
+                                    @if (cv.slrequest > 0)
+                                    {
+                                        <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest"><button style="background-color:aqua;" id="add">see/add plan</button></td>
+                                    }
+                                    else
+                                    {
+                                        <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest"><button id="add">see/add plan</button></td>
+                                    }
+
+                                </tr>
                                 }
                             </tbody>
 
@@ -60,16 +83,23 @@
         <!-- /.col-lg-12 -->
         @db.SaveChanges();
         <script>
+            $('.report').click(function () {
+                alert("report");
+                var idrow = $(this).closest('tr');
+
+                $(idrow).remove();
+                $.ajax({
+                    url: "/Job/Report?idJob=" + idrow.attr('class')+"&ma=2",
+                    type: "POST",
+                    success: function () {
+                        tt = refresh();
+                    }
+                });
+            });
             var myModal = $('#myModal').html();
             var planIndex;
 
-            $('#addTask').click(function () {
-                var data1 = "<td>" + $('#dropdownlist').clone().html() + "</td>";
-                var data = "<tr><td></td><td><input type='text'class='ten'/></td><td><input type='text'  class='nd'/></td>" + data1 + "<td>2011/04/25</td>" + "/<tr>";
-                $('#myModal tbody').append(data);
-
-
-            });
+           
             var t = myModal;
             var modal = document.getElementById('myModal');
             $('button#add').click(function () {

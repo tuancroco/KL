@@ -1,26 +1,76 @@
-﻿@model int[]
-<a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc <span class="fa arrow"></span></a>
+﻿@model List<List<int>>
+<a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc Cá Nhân<span class="fa arrow"></span></a>
 <ul class="nav nav-second-level">
     <li>
-        @if (Model[0] > 0)
-        {
-            <a id="newCn" style="background-color:red" href="#">Công Việc Mới @Model[0]</a>
-        }
-        else
-        {
-            <a id="newCn"  href="#">Công Việc Mới @Model[0]</a>
-        }
+        
+        <a id="newCn" href="#">Công Việc Mới @Model[0][0] (@Model[0][1])</a>
 
     </li>
     <li>
-        <a id="inPro">Công Việc Đang Làm @Model[1]</a>
+        <a id="inPro">Công Việc Đang Làm @Model[1][0] (@Model[1][1])</a>
     </li>
     <li>
-        <a id="request">Công Việc Cho Request @Model[2]</a>
+        <a id="request">Công Việc Cho Request @(Model[2][0]+Model[5][0]) (@(Model[2][1]+Model[5][1]))</a>
     </li>
 
     <li>
-        <a id="done">Công Việc Đã Hoàn Thành @Model[3]</a>
+        <a id="done">Công Việc Đã Hoàn Thành @Model[3][0] (@Model[3][1])</a>
     </li>
 </ul>
+@{ 
 
+    var t = Model[Model.Count - 1][0].ToString();
+}
+<script>
+                        $("#newCn").click(function () {
+                            var tt = refreshPr();
+        $.ajax({
+            type: "POST",
+            url: "/Content/ShowContent?hosoId=@t&ma=1",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+
+            }
+        });
+        });
+                        $("#inPro").click(function () {
+                            var tt = refreshPr();
+                            $.ajax({
+                                type: "POST",
+                                url: "/Content/ShowWorking?hosoId=@t&ma=1",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
+
+                        });
+
+                        $("#request").click(function () {
+                            var tt = refreshPr();
+        $.ajax({
+            type: "POST",
+            url: "/Content/ShowRequest?hosoId=@t&ma=1",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+            }
+                            });
+                            
+
+        });
+                        $("#done").click(function () {
+                            var tt = refreshPr();
+            $.ajax({
+                type: "POST",
+                url: "/Content/ShowDone?hosoId=@t&ma=1",
+                success: function (data) {
+                    $('#tab').empty();
+                    $('#tab').append($(data));
+                }
+            });
+
+            });
+            
+</script>

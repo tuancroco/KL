@@ -28,15 +28,19 @@
                                 @foreach (var cv in Model)
                                 {
                                     
-                                    <tr id="@cv.ID">
-                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                        <td>@cv.Ten</td>
-                                        <td>@cv.NoiDungCongViec</td>
-                                        <td>@cv.File</td>
-                                        <td>@cv.ThoiGianHoanThanh</td>
-                                        <td>@cv.IDkhac</td>
-                                        <td><button class="view">view</button></td>
-                                    </tr>
+                                <tr id="@cv.ID">
+                                    <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                    <td>@cv.Ten</td>
+                                    <td>@cv.NoiDungCongViec</td>
+                                    <td>@cv.File</td>
+                                    <td>@cv.ThoiHanHoanThanh</td>
+                                    <td>@cv.IDkhac</td>
+                                    <td><button class="view">view</button></td>
+                                    @if (cv.vitriCv == 4)
+                                    {
+                                     <td><button class="create">Tao Moi</button></td>
+                                    }
+                                </tr>
                                 }
                             </tbody>
 
@@ -49,6 +53,21 @@
                             $(rowclick).remove();
                             
                         });
+                        $('button.create').click(function () {
+
+                            planIndex = $(this).closest('tr').attr('class');
+                            $.ajax({
+                                url: "/Content/CreateJobPg/",
+                                type: "POST",
+                                success: function (data) {
+                                    $("#myModal").replaceWith($(data));
+                                    $("#myModal").show();
+                                }
+                            });
+                            //$('#myModal').find("tbody").append(tr);
+
+                            //alert($('.modal').attr('id'));
+                        });
                     </script>
                 </div>
                 <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
@@ -60,7 +79,10 @@
 </div>
 
 <link href="~/Assets/dist/css/Style.css" rel="stylesheet" />
+<div id="myModal" class="modal">
 
+
+</div>
 <!-- Modal content -->
 
 

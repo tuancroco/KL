@@ -1,0 +1,30 @@
+﻿@model List<List<int>>
+<a href="#"><i class="fa fa-files-o fa-fw"></i> Xac Nhan Cong Viec<span class="fa arrow"></span></a>
+<ul class="nav nav-second-level">
+
+
+    <li>
+        <a id="commitld">Công Việc Cho Xac Nhan @Model[0][0] (@Model[0][1])</a>
+    </li>
+    <li>
+        <a id="doneld">Công Việc Đã Hoàn Thành @Model[2][0] (@Model[2][1])</a>
+    </li>
+</ul>
+@{
+
+    var t = Model[Model.Count - 1][0].ToString();
+}
+<script>
+    $("#commitld").click(function () {
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/Content/ShowCommitld?hosoId=@t",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
+        var tld = refreshld();
+                        });
+</script>

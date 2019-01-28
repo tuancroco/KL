@@ -1,20 +1,106 @@
-﻿@model int[]
-<a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc <span class="fa arrow"></span></a>
+﻿@model List<List<int>>
+<a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc Phòng<span class="fa arrow"></span></a>
 <ul class="nav nav-second-level">
     <li>
-        <a id="newPg" href="#">Công Việc Mới @Model[0]</a>
+        <a id="newPg" href="#">Công Việc Mới @Model[0][0] (@Model[0][1])</a>
     </li>
     <li>
-        <a id="inProPg">Công Việc Đang Làm @Model[1]</a>
+        @{
+            if (@Model[1][2] > 0)
+            {
+                <a id="inProPg" style="background-color:aqua;" data-toggle="tooltip" data-placement="top" title="Co @Model[1][2] request">Công Việc Đang Làm @Model[1][0] (@Model[1][1])</a>
+            }
+            else
+            {
+                <a id="inProPg" data-toggle="tooltip" data-placement="top" title="Co @Model[1][2] request">Công Việc Đang Làm @Model[1][0] (@Model[1][1])</a>
+            }
+        }
+
     </li>
     <li>
-        <a id="requestPg">Công Việc Cho Request @Model[2]</a>
+        <a id="requestPg">Công Việc Cho Request @Model[2][0] (@Model[2][1])</a>
     </li>
     <li>
-        <a id="commitPg">Công Việc Cho Xac Nhan @Model[3]</a>
+        <a id="commitPg">Công Việc Cho Xac Nhan @Model[3][0] (@Model[3][1])</a>
     </li>
     <li>
-        <a id="donePg">Công Việc Đã Hoàn Thành @Model[3]</a>
+        <a id="donePg">Công Việc Đã Hoàn Thành @Model[4][0] (@Model[4][1])</a>
     </li>
 </ul>
+@{
 
+    var t = Model[Model.Count - 1][0].ToString();
+}
+<script>
+                        $("#newPg").click(function () {
+                            var rf = refresh();
+                            
+                            $.ajax({
+                                type: "POST",
+                                url: "/Content/ShowContentPg?hosoId=@t",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+
+                                }
+                                });
+
+                            });
+
+
+
+                        $("#inProPg").click(function () {
+                            var rf = refresh();
+                            $.ajax({
+                                type: "POST",
+
+                                url: "/Content/ShowWorkingPg?hosoId=@t",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
+
+                        });
+
+                        $("#requestPg").click(function () {
+                            var rf = refresh();
+                            
+                            $.ajax({
+                                type: "POST",
+                                url: "/Content/ShowRequest?hosoId=@t&ma=2",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
+
+                    });
+
+                        $("#commitPg").click(function () {
+                            $.ajax({
+                                type: "POST",
+                                url: "/Content/ShowCommitPg?hosoId=@t",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
+                            var rf = refresh();
+                            
+                        });
+                        $("#donePg").click(function () {
+                            var rf = refresh();
+                            
+                            $.ajax({
+                                type: "POST",
+                                url: "/Content/ShowDone?hosoId=@t&ma=2",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
+
+                        });
+                       
+</script>

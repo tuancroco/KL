@@ -1,0 +1,75 @@
+﻿@model List<List<int>>
+    <a href="#"><i class="fa fa-files-o fa-fw"></i> Công Việc Đến <span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        <li>
+            <a id="newVt" href="#">Công Việc Mới @Model[0][0] (@Model[0][1])</a>
+        </li>
+        <li>
+            <a id="inProVt">Công Việc Đang Làm @Model[1][0] (@Model[1][1])</a>
+        </li>
+        <li>
+            <a id="donevt">Công Việc Đã Xong @Model[3][0] (@Model[3][1])</a>
+        </li>
+    </ul>
+<li>
+    <a href="#"><i class="fa fa-files-o fa-fw"></i> Công Việc Đi <span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+        <li>
+            <a id="cvDi">Công Văn Đi @Model[0][1] (@Model[1][1])</a>
+        </li>
+        <li>
+            <a id="inRequestVt">Công Việc  @Model[0][1] (@Model[1][1])</a>
+        </li>
+        <li>
+        </li>
+    </ul>
+</li>
+@{
+
+    var t = Model[Model.Count - 1][0].ToString();
+}
+<script>
+    $("#newVt").click(function () {
+        var tt = refreshvt();                   
+        $.ajax({
+            type: "POST",
+            url: "/Content/ShowContent?hosoId=@t&ma=4",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+
+            }
+            });
+
+        });
+    $("#donevt").click(function () {
+        var tt = refreshvt();                   
+        $.ajax({
+            type: "POST",
+            url: "/Content/ShowDone?hosoId=@t&ma=4",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+
+            }
+            });
+
+        });
+
+
+                            $("#inProVt").click(function () {
+                                var tt = refreshvt();              
+        $.ajax({
+            type: "POST",
+
+            url: "/Content/ShowWorking?hosoId=@t&ma=4",
+            success: function (data) {
+                $('#tab').empty();
+                $('#tab').append($(data));
+            }
+        });
+
+        });
+
+</script>
+

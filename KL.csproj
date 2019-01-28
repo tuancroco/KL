@@ -148,7 +148,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="KL_SMOF.cs" />
     <Compile Include="Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,6 +171,7 @@
     <Compile Include="Models\DatabaseModels\HoSoNhanSu.cs" />
     <Compile Include="Models\DatabaseModels\LoaiCongViec.cs" />
     <Compile Include="Models\DatabaseModels\PhanHoi.cs" />
+    <Compile Include="Models\DatabaseModels\PhanHoiCV.cs" />
     <Compile Include="Models\DatabaseModels\PhongBan.cs" />
     <Compile Include="Models\DatabaseModels\Smof.cs" />
     <Compile Include="Models\DatabaseModels\sysdiagram.cs" />
@@ -179,8 +179,10 @@
     <Compile Include="Models\DatabaseModels\User_Role.cs" />
     <Compile Include="Models\DatabaseModels\ViTriViecLam.cs" />
     <Compile Include="Models\DataChanges.cs" />
+    <Compile Include="Models\Job.cs" />
     <Compile Include="Models\KHPhongModel.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\taskTimeModel.cs" />
     <Compile Include="NhanVien.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -401,8 +403,6 @@
     <Content Include="Assets\vendor\font-awesome\scss\_variables.scss" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Job\CreatePagPerson.cshtml" />
-    <Content Include="Views\Employee\ShowLeft.cshtml" />
-    <Content Include="Views\Employee\ShowContent.cshtml" />
     <Content Include="Views\Left\ShowLeftDonVi.cshtml" />
     <Content Include="Views\Left\ShowLeftCaNhan.cshtml" />
     <Content Include="Views\Left\ShowLeftTruongPhong.cshtml" />
@@ -413,6 +413,18 @@
     <Content Include="Views\Job\Report.cshtml" />
     <Content Include="Views\Content\ShowRequest.cshtml" />
     <Content Include="Views\Content\ShowDone.cshtml" />
+    <Content Include="Views\Content\ShowWorkingPg.cshtml" />
+    <Content Include="Views\Content\ShowContentPg.cshtml" />
+    <Content Include="Views\Content\Modal.cshtml" />
+    <Content Include="Views\Content\ShowCommitPg.cshtml" />
+    <Content Include="Views\Job\Commit.cshtml" />
+    <Content Include="Views\Job\SendRequest.cshtml" />
+    <Content Include="Views\Events\ShowNoti.cshtml" />
+    <Content Include="Views\Job\GetPHoi.cshtml" />
+    <Content Include="Views\Content\CreateJobPg.cshtml" />
+    <Content Include="Views\Left\ShowLeftVanThu.cshtml" />
+    <Content Include="Views\Left\ShowLeftLanhDao.cshtml" />
+    <Content Include="Views\Content\ShowCommitld.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

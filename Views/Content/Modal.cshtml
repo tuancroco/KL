@@ -1,6 +1,15 @@
 ﻿@model List<KL.Models.DatabaseModels.CongViecCaNhan>
 
+@{ 
+    var tx = 1;
+    var t = "";
+    if (Model.Count > 0) {
+        tx = Model.Count;
+        t = Model.First().IDHoSoNhanSu;
+    }
 
+
+}
 <div id="myModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -9,7 +18,7 @@
         </div>
         <div class="modal-body">
             <div class="card-body toggle-on" id="0">
-                <h1 style="color:green;">Da xong @(Model.Count(m => m.TrangThai == 3)*100 / Model.Count )%</h1>
+                <h1 style="color:green;">Da xong @(Model.Count(m => m.TrangThai == 3)*100 / tx )%</h1>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -53,10 +62,10 @@
                             }
                             <tr class="addMore">
                                 <td></td>
-                                <td><input type="text" id="tenCv" class="ten" /></td>
-                                <td><input type="text" id="noidung" class="nd" /></td>
+                                <td><input type="text" " class="ten" /></td>
+                                <td><input type="text"  class="nd" /></td>
                                 <td id="dropdownlist"> @Html.DropDownList("employee", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "select one")</td>
-                                <td><input type="text" id="tgian" class="nd" /></td>
+                                <td><input type="date" " class="tgian" /></td>
                             </tr>
 
                         </tbody>
@@ -83,46 +92,51 @@
         $('span#chutri').click(function () {
             $('#myModal').hide();
         });
+        @{ 
+            
+        }
         $('button#savePlan').click(function () {
             var data = []; var i = 0;
+            var x = refresh();
+            $.ajax({
+                                type: "POST",
+
+                                url: "/Content/ShowWorkingPg?hosoId=@t",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
             $('#myModal').hide();
             $('#myModal tbody .addMore').each(function () {
                 var dropList = $(this).find('option:selected').val();
                 var deadline = $(this).find('.tgian').val();
-                data[i] = {
-                    Ten: $(this).find('.ten').val(),
-                    Noidung: $(this).find('.nd').val(),
-                    IDHs: dropList,
-                    DeadLine: deadline
-                };
-                i++;
+                 {
+                    data[i] = {
+                        Ten: $(this).find('.ten').val(),
+                        Noidung: $(this).find('.nd').val(),
+                        IDHs: dropList,
+                        DeadLine: deadline
+                    };
+                    i++;
+                }
+                
+               
             });
             var kh = new Object();
             kh.ID = planIndex;
             kh.newPlans = data;
-            if (data.length > 0) {
+            if (data.length > 0 ) {
                 $.ajax({
                     url: '/Job/SaveNew',
                     type: 'POST',
                     data: { kh: kh },
 
                     success: function (response) {
-
-
-                        //$('#page-wrapper').replaceWith($(response));
-
-                        //$("html").html($("html", response).html());
                     }
                 });
             }
 
-            /*$.ajax({
-                url: '/Left/Left?hsId',
-                type: "POST",
-                success: function (data) {
-                    $('#left').replaceWith(data);
-                }
-            });*/
 
         });
         $('#addTask').click(function () {
@@ -140,14 +154,14 @@
         });
         $(".request").click(function () {
             t = $(this).closest("tr").attr("class");
-
+            $(this).closest("td").replaceWith("<td><p style='color:red;'>success</p>");
             $.ajax({
                 url: "/Job/SendRequest",
-                data: { idJob: t, request:"" },
+                data: { idJob: t, request:"",ma:2 },
                 type: "POST",
                 success: function () {
                     $('#phanHoi').hide();
-                    $(this).closest("td").replaceWith("<td><p style='color:red;'>success</p>");
+                    
                 }
             });
         });
@@ -168,7 +182,7 @@
 
             $.ajax({
                 url: "/Job/SendRequest",
-                data: { request: request, idJob: t },
+                data: { request: request, idJob: t,ma:2},
                 type: "POST",
                 success: function () {
                     $('#phanHoi').hide();

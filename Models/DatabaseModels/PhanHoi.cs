@@ -21,6 +21,8 @@ namespace KL.Models.DatabaseModels
 
         public int? TrangThai { get; set; }
 
+        public DateTime? Datecreate { get; set; }
+
         public virtual CongViecCaNhan CongViecCaNhan { get; set; }
 
         public virtual HoSoNhanSu HoSoNhanSu { get; set; }

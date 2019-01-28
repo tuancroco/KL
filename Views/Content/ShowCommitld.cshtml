@@ -1,0 +1,156 @@
+﻿
+@model List<KL.Models.DatabaseModels.CongViecPhong>
+
+<link href="~/Assets/dist/css/Style.css" rel="stylesheet" />
+
+<div id="page-wrapper">
+    <div class="row" id="content">
+        <div class="col-lg-12">
+            <h1 class="page-header">Dashboard</h1>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Cong Viec Dang Lam @Model.Count
+                </div>
+                <div class="card-body toggle-on" id="0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Stt</th>
+                                    <th>Ten Cong Viec</th>
+                                    <th>Noi Dung Tom Tat</th>
+                                    <th>Nguoi chu tri</th>
+                                    <th>File Dinh Kem</th>
+                                    <th>Thoi Han Hoan Thanh</th>
+                                    <th>Thoi Gian Hoan Thanh</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="@item.ID">
+                                        <td></td>
+                                        <td>@item.Ten</td>
+                                        <td>@item.NoiDungChitiet</td>
+                                        <td>@item.HoSoNhanSu.TenNhanSu</td>
+                                        <td>@item.CongVanDinhKem</td>
+                                        <td>@item.ThoiHanHoanThanh</td>
+                                        <td>@item.ThoiGianHoanThanh</td>
+                                        <td>
+                                            @{
+                                                if (item.TrangThai == 2)
+                                                {
+                                                    <button class="request">Request</button>
+                                                    <button class="reject">Reject</button>
+                                                }
+                                                else if (item.TrangThai == 3)
+                                                {
+                                                    <p>Done</p>
+                                                }
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).click(function (event) {
+        if (event.target == $('#myModal')[0]) {
+
+            $('#myModal').hide();
+
+
+        };
+
+    });
+    $('span#chutri').click(function () {
+        $('#myModal').hide();
+    });
+
+
+    var t = 1;
+    $(".reject").click(function () {
+        $("#phanHoi").show();
+        t = $(this).closest("tr").attr("class");
+        $(this).closest("td").replaceWith("<td><p style='color:red;'>success</p>");
+    });
+    $(".request").click(function () {
+        t = $(this).closest("tr").attr("class");
+
+        $.ajax({
+            url: "/Job/SendRequest",
+            data: { idJob: t, request: "",ma:3 },
+            type: "POST",
+            success: function () {
+                $('#phanHoi').hide();
+                $(this).closest("td").replaceWith("<td><p style='color:red;'>success</p>");
+            }
+        });
+    });
+    $(document).click(function (event) {
+        if (event.target == $('#phanHoi')[0]) {
+
+            $('#phanHoi').hide();
+        };
+
+    });
+    $('span#chutri').click(function () {
+        $('#myModal').hide();
+    });
+
+    $("#send").click(function () {
+        var request = "";
+        if ($("textarea").val() != null) request = $("textarea").val();
+
+        $.ajax({
+            url: "/Job/SendRequest",
+            data: { request: request, idJob: t, ma:3},
+            type: "POST",
+            success: function () {
+                $('#phanHoi').hide();
+            }
+        });
+    });
+</script>
+<div id="phanHoi" class="modal1">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="ph" class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Noi Dung Nhan Xet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="">
+                            <td><textarea rows="4" cols="50"></textarea></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <button class="btn-success" id="send" type="button">Send</button>
+        </div>
+    </div>
+    <script>
+
+    </script>
+</div>

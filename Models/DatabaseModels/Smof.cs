@@ -8,7 +8,7 @@ namespace KL.Models.DatabaseModels
     public partial class Smof : DbContext
     {
         public Smof()
-            : base("name=Smof5")
+            : base("name=Smof7")
         {
         }
 

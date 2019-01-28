@@ -21,26 +21,66 @@ namespace KL.Controllers
             return View();
         }
        
-        public ActionResult ShowLeftCaNhan(List<CongViecCaNhan> canhan)
+        public ActionResult ShowLeftCaNhan(string Id)
         {
-            int[] t = new int[6];
-            t[0]= canhan.Count(m => m.TrangThai == 0);
-            t[1] = canhan.Count(m => m.TrangThai == 1);
-            t[2] = canhan.Count(m => m.TrangThai == 2);
-            t[3] = canhan.Count(m => m.TrangThai == 3);
-            return View(t);
+            var db = new Smof();
+            var truongphong = db.CongViecCaNhans.Where(m => m.IDHoSoNhanSu == Id);
+            List<List<int>> list = new List<List<int>>();
+            for (int i = 0; i < 6; i++)
+            {
+                
+                {
+                    var t1 = new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && m.TrangThai == i) };
+                    list.Add(t1);
+                }
+            }
+            List<int> id = new List<int> { int.Parse(Id) };
+            list.Add(id);
+            return View(list);
         }
        
-        public ActionResult ShowLeftTruongPhong(List<CongViecPhong> truongphong)
+        public ActionResult ShowLeftTruongPhong(string Id)
         {
-            int[] t = new int[5];
-            t[0] = truongphong.Count(m => m.TrangThai == 0);
-            t[1] = truongphong.Count(m => m.TrangThai == 1);
-            t[2] = truongphong.Count(m => m.TrangThai == 2);
-            t[3] = truongphong.Count(m => m.TrangThai == 3);
             var db = new Smof();
-            //var hoso=truongphong.FirstOrDefault().HoSoNhanSu;
-            return View(t);
+            var truongphong = db.CongViecPhongs.Where(m => m.IDHoSoNhanSuPhuTrach == Id);
+            List<List<int>> list = new List<List<int>>();
+            for(int i = 0; i < 5; i++)
+            {
+                var t1=new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && m.TrangThai == i), truongphong.Count(m=>m.TrangThai==1&&m.CongViecCaNhans.Any(n=>n.TrangThai==2)) };
+                list.Add(t1);
+            }
+            List<int> id = new List<int> { int.Parse(Id) };
+            list.Add(id);
+            return View(list);
+        }
+        public ActionResult ShowLeftVanThu(string Id)
+        {
+            var db = new Smof();
+            var truongphong = db.CongViecs.Where(m => m.IDHoSoNhanSu == Id);
+            List<List<int>> list = new List<List<int>>();
+            for (int i = 0; i < 5; i++)
+            {
+                var t1 = new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && m.TrangThai == i) };
+                list.Add(t1);
+            }
+            List<int> id = new List<int> { int.Parse(Id) };
+            list.Add(id);
+            return View(list);
+        }
+        public ActionResult ShowLeftLanhDao(string Id)
+        {
+            var db = new Smof();
+            
+            var truongphong = db.CongViecPhongs;
+            List<List<int>> list = new List<List<int>>();
+            for (int i = 0; i < 5; i++)
+            {
+                var t1 = new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && m.TrangThai == i) };
+                list.Add(t1);
+            }
+            List<int> id = new List<int> { int.Parse(Id) };
+            list.Add(id);
+            return View(list);
         }
     }
 }

@@ -1,0 +1,139 @@
+﻿@model List<KL.Models.DatabaseModels.CongViecPhong>
+@using KL.Models.DatabaseModels;
+@{
+    var db = new Smof();
+    var pban = db.PhongBans.ToList();
+    var tphong = db.HoSoNhanSus.Where(m => m.ChucVu.MaChucVu == "2").ToList();
+}
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="chutri" class="close">&times;</span>
+
+        </div>
+        <div class="modal-body">
+            <div class="card-body toggle-on" id="0">
+                <h1 style="color:green;"></h1>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Stt</th>
+                                <th>Ten Cong Viec</th>
+                                <th>Trich yeu</th>
+                                <th>Noi yeu cau</th>
+                                <th>Ngay Nhan</th>
+                                <th>Phong Ban</th>
+                                <th>Nguoi Phu trach</th>
+                                <th>Thoi Han Hoan Thanh</th>
+                                <th>Cong Van dinh kem</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr class="">
+                                <td></td>
+                                <td class="ten"><input id="ten" type="text" /></td>
+                                <td><textarea id="tyeu"></textarea></td>
+                                <td></td>
+                                <td>
+                                    <select name="pb" id="pb">
+                                        @foreach (var pb in pban)
+                                        {
+                                            <option value="@pb.ID">@pb.TenPhongBan</option>
+
+                                        }
+                                    </select>
+
+                                </td>
+                                <td>
+                                    <select name="tp" id="tp">
+                                        @foreach (var tp in tphong)
+                                        {
+                                            <option value="@tp.ID">@tp.TenNhanSu</option>
+
+                                        }
+                                    </select>
+
+                                </td>
+                                <td><input id="tgian" type="date" /></td>
+                                <td>
+                                    <span>File</span>
+                                    <input type="file" id="file" name="file" size="10" />
+                                    <input id="uploadbutton" type="button" value="Upload" />
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn-success" id="send" type="button">Send</button>
+        </div>
+    </div>
+    <script>
+        $(document).click(function (event) {
+            if (event.target == $('#myModal')[0]) {
+
+                $('#myModal').hide();
+
+
+            };
+
+        });
+        $('span#chutri').click(function () {
+            $('#myModal').hide();
+        });
+        $('button#send').click(function () {
+            var data = []; var i = 0;
+            $('#myModal').hide();
+            var tp = $("#tp").find(":selected").attr('value');
+            var pb = $("#pb").find(":selected").attr('value');
+            var tg = $("#tgian").val();
+            var ten = $("#ten").val();
+            var nd = $("#tyeu").val();
+            var filename = $("#file").val();
+            {
+                $.ajax({
+                    url: '/Job/NewJob/',
+                    type: 'POST',   
+                    data: { tp: tp, pb: pb, ten: ten, tg: tg, nd: nd, file: filename },
+
+                    success: function (response) {
+                    }
+                });
+            }
+
+        });
+        $(document).click(function (event) {
+            if (event.target == $('#phanHoi')[0]) {
+
+                $('#phanHoi').hide();
+            };
+
+        });
+        $('span#chutri').click(function () {
+            $('#myModal').hide();
+        });
+
+        $("#uploadbutton").click(function () {
+            var filename = $("#file").val();
+            $.ajax({
+                type: "POST",
+                url: "",
+                enctype: 'multipart/form-data',
+                data: {
+                    file: filename
+                },
+                success: function () {
+                    alert("Data Uploaded: ");
+                }
+            });
+        });
+    </script>
+</div>
