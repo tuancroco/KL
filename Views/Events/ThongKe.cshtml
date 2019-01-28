@@ -1,0 +1,65 @@
+﻿@model KL.Models.ThongKe
+@{
+    ViewBag.Title = "ThongKe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="page-wrapper">
+    <div class="row" id="content">
+        <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">From Date</label>
+                    <div class="col-sm-3">
+                        <input type="date" class="form-control" id="fromDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                    </div>
+                    <label for="" class="col-sm-2 col-form-label " >To Date</label>
+                    <div class="col-sm-3">
+                        <input type="date" class="form-control" id="toDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2" for="sel1">Loai Cong Viec:</label>
+                    <div class="col-sm-3">
+                        <select name="Loai CV" id="loaiCv">
+                            <option value="6">--All--</option>
+                            <option value="1">CV Ca Nhan</option>
+                            <option value="2">CV Phong</option>
+                            <option value="3">CVan</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2" for="sel1">Trang Thai CV:</label>
+                    <div class="col-sm-3">
+                        <select name="" id="ttCv">
+                            <option value="6">--All--</option>
+                            <option value="0">CV Moi</option>
+                            <option value="1">CV Dang Lam</option>
+                            <option value="2">CV Request</option>
+                            <option value="3">CV Da Xong</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" value="thong ke">Thong ke</button>
+            <div class="show">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("button").click(function () {
+        var t = new Object();
+        t.fromdate = $("#fromDate").val();
+        t.todate = $("#toDate").val();
+        t.loaiCv = $("#loaiCv").find(":selected").attr('value');
+        t.ttCv = $("#ttCv").find(":selected").attr('value');
+        $.ajax({
+            url: "/Events/ShowThongKe/",
+            type: "POST",
+            data: t,
+            success: function (data) {
+                $('.show').empty().append($(data));
+            }
+        });
+    });
+</script>
+
+

@@ -1,0 +1,61 @@
+﻿@model List<KL.Models.Job>
+
+
+
+<style type="text/css">
+    .a1{
+        background-color:papayawhip;
+    }
+    .a2{
+        background-color:palegoldenrod;
+    }
+</style>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Cong Viec Moi
+    </div>
+    <div class="card-body " id="toggle-offtable">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Stt</th>
+                        <th>Ten Cong Viec</th>
+                        <th>Noi Dung Tom Tat</th>
+                        <th>File Dinh Kem</th>
+                        <th>Thoi Gian Can Hoan Thanh</th>
+                        <th>Cong Viec Phong</th>
+                    </tr>
+                </thead>
+                <tbody id="cvcn">
+                    @foreach (var cv in Model)
+                    {
+
+                        <tr id="@cv.ID" class="@('a'+cv.vitriCv.ToString())">
+                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                            <td>@cv.Ten</td>
+                            <td>@cv.NoiDungCongViec</td>
+                            <td>@cv.File</td>
+                            <td>@cv.ThoiHanHoanThanh</td>
+                            <td>@cv.IDkhac</td>
+
+                        </tr>
+                    }
+                </tbody>
+
+
+            </table>
+        </div>
+
+    </div>
+    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+</div>
+
+
+<link href="~/Assets/dist/css/Style.css" rel="stylesheet" />
+<div id="myModal" class="modal">
+
+
+</div>
+<!-- Modal content -->

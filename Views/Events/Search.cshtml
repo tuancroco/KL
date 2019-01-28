@@ -1,0 +1,13 @@
+﻿@model KL.Models.Search
+    @using (Html.BeginForm("ShowSearch", "Events", FormMethod.Post))
+    {
+        <div class="input-group custom-search-form">
+            @Html.TextBoxFor(m => m.field, new { @class = "form-control" ,placeholder = "Search..." })
+            <span class="input-group-btn">
+                <button id="search" class="btn btn-default" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+
+    }

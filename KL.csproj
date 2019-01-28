@@ -167,6 +167,7 @@
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\taskTimeModel.cs" />
+    <Compile Include="Models\ThongKe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -381,6 +382,8 @@
     <Content Include="Views\Content\ShowCommitld.cshtml" />
     <Content Include="Views\Events\Search.cshtml" />
     <Content Include="Views\Events\ShowSearch.cshtml" />
+    <Content Include="Views\Events\ThongKe.cshtml" />
+    <Content Include="Views\Events\ShowThongKe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

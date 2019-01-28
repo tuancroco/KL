@@ -21,17 +21,23 @@ namespace KL.Controllers
 
             return View();
         }
-        public ActionResult ShowTaskPercent()
+        public ActionResult ShowTaskPercent(string userID)
         {
             var db = new Smof();
-            var hs = db.HoSoNhanSus.Where(m => m.ID == userId).First();
+            var hs = db.HoSoNhanSus.Where(m => m.ID == userID).First();
             var listTask = new List<taskTimeModel>();
+            var cn = 1;
+            var pcn = hs.CongViecCaNhans.Count(m => m.TrangThai == 3);
+            var ppg = hs.CongViecPhongs.Count(m => m.TrangThai == 3);
+            if (hs.CongViecCaNhans.Count > 0) cn = hs.CongViecCaNhans.Count;
+            var pg = 1;
+            if (hs.CongViecPhongs.Count > 0) pg = hs.CongViecPhongs.Count;
             if (int.Parse(hs.ChucVu.MaChucVu) > 0)
             {
                 listTask.Add(new taskTimeModel
                 {
                     jobName = "cong viec ca nhan",
-                    percent = 80,
+                    percent = pcn*100/cn,
                 });
             }
             if (int.Parse(hs.ChucVu.MaChucVu) > 1)
@@ -39,7 +45,7 @@ namespace KL.Controllers
                 listTask.Add(new taskTimeModel
                 {
                     jobName = "cong viec phong",
-                    percent = 80,
+                    percent = ppg*100/pg,
                 });
             }
             
@@ -57,16 +63,50 @@ namespace KL.Controllers
             var db = new Smof();
             var t = new ContentController();
             var hoso = db.HoSoNhanSus.Where(m => m.ID == userId).First();
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < 4; i++)
             {
-                for(int j = 0; j < 3; j++)
+                for(int j = 0; j < 4; j++)
                 {
                     list.AddRange(t.MakeJobModel(i, hoso, j));
                 }
                 
             }
-            list = list.Where(m => m.Ten.Contains(search.field)).ToList();
+            var field = "";
+            if (search.field != null) field = search.field;
+            list = list.Where(m => m.Ten.Contains(field)).ToList();
+            list=list.OrderByDescending(m => m.vitriCv).ToList();
             return View(list.ToList());
+        }
+        public ActionResult ThongKe()
+        {
+            return View();
+        }
+        public ActionResult ShowThongKe(ThongKe t)
+        {
+            var db = new Smof();
+            var hoso = db.HoSoNhanSus.Where(m => m.ID == userId).First();
+            var tt = new ContentController();
+            List<Job> list = new List<Job>();
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    list.AddRange(tt.MakeJobModel(i, hoso, j));
+                }
+
+            }
+            if (t.loaiCv != 6)
+            {
+                list = list.Where(m => m.vitriCv == t.loaiCv).ToList();
+            }
+            if (t.ttCv != 6)
+            {
+                list = list.Where(m => m.TrangThai == t.ttCv.ToString()).ToList();
+            }
+            var x = list[0].ThoiHanHoanThanh.CompareTo(t.fromdate.ToString("yyyy-MM-dd"));
+            var c= list[0].ThoiHanHoanThanh.CompareTo(t.todate.ToString("yyyy-MM-dd"));
+            list = list.Where(m => m.ThoiHanHoanThanh.CompareTo(t.fromdate.ToString("yyyy-MM-dd")) >=0 && m.ThoiHanHoanThanh.CompareTo(t.todate.ToString("yyyy-MM-dd"))<=0).ToList();
+            return View(list);
         }
     }
 }

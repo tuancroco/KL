@@ -145,6 +145,7 @@ namespace KL.Controllers
         public ActionResult GetPHoi(string idJob)
         {
             db = new Smof();
+
             var phahois = db.PhanHois.Where(m => m.IDCongviecCaNhan == idJob).OrderByDescending(m=>m.Datecreate);
 
             return View(phahois.ToList());

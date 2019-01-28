@@ -1,23 +1,26 @@
 ﻿@model List<List<int>>
+<style>
+
+</style>
 <a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc Cá Nhân<span class="fa arrow"></span></a>
 <ul class="nav nav-second-level">
     <li>
-        
-        <a id="newCn" href="#">Công Việc Mới @Model[0][0] (@Model[0][1])</a>
+
+        <a id="newCn" >Công Việc Mới @Model[0][0] (@Model[0][1])</a>
 
     </li>
     <li>
         <a id="inPro">Công Việc Đang Làm @Model[1][0] (@Model[1][1])</a>
     </li>
     <li>
-        <a id="request">Công Việc Cho Request @(Model[2][0]+Model[5][0]) (@(Model[2][1]+Model[5][1]))</a>
+        <a id="request">Công Việc Cho Request @(Model[2][0] + Model[5][0]) (@(Model[2][1] + Model[5][1]))</a>
     </li>
 
     <li>
         <a id="done">Công Việc Đã Hoàn Thành @Model[3][0] (@Model[3][1])</a>
     </li>
 </ul>
-@{ 
+@{
 
     var t = Model[Model.Count - 1][0].ToString();
 }
@@ -57,7 +60,7 @@
                 $('#tab').append($(data));
             }
                             });
-                            
+
 
         });
                         $("#done").click(function () {
@@ -72,5 +75,5 @@
             });
 
             });
-            
+
 </script>

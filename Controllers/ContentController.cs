@@ -329,6 +329,8 @@ namespace KL.Controllers
                 var th = 1;
                 if (cv.PhanHoi != null) th = cv.PhanHoi.Value;
                 if (cv.TrangThai == 2) trangthai1 = "Request";
+                var tgian = "";
+                if (cv.ThoiGianHoanThanh != null) tgian = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd");
                 if (cv.TrangThai == trangthai)
                 {
                     
@@ -336,11 +338,11 @@ namespace KL.Controllers
                     {
                         Ten = cv.Ten,
                         ID = cv.ID,
-                        ThoiGianHoanThanh = cv.ThoiGianHoanThanh.ToString(),
+                        ThoiGianHoanThanh = tgian,
                         File = cv.CongVanDinhKemCaNhan,
                         IDkhac = cv.CongViecPhong.Ten,
                         NoiDungCongViec = cv.NoiDungCongViec,
-                        ThoiHanHoanThanh = cv.ThoiHanHoanThanh.ToString(),
+                        ThoiHanHoanThanh = cv.ThoiHanHoanThanh.Value.ToString("yyyy-MM-dd"),
                         IDNV = hoso.ID,
                         New = cv.New.ToString(),
                         TrangThai = cv.TrangThai.ToString(),
@@ -369,11 +371,11 @@ namespace KL.Controllers
                     {
                         Ten = cv.Ten,
                         ID = cv.ID,
-                        ThoiGianHoanThanh = cv.ThoiGianHoanThanh.ToString(),
+                        ThoiGianHoanThanh = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd"),
                         File = cv.CongVanDinhKem,
                         IDkhac = cv.CongViec.Ten,
                         NoiDungCongViec = cv.NoiDungChitiet,
-                        ThoiHanHoanThanh = cv.ThoiHanHoanThanh.ToString(),
+                        ThoiHanHoanThanh = cv.ThoiHanHoanThanh.Value.ToString("yyyy-MM-dd"),
                         IDNV = hoso.ID,
                         New = cv.New.ToString(),
                         TrangThai = cv.TrangThai.ToString(),
@@ -413,10 +415,10 @@ namespace KL.Controllers
                     {
                         Ten = cv.Ten,
                         ID = cv.ID,
-                        ThoiGianHoanThanh = cv.ThoiGianHoanThanh.ToString(),
+                        ThoiGianHoanThanh = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd"),
                         File = cv.CongVanDinhKem,
                         NoiDungCongViec = cv.NoiDung,
-                        ThoiHanHoanThanh = cv.NgayHoanThanh.ToString(),
+                        ThoiHanHoanThanh = cv.NgayHoanThanh.Value.ToString("yyyy-MM-dd"),
                         IDNV = hoso.ID,
                         New = cv.New.ToString(),
                         TrangThai = cv.TrangThai.ToString(),
