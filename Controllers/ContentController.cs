@@ -69,12 +69,12 @@ namespace KL.Controllers
             }
             else if (ma == 2)
             {
-                foreach (var item in hoso.CongViecPhongs.Where(m => m.HoSoNhanSu.ID == hosoId))
+                foreach (var item in hoso.CongViecPhongs.Where(m => m.TrangThai==click))
 
                 {
                     {
                         item.New = 1;
-                        if (click == 2)
+                        if (click == 2 || click == 5)
                         {
                             if (item.PhanHoi == 0)
                             {
@@ -107,12 +107,12 @@ namespace KL.Controllers
             }
             else if (ma == 3)
             {
-                foreach (var item in hoso.CongViecPhongs.Where(m => m.HoSoNhanSu.ID == hosoId))
+                foreach (var item in hoso.CongViecPhongs.Where(m => m.TrangThai==click))
 
                 {
                     {
                         item.New = 1;
-                        if (click == 2)
+                        if (click == 2 || click == 5)
                         {
                             if (item.PhanHoi == 0)
                             {
@@ -145,12 +145,12 @@ namespace KL.Controllers
             }
             else
             {
-                foreach (var item in hoso.CongViecs.Where(m => m.HoSoNhanSu.ID == hosoId))
+                foreach (var item in hoso.CongViecs.Where(m => m.TrangThai==click))
 
                 {
                     {
                         item.New = 1;
-                        if (click == 2)
+                        if (click == 2 || click == 5)
                         {
                             if (item.PhanHoi == 0)
                             {
@@ -365,14 +365,19 @@ namespace KL.Controllers
                 var th = 1;
                 int slrequest = cv.CongViecCaNhans.Count(m => m.TrangThai == 2);
                 if (cv.PhanHoi != null) th = cv.PhanHoi.Value;
+                var tgian = "";
+                var file = "";
+                if (cv.CongVanDinhKem != null) file = cv.CongVanDinhKem.Skip(cv.CongVanDinhKem.LastIndexOf("\\")).Take(cv.CongVanDinhKem.Length).ToString();
+                if (cv.ThoiGianHoanThanh != null) tgian = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd");
                 if (cv.TrangThai == trangthai)
                 {
                     job = new Job
                     {
                         Ten = cv.Ten,
                         ID = cv.ID,
-                        ThoiGianHoanThanh = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd"),
-                        File = cv.CongVanDinhKem,
+                        ThoiGianHoanThanh = tgian,
+                        File =file,
+                        upload=cv.upload,
                         IDkhac = cv.CongViec.Ten,
                         NoiDungCongViec = cv.NoiDungChitiet,
                         ThoiHanHoanThanh = cv.ThoiHanHoanThanh.Value.ToString("yyyy-MM-dd"),
@@ -408,6 +413,8 @@ namespace KL.Controllers
                 var th = 1;
                 if (cv.PhanHoi != null) th = cv.PhanHoi.Value;
                 if (cv.TrangThai == 2) trangthai1 = "Request";
+                var tgian = "";
+                if (cv.ThoiGianHoanThanh != null) tgian = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd");
                 if (cv.TrangThai == trangthai)
                 {
 
@@ -415,7 +422,8 @@ namespace KL.Controllers
                     {
                         Ten = cv.Ten,
                         ID = cv.ID,
-                        ThoiGianHoanThanh = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd"),
+                        upload=cv.upload,
+                        ThoiGianHoanThanh = tgian,
                         File = cv.CongVanDinhKem,
                         NoiDungCongViec = cv.NoiDung,
                         ThoiHanHoanThanh = cv.NgayHoanThanh.Value.ToString("yyyy-MM-dd"),

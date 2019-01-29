@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,7 +20,7 @@ namespace KL.Controllers
             return View();
         }
         public Smof db = new Smof();
-        
+        public static string userId = "";
         public ActionResult SaveNew(KhPhongModel kh)
         {
             if (kh.newPlans[0].Ten == null) return RedirectToAction("Login", "Login");
@@ -29,7 +30,7 @@ namespace KL.Controllers
             db.SaveChanges();
             var IDNhanSu = db.HoSoNhanSus.Where(m => m.CongViecPhongs.Any(n => n.ID == kh.ID)).FirstOrDefault().ID;
             var hoso = db.HoSoNhanSus.Where(m => m.ID == IDNhanSu).FirstOrDefault();
-            var id = Int32.Parse(db.CongViecCaNhans.Max(m => (m.ID)));
+            var id = (db.CongViecCaNhans.ToList().Count);
             var newPlans = kh.newPlans;
             foreach(var item in newPlans)
             {
@@ -40,7 +41,7 @@ namespace KL.Controllers
                 {
                     ID = id.ToString(),
                     Ten=item.Ten,
-                    ThoiGianHoanThanh=result,
+                    ThoiHanHoanThanh=result,
                     IDCongViecPhong=IDCVPhong,
                     HoSoNhanSu=hoSoNhanSu,
                     NoiDungCongViec = item.Noidung,
@@ -154,13 +155,14 @@ namespace KL.Controllers
         {
             var db = new Smof();
             CongViec cv = new CongViec();
-            var id = db.CongViecs.Count() + 2;
+            var id = db.CongViecs.Count() + 1;
             cv.CongVanDinhKem = file;
             cv.Datecreate = DateTime.Now;
             cv.NoiDung = nd;
+            cv.TrangThai = 1;
             cv.ID = id.ToString();
             CongViecPhong cvp = new CongViecPhong();
-            var idp = db.CongViecPhongs.Count() + 2;
+            var idp = db.CongViecPhongs.Count() + 1;
             cvp.ID = idp.ToString();
             cvp.NoiDungChitiet = nd;
             cvp.CongVanDinhKem = file;
@@ -175,6 +177,84 @@ namespace KL.Controllers
             db.CongViecPhongs.Add(cvp);
             db.SaveChanges();
             return RedirectToAction("Login", "Login");
+        }
+        public ActionResult UploadFiles(HttpPostedFileBase file,string jobId)
+        {
+
+            
+            return RedirectToAction("Login", "Login");
+        }
+        [HttpPost]
+        public ActionResult UploadFile()
+        {
+            // Checking no of files injected in Request object  
+            
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                        }
+                        else
+                        {
+                            fname = file.FileName;
+                        }
+                        var t = Request.Form["jobId"];
+                        var ma = Request.Form["ma"];
+                        fname = Path.Combine(Server.MapPath("~/Uploads/"), fname);
+                        var db = new Smof();
+                        if (ma == "1")
+                        {
+                            if (t == "") t = (db.CongViecCaNhans.Count()).ToString();
+
+                            if (Request.Form.AllKeys.Contains("congvan"))
+                            {
+                                db.CongViecCaNhans.Where(m => m.ID == t).First().CongVanDinhKemCaNhan = fname.ToString();
+                            }
+                            else
+                            {
+                                db.CongViecCaNhans.Where(m => m.ID == t).First().upload = fname.ToString();
+                            }
+                        }
+                        else if(ma=="2")
+                        {
+                            if (t == "") t = (db.CongViecPhongs.Count()).ToString();
+
+                            if (Request.Form.AllKeys.Contains("congvan"))
+                            {
+                                db.CongViecPhongs.Where(m => m.ID == t).First().CongVanDinhKem = fname.ToString();
+                            }
+                            else
+                            {
+                                db.CongViecPhongs.Where(m => m.ID == t).First().upload = fname.ToString();
+                            }
+                        }
+                        
+                        
+                        db.SaveChanges();
+                        file.SaveAs(fname);
+                        
+                    }
+                    return Json("File Uploaded Successfully!");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
         }
     }
 }

@@ -1,6 +1,10 @@
 ﻿@model List<KL.Models.Job>
 
-
+<style type="text/css">
+    .a0{
+        background-color:peachpuff;
+    }
+</style>
 <div id="page-wrapper">
     <div class="row" id="content">
         <div class="col-lg-12">
@@ -20,6 +24,7 @@
                                     <th>Stt</th>
                                     <th>Ten Cong Viec</th>
                                     <th>Noi Dung Tom Tat</th>
+                                    <th>Cong Van Dinh Kem</th>
                                     <th>File Dinh Kem</th>
                                     <th>Thoi Han Hoan Thanh</th>
                                     <th>Thuoc Cong Viec</th>
@@ -36,38 +41,51 @@
                                 @foreach (var cv in Model)
                                 {
 
-                                <tr class="@cv.ID">
-                                    <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                    <td>@cv.Ten</td>
-                                    <td>@cv.NoiDungCongViec</td>
-                                    <td>@cv.File</td>
-                                    <td>@cv.ThoiHanHoanThanh</td>
-                                    <td>@cv.IDkhac</td>
-                                    @{
-                                        var t = cv.jobcn.Count;
-                                        if (cv.jobcn.Count == 0) { t = 1; }
-                                        if (cv.jobcn.Count(m => m.TrangThai == 3) == t)
+                                    <tr class="@cv.ID @("a"+cv.New)" >
+                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                        <td>@cv.Ten</td>
+                                        <td>@cv.NoiDungCongViec</td>
+
+                                        <td><a href="@cv.File"><img width="20" height="20" src="~/Assets/file.png" /></a></td>
+                                        @if (cv.upload !=null)
                                         {
-                                            <td>100%</td>
-                                            <td><button class="report">Report</button></td>
+                                            <td><a href="@cv.upload"><img width="20" height="20" src="~/Assets/file.png" /></a></td>
                                         }
                                         else
                                         {
-                                            <td>@(cv.jobcn.Count(m => m.TrangThai == 3)*100 / t)%</td>
-                                            <td></td>
+                                            <td>
+                                                <span>File</span>
+                                                <input type="file" class="file" name="file" size="10" />
+                                                <input class="uploadbutton" type="button" value="Upload" />
+                                            </td>
                                         }
-                                    }
+                                        <td>@cv.ThoiHanHoanThanh</td>
+                                        <td>@cv.IDkhac</td>
+                                        @{
+                                            var t = cv.jobcn.Count;
+                                            if (cv.jobcn.Count == 0) { t = 1; }
+                                            if (cv.jobcn.Count(m => m.TrangThai == 3) == t)
+                                            {
+                                                <td>100%</td>
+                                                <td><button class="report">Report</button></td>
+                                            }
+                                            else
+                                            {
+                                                <td>@(cv.jobcn.Count(m => m.TrangThai == 3) * 100 / t)%</td>
+                                                <td></td>
+                                            }
+                                        }
 
-                                    @if (cv.slrequest > 0)
-                                    {
-                                        <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest"><button style="background-color:aqua;" id="add">see/add plan</button></td>
-                                    }
-                                    else
-                                    {
-                                        <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest"><button id="add">see/add plan</button></td>
-                                    }
+                                        @if (cv.slrequest > 0)
+                                        {
+                                            <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest"><button style="background-color:aqua;" id="add">see/add plan</button></td>
+                                        }
+                                        else
+                                        {
+                                            <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest"><button id="add">see/add plan</button></td>
+                                        }
 
-                                </tr>
+                                    </tr>
                                 }
                             </tbody>
 
@@ -83,13 +101,35 @@
         <!-- /.col-lg-12 -->
         @db.SaveChanges();
         <script>
+            $(".uploadbutton").click(function () {
+                var idrows = $(this).closest('tr').attr('class')[0];
+                var fileUpload = $(".file").get(0);
+                var files = fileUpload.files[0];
+                var fileData = new FormData();
+                fileData.append(files.name, files);
+                fileData.append('jobId', idrows);
+                fileData.append('ma', "2");
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Job/UploadFile/",
+                    enctype: 'multipart/form-data',
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function () {
+                        alert("Data Uploaded: ");
+                    }
+                });
+            });
             $('.report').click(function () {
                 alert("report");
                 var idrow = $(this).closest('tr');
 
                 $(idrow).remove();
                 $.ajax({
-                    url: "/Job/Report?idJob=" + idrow.attr('class')+"&ma=2",
+                    url: "/Job/Report?idJob=" + idrow.attr('class')[0] + "&ma=2",
                     type: "POST",
                     success: function () {
                         tt = refresh();
@@ -99,12 +139,12 @@
             var myModal = $('#myModal').html();
             var planIndex;
 
-           
+
             var t = myModal;
             var modal = document.getElementById('myModal');
             $('button#add').click(function () {
 
-                planIndex = $(this).closest('tr').attr('class');
+                planIndex = $(this).closest('tr').attr('class')[0];
                 $.ajax({
                     url: "/Content/Modal?jobId=" + planIndex,
                     type: "POST",
@@ -130,10 +170,3 @@
 
 </div>
 <!-- Modal content -->
-
-
-
-
-
-
-

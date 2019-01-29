@@ -36,7 +36,15 @@
                                         <td>@item.Ten</td>
                                         <td>@item.NoiDungChitiet</td>
                                         <td>@item.HoSoNhanSu.TenNhanSu</td>
-                                        <td>@item.CongVanDinhKem</td>
+                                        @if (item.upload != null)
+                                        {
+
+                                            <td><a href="@item"><img width="20" height="20" src="~/Assets/file.png" /></a></td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
                                         <td>@item.ThoiHanHoanThanh</td>
                                         <td>@item.ThoiGianHoanThanh</td>
                                         <td>
@@ -88,14 +96,14 @@
     });
     $(".request").click(function () {
         t = $(this).closest("tr").attr("class");
-
+        $(this).closest("td").replaceWith("<td><p style='color:red;'>success</p>");
         $.ajax({
             url: "/Job/SendRequest",
-            data: { idJob: t, request: "",ma:3 },
+            data: { idJob: t, request: "", ma: 3 },
             type: "POST",
             success: function () {
                 $('#phanHoi').hide();
-                $(this).closest("td").replaceWith("<td><p style='color:red;'>success</p>");
+               
             }
         });
     });
@@ -116,7 +124,7 @@
 
         $.ajax({
             url: "/Job/SendRequest",
-            data: { request: request, idJob: t, ma:3},
+            data: { request: request, idJob: t, ma: 3 },
             type: "POST",
             success: function () {
                 $('#phanHoi').hide();

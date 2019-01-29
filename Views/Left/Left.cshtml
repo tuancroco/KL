@@ -97,7 +97,7 @@
         function refreshPr() {
                 $.ajax({
                     type: "POST",
-                    url: "/Left/ShowLeftNhanVien?hsId=@Model.ID",
+                    url: "/Left/ShowLeftCaNhan?Id=@Model.ID",
             success: function (data) {
                 $('#leftCn').empty();
                 $('#leftCn').append($(data));

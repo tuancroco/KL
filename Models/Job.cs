@@ -12,6 +12,7 @@ namespace KL.Models
         public string ID { get; set; }
         public string ThoiGianHoanThanh { get; set; }
         public string File { get; set; }
+        public string upload { get; set; }
         public string NoiDungCongViec { get; set; }
         public string IDkhac { get; set; }
         public string ThoiHanHoanThanh { get; set; }

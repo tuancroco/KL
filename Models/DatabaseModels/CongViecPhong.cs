@@ -55,6 +55,8 @@ namespace KL.Models.DatabaseModels
 
         public int? New { get; set; }
 
+        public string upload { get; set; }
+
         public virtual CongViec CongViec { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

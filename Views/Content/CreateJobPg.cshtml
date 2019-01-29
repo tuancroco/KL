@@ -57,7 +57,7 @@
                                 <td><input id="tgian" type="date" /></td>
                                 <td>
                                     <span>File</span>
-                                    <input type="file" id="file" name="file" size="10" />
+                                    <input type="file" class="file" name="file" size="10" />
                                     <input id="uploadbutton" type="button" value="Upload" />
                                 </td>
                             </tr>
@@ -95,16 +95,33 @@
             var ten = $("#ten").val();
             var nd = $("#tyeu").val();
             var filename = $("#file").val();
-            {
+            var idrows = $(this).closest('tr').attr('class');
+            var fileUpload = $(".file").get(0);
+            var files = fileUpload.files[0];
+            var fileData = new FormData();
+            fileData.append(files.name, files);
+            fileData.append('jobId', "");
+            fileData.append('congvan', "");
+            fileData.append('ma', "2");
                 $.ajax({
                     url: '/Job/NewJob/',
                     type: 'POST',   
                     data: { tp: tp, pb: pb, ten: ten, tg: tg, nd: nd, file: filename },
 
                     success: function (response) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/Job/UploadFile/",
+                            enctype: 'multipart/form-data',
+                            contentType: false, // Not to set any content header  
+                            processData: false, // Not to process data  
+                            data: fileData,
+                            success: function () {
+                                alert("Data Uploaded: ");
+                            }
+                        });
                     }
                 });
-            }
 
         });
         $(document).click(function (event) {
@@ -118,19 +135,11 @@
             $('#myModal').hide();
         });
 
-        $("#uploadbutton").click(function () {
-            var filename = $("#file").val();
-            $.ajax({
-                type: "POST",
-                url: "",
-                enctype: 'multipart/form-data',
-                data: {
-                    file: filename
-                },
-                success: function () {
-                    alert("Data Uploaded: ");
-                }
-            });
+        $(".uploadbutton").click(function () {
+            
+
+
+            
         });
     </script>
 </div>

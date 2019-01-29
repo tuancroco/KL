@@ -50,6 +50,8 @@ namespace KL.Models.DatabaseModels
 
         public string NoiDungPhanHoi { get; set; }
 
+        public string upload { get; set; }
+
         public virtual CongViecPhong CongViecPhong { get; set; }
 
         public virtual HoSoNhanSu HoSoNhanSu { get; set; }
