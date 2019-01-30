@@ -56,7 +56,6 @@ namespace KL.Controllers
             userId = Id;
             return View();
         }
-        
         public ActionResult ShowSearch(Search search)
         {
             List<Job> list = new List<Job>();
@@ -106,6 +105,16 @@ namespace KL.Controllers
             var x = list[0].ThoiHanHoanThanh.CompareTo(t.fromdate.ToString("yyyy-MM-dd"));
             var c= list[0].ThoiHanHoanThanh.CompareTo(t.todate.ToString("yyyy-MM-dd"));
             list = list.Where(m => m.ThoiHanHoanThanh.CompareTo(t.fromdate.ToString("yyyy-MM-dd")) >=0 && m.ThoiHanHoanThanh.CompareTo(t.todate.ToString("yyyy-MM-dd"))<=0).ToList();
+            var count= list.Count;
+            var number = t.number == 0 ? 1 : t.number;
+            if (t.count < count) count = t.count;
+            if (t.count == 0) count = 5;
+            ViewBag.count = count;
+            ViewBag.number = t.number;
+            var search = t.search == null ? "" : t.search;
+            ViewBag.search = t.search==null?"":t.search;
+            ViewBag.pages = Math.Ceiling((decimal)list.Count / count);
+            //list = list.Where(m => m.Ten.Contains(search)).ToList();
             return View(list);
         }
     }

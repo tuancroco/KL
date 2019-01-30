@@ -2,16 +2,15 @@
 @model List<KL.Models.DatabaseModels.CongViecPhong>
 
 <link href="~/Assets/dist/css/Style.css" rel="stylesheet" />
-
+<link href="~/Assets/dist/css/table.css" type="text/css" rel="stylesheet" />
 <div id="page-wrapper">
     <div class="row" id="content">
         <div class="col-lg-12">
-            <h1 class="page-header">Dashboard</h1>
+            <h1 class="page-header">Công Việc Chờ Xác Nhận (@Model.Count)</h1>
 
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
-                    Cong Viec Dang Lam @Model.Count
                 </div>
                 <div class="card-body toggle-on" id="0">
                     <div class="table-responsive">
@@ -51,8 +50,8 @@
                                             @{
                                                 if (item.TrangThai == 2)
                                                 {
-                                                    <button class="request">Request</button>
-                                                    <button class="reject">Reject</button>
+                                                    <button class="request btn">Request</button>
+                                                    <button class="reject btn">Reject</button>
                                                 }
                                                 else if (item.TrangThai == 3)
                                                 {

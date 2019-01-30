@@ -173,12 +173,15 @@
   <ItemGroup>
     <Content Include="Assets\dist\css\sb-admin-2.css" />
     <Content Include="Assets\dist\css\sb-admin-2.min.css" />
+    <Content Include="Assets\dist\css\table.css" />
     <Content Include="Assets\dist\js\modal.js" />
     <Content Include="Assets\dist\js\taskShow.js" />
     <Content Include="Assets\dist\js\sb-admin-2.js" />
     <Content Include="Assets\dist\js\sb-admin-2.min.js" />
     <Content Include="Assets\favicon.ico" />
     <Content Include="Assets\file.png" />
+    <Content Include="Assets\home-icon.png" />
+    <Content Include="Assets\image.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

@@ -5,6 +5,12 @@
     var db = new Smof();
 
 }
+<style type="text/css">
+    .f0 {
+        background-color: peachpuff;
+    }
+</style>
+<link href="~/Assets/dist/css/table.css" type="text/css" rel="stylesheet" />
 <div id="page-wrapper">
     <div class="row" id="content">
         <div class="col-lg-12">
@@ -23,6 +29,7 @@
                                     <th>Stt</th>
                                     <th>Ten Cong Viec</th>
                                     <th>Noi Dung Tom Tat</th>
+                                    <th>Cong Van Dinh Kem</th>
                                     <th>File Dinh Kem</th>
                                     <th>Thoi Han Hoan Thanh</th>
                                     <th>Thuoc Cong Viec</th>
@@ -33,36 +40,34 @@
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
-                                    if (cv.New == "0")
+                                <tr class="@cv.ID @("f"+cv.New)">
+                                    <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                    <td>@cv.Ten</td>
+                                    <td>@cv.NoiDungCongViec</td>
+                                    @if (cv.File!="" )
                                     {
-                                        <tr class="@cv.ID" style="background-color:lightgreen;">
-                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                            <td>@cv.Ten</td>
-                                            <td>@cv.NoiDungCongViec</td>
-                                            <td>
-                                                @cv.File
-                                            </td>
-                                            <td>@cv.ThoiHanHoanThanh</td>
-                                            <td>@cv.IDkhac</td>
-                                            <td>@cv.ThoiGianHoanThanh</td>
 
-                                        </tr>
+                                        <td><a href="@("\\Uploads\\"+cv.File)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.File</p></a></td>
                                     }
                                     else
                                     {
-                                        <tr class="@cv.ID">
-                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                            <td>@cv.Ten</td>
-                                            <td>@cv.NoiDungCongViec</td>
-                                            <td>
-                                                @cv.File
-                                            </td>
-                                            <td>@cv.ThoiHanHoanThanh</td>
-                                            <td>@cv.IDkhac</td>
-                                            <td>@cv.ThoiGianHoanThanh</td>
-
-                                        </tr>
+                                        <td></td>
                                     }
+                                    @if (cv.upload!="")
+                                    {
+
+                                        <td><a href="@("\\Uploads\\"+cv.upload)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.upload</p></a></td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td>@cv.ThoiHanHoanThanh</td>
+                                    <td>@cv.IDkhac</td>
+                                    <td>@cv.ThoiGianHoanThanh</td>
+
+                                </tr>
+
                                 }
                             </tbody>
 
@@ -86,7 +91,7 @@
 
             $(idrow).remove();
             $.ajax({
-                url: "/Job/Report?idJob=" + idrow.attr('class'),
+                url: "/Job/Report?idJob=" + idrow.attr('class')[0],
                 type: "POST",
                 success: function () {
                 }

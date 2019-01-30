@@ -2,7 +2,11 @@
 <div id="left">
     <div id="wrapper">
         <!-- Navigation -->
-
+        <link href="~/Assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/Assets/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+        <link href="~/Assets/dist/css/sb-admin-2.css" rel="stylesheet">
+        <link href="~/Assets/vendor/morrisjs/morris.css" rel="stylesheet">
+        <link href="~/Assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -11,14 +15,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">SmartOffice</a>
+                <a class="navbar-brand" href=""><img src="~/Assets/home-icon.png" width="60" height="30" /></a>
             </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" id="task" data-toggle="dropdown" href="#">
                         <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
-                        @{Html.RenderAction("ShowTaskPercent", "Events", new {userID=Model.ID });}
+                    @{Html.RenderAction("ShowTaskPercent", "Events", new { userID = Model.ID });}
                 </li>
                 <li class="dropdown" id="noti">
                 </li>
@@ -87,10 +91,11 @@
                                 type: "POST",
                                 url: "/Left/ShowLeftTruongPhong/",
                                 data: {Id:@Model.ID},
-                                            success: function (data) {
+                                success: function (data) {
 
                                     $('#leftPg').empty();
                                     $('#leftPg').append($(data));
+                                    $('#leftPg').addClass("active");
                                     }
                             });
         };
@@ -101,7 +106,7 @@
             success: function (data) {
                 $('#leftCn').empty();
                 $('#leftCn').append($(data));
-
+                $('#leftCn').addClass("active");
                     }
                 });
         };
@@ -112,7 +117,7 @@
             success: function (data) {
                 $('#lanhdao').empty();
                 $('#lanhdao').append($(data));
-
+                $('#lanhdao').addClass("active");
                     }
                 });
         };
@@ -123,13 +128,12 @@
             success: function (data) {
                 $('#vtleft').empty();
                 $('#vtleft').append($(data));
-
+                $('#vtleft').addClass("active");
                     }
                 });
         };
 
     </script>
 
-
-
+    
 </div>

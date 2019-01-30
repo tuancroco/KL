@@ -1,16 +1,15 @@
 ﻿@model List<List<int>>
-    <a><i class="fa fa-files-o fa-fw"></i> Công Việc Đến <span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">
-        <li>
-            <a id="newVt" >Công Việc Mới @Model[0][0] (@Model[0][1])</a>
-        </li>
-        <li>
-            <a id="inProVt">Công Việc Đang Làm @Model[1][0] (@Model[1][1])</a>
-        </li>
-        <li>
-            <a id="donevt">Công Việc Đã Xong @Model[3][0] (@Model[3][1])</a>
-        </li>
-    </ul>
+<a><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc <span class="fa arrow"></span></a>
+<ul class="nav nav-second-level">
+    <li>
+        <a id="newVt">Công Việc Mới @Model[0][0] (@Model[0][1])</a>
+    </li>
+    <li>
+        <a id="donevt">Công Việc Đã Xong @Model[3][0] (@Model[3][1])</a>
+    </li>
+
+</ul>
+
 
 @{
 
@@ -18,7 +17,7 @@
 }
 <script>
     $("#newVt").click(function () {
-        var tt = refreshvt();                   
+        var tt = refreshvt();
         $.ajax({
             type: "POST",
             url: "/Content/ShowContent?hosoId=@t&ma=4",
@@ -31,7 +30,7 @@
 
         });
     $("#donevt").click(function () {
-        var tt = refreshvt();                   
+        var tt = refreshvt();
         $.ajax({
             type: "POST",
             url: "/Content/ShowDone?hosoId=@t&ma=4",
@@ -46,7 +45,7 @@
 
 
                             $("#inProVt").click(function () {
-                                var tt = refreshvt();              
+                                var tt = refreshvt();
         $.ajax({
             type: "POST",
 
@@ -61,3 +60,11 @@
 
 </script>
 
+<script src="~/Assets/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Assets/vendor/metisMenu/metisMenu.min.js"></script>
+<script src="~/Assets/vendor/raphael/raphael.min.js"></script>
+<script src="~/Assets/vendor/morrisjs/morris.min.js"></script>
+<script src="~/Assets/vendor/morrisjs/morris.js"></script>
+<script src="~/Assets/dist/js/sb-admin-2.js"></script>
+<script src="~/Assets/dist/js/taskShow.js"></script>

@@ -2,6 +2,7 @@
 using KL.Models.DatabaseModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -324,12 +325,15 @@ namespace KL.Controllers
             var db = new Smof();
             foreach (var cv in hoso.CongViecCaNhans)
             {
-                var trangthai1 = "";
-                var phooi = "";
                 var th = 1;
                 if (cv.PhanHoi != null) th = cv.PhanHoi.Value;
-                if (cv.TrangThai == 2) trangthai1 = "Request";
                 var tgian = "";
+                var file = "";
+                var upload = "";
+
+                if (cv.upload != null)
+                    upload = Path.GetFileName(cv.upload);
+                if (cv.CongVanDinhKemCaNhan != null) file = Path.GetFileName(cv.CongVanDinhKemCaNhan);
                 if (cv.ThoiGianHoanThanh != null) tgian = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd");
                 if (cv.TrangThai == trangthai)
                 {
@@ -339,7 +343,7 @@ namespace KL.Controllers
                         Ten = cv.Ten,
                         ID = cv.ID,
                         ThoiGianHoanThanh = tgian,
-                        File = cv.CongVanDinhKemCaNhan,
+                        File = file,
                         IDkhac = cv.CongViecPhong.Ten,
                         NoiDungCongViec = cv.NoiDungCongViec,
                         ThoiHanHoanThanh = cv.ThoiHanHoanThanh.Value.ToString("yyyy-MM-dd"),
@@ -350,14 +354,14 @@ namespace KL.Controllers
                         PhanHoi = cv.NoiDungPhanHoi,
                         TrangThaiPh = th,
                         IDB=cv.IDCongViecPhong,
-                        vitriCv=1
+                        vitriCv=1,
+                        upload=upload
                     });
                     cv.New = 1;
                 }
                     
             }
             db.SaveChanges();
-            
 
             foreach (var cv in hoso.CongViecPhongs)
             {
@@ -367,7 +371,10 @@ namespace KL.Controllers
                 if (cv.PhanHoi != null) th = cv.PhanHoi.Value;
                 var tgian = "";
                 var file = "";
-                if (cv.CongVanDinhKem != null) file = cv.CongVanDinhKem.Skip(cv.CongVanDinhKem.LastIndexOf("\\")).Take(cv.CongVanDinhKem.Length).ToString();
+                var upload = "";
+                
+                if(cv.upload!=null) upload = Path.GetFileName(cv.upload);
+                if (cv.CongVanDinhKem != null) file = Path.GetFileName(cv.CongVanDinhKem);
                 if (cv.ThoiGianHoanThanh != null) tgian = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd");
                 if (cv.TrangThai == trangthai)
                 {
@@ -377,7 +384,7 @@ namespace KL.Controllers
                         ID = cv.ID,
                         ThoiGianHoanThanh = tgian,
                         File =file,
-                        upload=cv.upload,
+                        upload=upload,
                         IDkhac = cv.CongViec.Ten,
                         NoiDungCongViec = cv.NoiDungChitiet,
                         ThoiHanHoanThanh = cv.ThoiHanHoanThanh.Value.ToString("yyyy-MM-dd"),
@@ -414,6 +421,12 @@ namespace KL.Controllers
                 if (cv.PhanHoi != null) th = cv.PhanHoi.Value;
                 if (cv.TrangThai == 2) trangthai1 = "Request";
                 var tgian = "";
+                var file = "";
+                var upload = "";
+
+                if (cv.upload != null)
+                    upload = Path.GetFileName(cv.upload);
+                if (cv.CongVanDinhKem != null) file = Path.GetFileName(cv.CongVanDinhKem);
                 if (cv.ThoiGianHoanThanh != null) tgian = cv.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd");
                 if (cv.TrangThai == trangthai)
                 {
@@ -422,9 +435,9 @@ namespace KL.Controllers
                     {
                         Ten = cv.Ten,
                         ID = cv.ID,
-                        upload=cv.upload,
+                        upload=upload,
                         ThoiGianHoanThanh = tgian,
-                        File = cv.CongVanDinhKem,
+                        File = file,
                         NoiDungCongViec = cv.NoiDung,
                         ThoiHanHoanThanh = cv.NgayHoanThanh.Value.ToString("yyyy-MM-dd"),
                         IDNV = hoso.ID,

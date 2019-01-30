@@ -10,6 +10,7 @@
 
 
 }
+<link href="~/Assets/dist/css/table.css" type="text/css" rel="stylesheet" />
 <div id="myModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -52,8 +53,8 @@
                                     @{
                                         if (item.TrangThai == 2)
                                         {
-                                            <button class="request">Request</button>
-                                            <button class="reject">Reject</button>
+                                            <button class="request btn btn-success">Request</button>
+                                            <button class="reject btn btn-danger">Reject</button>
                                         }
                                         else if (item.TrangThai == 3)
                                         {
@@ -79,7 +80,7 @@
                         </tbody>
 
                     </table>
-                    <button id="addTask">Add task</button>
+                    <button id="addTask" class="btn btn-block">Add task</button>
                 </div>
             </div>
         </div>

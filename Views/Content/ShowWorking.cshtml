@@ -3,10 +3,16 @@
 @{
     var db = new Smof();
 }
+<style type="text/css">
+    .f0{
+        background-color:peachpuff;
+    }
+</style>
+<link href="~/Assets/dist/css/table.css" type="text/css" rel="stylesheet" />
 <div id="page-wrapper">
     <div class="row" id="content">
         <div class="col-lg-12">
-            <h1 class="page-header">Dashboard</h1>
+            <h1 class="page-header">Công Việc Đang Làm</h1>
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
@@ -35,78 +41,58 @@
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
-                                    if (cv.New == "0")
+                                <tr class="@cv.ID @("f"+cv.New)">
+                                    <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                    <td>@cv.Ten</td>
+                                    <td>@cv.NoiDungCongViec</td>
+                                    @if (cv.File != "")
                                     {
-                                        <tr class="@cv.ID" style="background-color:greenyellow">
-                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                            <td>@cv.Ten</td>
-                                            <td>@cv.NoiDungCongViec</td>
-                                            <td><a href="@cv.File"><img width="20" height="20" src="~/Assets/file.png" /></a></td>
-                                            @if (cv.upload != null)
-                                            {<td><a href="@cv.upload"><img width="20" height="20"src="~/Assets/file.png"/></a></td>}
-                                            else if (cv.vitriCv == 4) { }
-                                            else
-                                            {
-                                                <td>
-                                                    <span>File</span>
-                                                    <input type="file" id="file" name="file" size="10" />
-                                                    <input id="uploadbutton" type="button" value="Upload" />
-                                                </td>
-                                            }
-                                            <td>@cv.ThoiHanHoanThanh</td>
-                                            <td>@cv.IDkhac</td>
-                                            @if (cv.vitriCv == 4) { }
-                                            else
-                                            {
-                                                <td><button class="pHoi">Phan Hoi</button></td>
-                                                <td><button class="report">report</button></td>
-                                            }
-                                        </tr>
+
+                                        <td><a href="@("\\Uploads\\"+cv.File)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.File</p></a></td>
                                     }
                                     else
                                     {
-
-                                        <tr class="@cv.ID">
-                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                            <td>@cv.Ten</td>
-                                            <td>@cv.NoiDungCongViec</td>
-                                            <td><a href="@cv.File"><img width="20" height="20"src="~/Assets/file.png" /></a></td>
-                                            @if (cv.upload != null)
-                                            {
-                                               
-                                                <td><a href="@cv.upload"><img width="20" height="20" src="~/Assets/file.png" /></a></td>
-                                            }
-                                            else if (cv.vitriCv != 4)
-                                            {
-                                                <td>
-                                                    <span>File</span>
-                                                    <input type="file" class="file" name="file" size="10" />
-                                                    <input class="uploadbutton" type="button" value="Upload" />
-                                                </td>
-                                            }
-                                            <td>@cv.ThoiHanHoanThanh</td>
-                                            <td>@cv.IDkhac</td>
-                                            @if (cv.vitriCv == 4)
-                                            {
-
-                                            }
-                                            else if (cv.slPh > 0)
-                                            {
-                                                <td><button class="pHoi">Phan Hoi</button></td>
-                                            }
-                                            else
-                                            {
-                                                <td>Khong co phan hoi</td>
-                                            }
-
-                                            @if (cv.vitriCv == 4)
-                                            { }
-                                            else
-                                            {
-                                                <td><button class="report">report</button></td>
-                                            }
-                                        </tr>
+                                        <td></td>
                                     }
+                                    @if (cv.upload != "")
+                                    {
+
+                                        <td><a href="@("\\Uploads\\" + cv.upload)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.upload</p></a></td>
+                                    }
+                                    else if (cv.vitriCv != 4)
+                                    {
+                                        <td>
+                                            <span>File</span>
+                                            <input type="file" class="file" name="file" size="10" />
+                                            <input class="uploadbutton btn btn-warning" type="button" value="Upload" />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td>@cv.ThoiHanHoanThanh</td>
+                                    <td>@cv.IDkhac</td>
+                                    @if (cv.vitriCv == 4)
+                                    {
+
+                                    }
+                                    else if (cv.slPh > 0)
+                                    {
+                                        <td><button class="pHoi btn btn-success">Phan Hoi</button></td>
+                                    }
+                                    else
+                                    {
+                                        <td>Khong co phan hoi</td>
+                                    }
+
+                                    @if (cv.vitriCv == 4)
+                                    { }
+                                    else
+                                    {
+                                        <td><button class="report btn btn-danger">report</button></td>
+                                    }
+                                </tr>
                                 }
                             </tbody>
 
@@ -123,9 +109,9 @@
     </div>
     <script>
         $(".uploadbutton").click(function () {
-            var idrows = $(this).closest('tr').attr('class');
+            var idrows = $(this).closest('tr').attr('class')[0];
             var fileUpload = $(".file").get(0);
-            var files = fileUpload.files[0];  
+            var files = fileUpload.files[0];
             var fileData = new FormData();
             fileData.append(files.name, files);
             fileData.append('jobId', idrows);
@@ -136,21 +122,21 @@
                 type: "POST",
                 url: "/Job/UploadFile/",
                 enctype: 'multipart/form-data',
-                contentType: false, // Not to set any content header  
-                processData: false, // Not to process data  
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
                 data: fileData,
-            success: function () {
-                alert("Data Uploaded: ");
-            }
-        });
+                success: function () {
+                    alert("Data Uploaded: ");
+                }
+            });
         });
         $('.report').click(function () {
             alert("report");
             var idrow = $(this).closest('tr');
-            
+
             $(idrow).remove();
             $.ajax({
-                url: "/Job/Report?idJob=" + idrow.attr('class')+"&ma=1",
+                url: "/Job/Report?idJob=" + idrow.attr('class')[0] + "&ma=1",
                 type: "POST",
                 success: function () {
                 }
@@ -159,7 +145,7 @@
         $('.pHoi').click(function () {
             var idrow = $(this).closest('tr');
             $.ajax({
-                url: "/Job/GetPHoi?idJob=" + idrow.attr('class'),
+                url: "/Job/GetPHoi?idJob=" + idrow.attr('class')[0],
                 type: "POST",
                 success: function (data) {
                     $("#phoicn").replaceWith($(data));

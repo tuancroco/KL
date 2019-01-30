@@ -4,13 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style type="text/css">
-    .t1{
-        background-color:papayawhip;
+    .t1 {
+        background-color: papayawhip;
     }
-    .t2{
-        background-color:palegoldenrod;
+
+    .t2 {
+        background-color: palegoldenrod;
     }
 </style>
+<link href="~/Assets/dist/css/table.css" type="text/css" rel="stylesheet" />
 <h2>ShowSearch</h2>
 <div id="page-wrapper">
     <div class="row" id="content">
@@ -20,7 +22,7 @@
                 <div class="card-header">
                     <i class="fas fa-table"></i>
                     Ket qua tim kiem @Model.Count
-                    
+
                 </div>
 
                 <div class="card-body " id="toggle-ontable">
@@ -29,79 +31,36 @@
                             <thead>
                                 <tr>
                                     <th>Stt</th>
-                                    <th>Ten Cong Viec</th>
-                                    <th>Noi Dung Tom Tat</th>
-                                    <th>File Dinh Kem</th>
-                                    <th>Thoi Han Hoan Thanh</th>
-                                    <th>Thuoc Cong Viec</th>
-                                    <th>Phan Hoi</th>
+                                    <th>Tên Công Việc</th>
+                                    <th>Nội Dung Tóm Tắt</th>
+                                    <th>Công Văn Đính Kèm</th>
+                                    <th>File Đính Kèm</th>
+                                    <th>Thời Gian Hoàn Thành</th>
+                                    <th>Phản Hồi</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
-                                    if (cv.New == "0")
-                                    {
-                                        <tr class="@cv.ID @('t'+cv.vitriCv)" style="background-color:greenyellow">
-                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                            <td>@cv.Ten</td>
-                                            <td>@cv.NoiDungCongViec</td>
-                                            @if (cv.vitriCv == 4) { }
-                                            else
-                                            {
-                                                <td>
-                                                    <span>File</span>
-                                                    <input type="file" id="file" name="file" size="10" />
-                                                    <input id="uploadbutton" type="button" value="Upload" />
-                                                </td>
-                                            }
-                                            <td>@cv.ThoiHanHoanThanh</td>
-                                            <td>@cv.IDkhac</td>
-                                            @if (cv.vitriCv == 4) { }
-                                            else
-                                            {
-                                                <td><button class="pHoi">Phan Hoi</button></td>
-                                            }
-                                        </tr>
-                                    }
-                                    else
-                                    {
-
-                                        <tr class="@cv.ID @('t'+cv.vitriCv.ToString())">
-                                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                            <td>@cv.Ten</td>
-                                            <td>@cv.NoiDungCongViec</td>
-                                            @if (cv.vitriCv != 4)
-                                            {
-                                                <td>
-                                                    <span>File</span>
-                                                    <input type="file" id="file" name="file" size="10" />
-                                                    <input id="uploadbutton" type="button" value="Upload" />
-                                                </td>
-                                            }
-                                            <td>@cv.ThoiHanHoanThanh</td>
-                                            <td>@cv.IDkhac</td>
-                                            @if (cv.vitriCv == 4)
-                                            {
-
-                                            }
-                                            else if (cv.slPh > 0)
-                                            {
-                                                <td><button class="pHoi">Phan Hoi</button></td>
-                                            }
-                                            else
-                                            {
-                                                <td>Khong co phan hoi</td>
-                                            }
-
-                                            @if (cv.vitriCv == 4)
-                                            { }
-                                            else
-                                            {
-                                            }
-                                        </tr>
-                                    }
+                                    <tr class="@cv.ID @('t'+cv.vitriCv)" >
+                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                        <td>@cv.Ten</td>
+                                        <td>@cv.NoiDungCongViec</td>
+                                        <td>@cv.File</td>
+                                        <td>
+                                            <span>File</span>
+                                            <input type="file" id="file" name="file" size="10" />
+                                            <input id="uploadbutton" type="button" value="Upload" class="btn" />
+                                        </td>
+                                        <td>@cv.ThoiHanHoanThanh</td>
+                                        <td>@cv.IDkhac</td>
+                                        @if (cv.vitriCv == 4) { }
+                                        else
+                                        {
+                                            <td><button class="pHoi btn">Phan Hoi</button></td>
+                                        }
+                                    </tr>
                                 }
                             </tbody>
 
@@ -118,19 +77,19 @@
     <script>
         $("#uploadbutton").click(function () {
             var filename = $("#file").val();
-        $.ajax({
-            type: "POST",
-            url: "",
-            enctype: 'multipart/form-data',
-            data: {
-                file: filename
-            },
-            success: function () {
-                alert("Data Uploaded: ");
-            }
+            $.ajax({
+                type: "POST",
+                url: "",
+                enctype: 'multipart/form-data',
+                data: {
+                    file: filename
+                },
+                success: function () {
+                    alert("Data Uploaded: ");
+                }
+            });
         });
-        });
-        
+
         $('.pHoi').click(function () {
             var idrow = $(this).closest('tr').attr('class')[0];
             $.ajax({
@@ -144,4 +103,4 @@
         });
     </script>
 </div>
-<div  id="phoicn"></div>
+<div id="phoicn"></div>

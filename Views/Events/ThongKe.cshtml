@@ -3,6 +3,20 @@
     ViewBag.Title = "ThongKe";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Assets/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Assets/vendor/metisMenu/metisMenu.min.js"></script>
+<script src="~/Assets/vendor/raphael/raphael.min.js"></script>
+<script src="~/Assets/vendor/morrisjs/morris.min.js"></script>
+<script src="~/Assets/vendor/morrisjs/morris.js"></script>
+<script src="~/Assets/dist/js/sb-admin-2.js"></script>
+<script src="~/Assets/dist/js/taskShow.js"></script>
+<link href="~/Assets/dist/css/table.css" type="text/css" rel="stylesheet" />
+<link href="~/Assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/Assets/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<link href="~/Assets/dist/css/sb-admin-2.css" rel="stylesheet">
+<link href="~/Assets/vendor/morrisjs/morris.css" rel="stylesheet">
+<link href="~/Assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <div id="wrapper">
     <!-- Navigation -->
 
@@ -35,20 +49,33 @@
 </div>
 <div id="page-wrapper">
     <div class="row" id="content">
-        <div class="col-lg-12">
-            <div class="form-group row">
-                <label for="" class="col-sm-2 col-form-label">From Date</label>
-                <div class="col-sm-3">
-                    <input type="date" class="form-control" id="fromDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
-                </div>
-                <label for="" class="col-sm-2 col-form-label ">To Date</label>
-                <div class="col-sm-3">
-                    <input type="date" class="form-control" id="toDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-6">
+                <label for="" class="col-lg-3 col-form-label ">Search:</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" id="search" value="" placeholder="search....">
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-sm-2" for="sel1">Loai Cong Viec:</label>
-                <div class="col-sm-3">
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <label for="" class="col-lg-3 col-form-label">From Date</label>
+                <div class="col-lg-5">
+                    <input type="date" class="form-control" id="fromDate" value=@DateTime.Now.ToString(" yyyy-MM-dd")>
+                </div>
+
+            </div>
+            <div class="col-lg-6">
+                <label for="" class="col-lg-3 col-form-label ">To Date</label>
+                <div class="col-lg-5">
+                    <input type="date" class="form-control" id="toDate" value=@DateTime.Now.ToString(" yyyy-MM-dd")>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <label class="col-lg-3" for="sel1">Loai Cong Viec:</label>
+                <div class="col-lg-5">
                     <select name="Loai CV" id="loaiCv">
                         <option value="6">--All--</option>
                         <option value="1">CV Ca Nhan</option>
@@ -56,9 +83,11 @@
                         <option value="3">CVan</option>
                     </select>
                 </div>
-                <label class="col-sm-2" for="sel1">Trang Thai CV:</label>
-                <div class="col-sm-3">
-                    <select name="" id="ttCv">
+            </div>
+            <div class="col-lg-6">
+                <label class="col-lg-3" for="sel1">Trang Thai CV:</label>
+                <div class="col-lg-5" >
+                    <select class="dropdown dropbtn" name="" id="ttCv">
                         <option value="6">--All--</option>
                         <option value="0">CV Moi</option>
                         <option value="1">CV Dang Lam</option>
@@ -67,16 +96,35 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" value="thong ke">Thong ke</button>
-            <div class="show">
-
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <label for="" class="col-lg-3  ">Go to page</label>
+                <div class="col-lg-2">
+                    <input placeholder="type a number" width="4" type="text" size="4" class="form-control" id="number" value="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label for="" class="col-lg-3  ">Số Lượng</label>
+                <div class="col-lg-2">
+                    <input placeholder="type a number" width="4" type="text" size="4" class="form-control" id="count" value="">
+                </div>
             </div>
         </div>
+        
+        <button class="btn" type="submit" value="thong ke">Thong ke</button>
+    </div>
+    
+    <div class="show">
+
     </div>
 </div>
 <script>
     $("button").click(function () {
         var t = new Object();
+        t.count = $("#count").val();
+        t.search = $("#search").val();
+        t.number = $("#number").val();
         t.fromdate = $("#fromDate").val();
         t.todate = $("#toDate").val();
         t.loaiCv = $("#loaiCv").find(":selected").attr('value');

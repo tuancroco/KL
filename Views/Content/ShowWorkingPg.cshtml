@@ -1,19 +1,21 @@
 ﻿@model List<KL.Models.Job>
 
 <style type="text/css">
-    .a0{
-        background-color:peachpuff;
+    .a0 {
+        background-color: peachpuff;
     }
+    
 </style>
+<link href="~/Assets/dist/css/table.css"  type="text/css" rel="stylesheet"/>
 <div id="page-wrapper">
     <div class="row" id="content">
         <div class="col-lg-12">
             <h1 class="page-header">Dashboard</h1>
 
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header" style="position:center;align-content:center">
                     <i class="fas fa-table"></i>
-                    Cong Viec Dang Lam @Model.Count
+                    <h1>Cong Viec Dang Lam @Model.Count</h1>
                 </div>
 
                 <div class="card-body " id="toggle-ontable">
@@ -41,15 +43,24 @@
                                 @foreach (var cv in Model)
                                 {
 
-                                    <tr class="@cv.ID @("a"+cv.New)" >
+                                    <tr class="@cv.ID @("a"+cv.New)">
                                         <td>@(Model.ToList().IndexOf(cv) + 1)</td>
                                         <td>@cv.Ten</td>
                                         <td>@cv.NoiDungCongViec</td>
 
-                                        <td><a href="@cv.File"><img width="20" height="20" src="~/Assets/file.png" /></a></td>
-                                        @if (cv.upload !=null)
+                                        @if (cv.File != "")
                                         {
-                                            <td><a href="@cv.upload"><img width="20" height="20" src="~/Assets/file.png" /></a></td>
+
+                                            <td><a href="@("\\Uploads\\"+cv.File)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.File</p></a></td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        @if (cv.upload != "")
+                                        {
+
+                                            <td><a href="@("\\Uploads\\"+cv.upload)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.upload</p></a></td>
                                         }
                                         else
                                         {
@@ -62,29 +73,37 @@
                                         <td>@cv.ThoiHanHoanThanh</td>
                                         <td>@cv.IDkhac</td>
                                         @{
-                                            var t = cv.jobcn.Count;
-                                            if (cv.jobcn.Count == 0) { t = 1; }
-                                            if (cv.jobcn.Count(m => m.TrangThai == 3) == t)
-                                            {
-                                                <td>100%</td>
-                                                <td><button class="report">Report</button></td>
-                                            }
-                                            else
-                                            {
-                                                <td>@(cv.jobcn.Count(m => m.TrangThai == 3) * 100 / t)%</td>
-                                                <td></td>
-                                            }
+                                            var tf = cv.jobcn.Count;
+                                            if (cv.jobcn.Count == 0) { tf = 1; }
+
+                                            <td>
+                                                @{
+                                                    var f = cv.jobcn.Count(m => m.TrangThai == 3) * 100 / tf;
+                                                    var t = "progress-bar-success";
+                                                    if (f <= 60) { t = "progress-bar-warning"; }
+                                                    if (f <= 40) { t = "progress-bar-info"; }
+                                                    if (f <= 20) { t = "progress-bar-danger"; }
+                                                    <div>
+                                                        <p>
+                                                            <span class="pull-right text-muted">@f %</span>
+                                                        </p>
+                                                        <div class="progress progress-striped active">
+                                                            <div class="progress-bar @t" role="progressbar" aria-valuenow="@f" aria-valuemin="0" aria-valuemax="100" style="width: @f%">
+                                                                <span class="sr-only">@f % </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td></td>
                                         }
 
-                                        @if (cv.slrequest > 0)
+                                        
+                                        <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest request(s)"><span class="button"><button class="btn btn-success" id="add">see/add plan</button><span class="button__badge">@cv.slrequest</span></span> </td>
+                                        @if (cv.jobcn.Count(m => m.TrangThai == 3) == tf)
                                         {
-                                            <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest"><button style="background-color:aqua;" id="add">see/add plan</button></td>
+                                            <td><button class="btn btn-danger report">Report</button></td>
                                         }
-                                        else
-                                        {
-                                            <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest"><button id="add">see/add plan</button></td>
-                                        }
-
                                     </tr>
                                 }
                             </tbody>
@@ -97,7 +116,28 @@
                 <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
             </div>
         </div>
+        <style>
 
+
+            /* Define what each icon button should look like */
+            .button {
+                display: inline-block; /* Inline elements with width and height. TL;DR they make the icon buttons stack from left-to-right instead of top-to-bottom */
+                position: relative; /* All 'absolute'ly positioned elements are relative to this one */
+                padding: 2px 5px; /* Add some padding so it looks nice */
+            }
+
+            /* Make the badge float in the top right corner of the button */
+            .button__badge {
+                background-color: #fa3e3e;
+                border-radius: 2px;
+                color: white;
+                padding: 1px 3px;
+                font-size: 10px;
+                position: absolute; /* Position the badge within the relatively positioned button */
+                top: 0;
+                right: 0;
+            }
+        </style>
         <!-- /.col-lg-12 -->
         @db.SaveChanges();
         <script>
