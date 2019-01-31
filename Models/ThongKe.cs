@@ -11,8 +11,8 @@ namespace KL.Models
         public DateTime todate { get; set; }
         public int ttCv { get; set; }
         public int loaiCv { get; set; }
-        public int count { get; set; }
+        public int pagnumber { get; set; }
         public string search { get; set; }
-        public int number {get;set;}
+        public int pagsize {get;set;}
     }
 }

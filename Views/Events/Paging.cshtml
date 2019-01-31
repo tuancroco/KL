@@ -1,0 +1,73 @@
+﻿@model List<int>
+<style type="text/css">
+</style>
+<div class="row">
+    
+</div>
+<div class="row" id="stt">
+    <div class="col-lg-5 pagination">
+        <label for="" class="col-lg-2 col-form-label ">Search:</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="search" value="" placeholder="search....">
+        </div>
+    </div>
+    <div class="col-lg-6 " style="text-align:right;">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model[0]; i++)
+            {
+                <li>
+                    @if (i == Model[1])
+                    {
+                        <a class="pp" style="background-color:blue" id="@i">@i</a>
+                    }
+                    else
+                    {
+                        <a class="pp" id="@i">@i</a>
+                    }
+
+                </li>
+
+            }
+        </ul>
+
+    </div>
+</div>
+
+<script>
+    $('.pp').click(function () {
+        var t = this;
+        var pagebutton = $(this).attr('id');
+        $.ajax({
+            url: "/Events/PageChange/",
+            type: "POST",
+            data: { pagbutton: pagebutton },
+            success: function (data) {
+
+                $('.pp').each(function (each) {
+                    $(this).css("background-color", "White");
+                });
+                $(t).css("background-color", "Blue");
+                $('.show').empty().append($(data));
+            }
+
+        });
+
+    });
+    $("#search").keyup(function () {
+        var search = $("#search").val().toLowerCase();
+        $('tr').each(function () {
+            var kt = false;
+            $(this).find('td').each(function () {
+                var gt = $(this).text().toLowerCase();
+                if (gt.indexOf(search) != -1)
+                {
+                    kt = true;
+                }
+            });
+            if (kt || $(this).attr('id')=='th') {
+                $(this).show()
+            }
+            else $(this).hide();
+        });
+    });
+</script>

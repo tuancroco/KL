@@ -49,14 +49,7 @@
 </div>
 <div id="page-wrapper">
     <div class="row" id="content">
-        <div class="row">
-            <div class="col-lg-6 col-lg-offset-6">
-                <label for="" class="col-lg-3 col-form-label ">Search:</label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control" id="search" value="" placeholder="search....">
-                </div>
-            </div>
-        </div>
+       
         <div class="row">
             <div class="col-lg-6">
                 <label for="" class="col-lg-3 col-form-label">From Date</label>
@@ -118,13 +111,16 @@
     <div class="show">
 
     </div>
+    <div class="pageindex">
+
+    </div>
 </div>
 <script>
     $("button").click(function () {
         var t = new Object();
-        t.count = $("#count").val();
+        t.pagsize = $("#count").val();
         t.search = $("#search").val();
-        t.number = $("#number").val();
+        t.pagnumber = $("#number").val();
         t.fromdate = $("#fromDate").val();
         t.todate = $("#toDate").val();
         t.loaiCv = $("#loaiCv").find(":selected").attr('value');
@@ -135,9 +131,17 @@
             data: t,
             success: function (data) {
                 $('.show').empty().append($(data));
+                $.ajax({
+                    url: "/Events/Paging/",
+                    type: "POST",
+                    success: function (data) {
+                        $('.pageindex').empty().append($(data));
+                    }
+                });
             }
         });
     });
 </script>
+
 
 

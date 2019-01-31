@@ -1,5 +1,4 @@
 ﻿@model List<List<int>>
-<a><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc Phòng<span class="fa arrow"></span></a>
 <script src="~/Assets/vendor/jquery/jquery.min.js"></script>
 <script src="~/Assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/Assets/vendor/metisMenu/metisMenu.min.js"></script>
@@ -31,24 +30,26 @@
         right: 0;
     }
 </style>
+<a href="#"><i class="fa fa-files-o fa-fw"></i> Quản Lý Công Việc Phòng<span class="fa arrow"></span></a>
+
 <ul class="nav nav-second-level">
     <li>
-        <a id="newPg">Công Việc Mới <span class="button">@Model[0][0] <span class="button__badge">@Model[0][1]</span></span> </a>
+        <a href="#" id="newPg">Công Việc Mới <span class="button">@Model[0][0] <span class="button__badge">@Model[0][1]</span></span> </a>
     </li>
     <li>
         @{
-            <a id="inProPg" data-toggle="tooltip" data-placement="top" title="Co @Model[1][2] request">Công Việc Đang Làm <span class="button">@Model[1][0] <span class="button__badge">@(Model[1][1]+Model[1][2])</span></span></a>
+            <a href="#" id="inProPg" data-toggle="tooltip" data-placement="top" title="Co @Model[1][2] request">Công Việc Đang Làm <span class="button">@Model[1][0] <span class="button__badge">@(Model[1][1] + Model[1][2])</span></span></a>
         }
 
     </li>
     <li>
-        <a id="requestPg">Công Việc Chờ Request <span class="button">@Model[2][0] <span class="button__badge">@Model[2][1]</span></span></a>
+        <a href="#" id="requestPg">Công Việc Chờ Request <span class="button">@Model[2][0] <span class="button__badge">@Model[2][1]</span></span></a>
     </li>
     <li>
-        <a id="commitPg">Công Việc Chờ Xác Nhận<span class="button">@Model[4][0] <span class="button__badge">@Model[4][1]</span></span></a>
+        <a href="#" id="commitPg">Công Việc Chờ Xác Nhận<span class="button">@Model[4][0] <span class="button__badge">@Model[4][1]</span></span></a>
     </li>
     <li>
-        <a id="donePg">Công Việc Đã Hoàn Thành <span class="button">@Model[3][0] <span class="button__badge">@Model[3][1]</span></span></a>
+        <a href="#" id="donePg">Công Việc Đã Hoàn Thành <span class="button">@Model[3][0] <span class="button__badge">@Model[3][1]</span></span></a>
     </li>
 </ul>
 @{

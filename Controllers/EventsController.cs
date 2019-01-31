@@ -80,10 +80,42 @@ namespace KL.Controllers
         {
             return View();
         }
-        public ActionResult ShowThongKe(ThongKe t)
+        public static List<Job> jobs=new List<Job>();
+        public static int pagSize=5;
+        public static int pagNum=1;
+        public ActionResult ShowThongKe(ThongKe t, SortModel Sort,int button=0)
         {
-            var db = new Smof();
+             var db = new Smof();
             var hoso = db.HoSoNhanSus.Where(m => m.ID == userId).First();
+            pagNum = t.pagnumber == 0 ? pagNum : t.pagnumber;
+            pagSize = t.pagsize == 0 ? pagSize : t.pagsize;
+            ViewBag.number = pagNum;
+            ViewBag.pagsize = pagSize;
+            if (Sort.col != null)
+            {
+                foreach(var pro in new Job().GetType().GetProperties())
+                {
+                    if (pro.Name.ToString().ToLower().Contains(Sort.col))
+                    {
+                        if (Sort.orderBy == "asc")
+                        {
+                            jobs = jobs.OrderBy(m => pro.GetValue(m)).ToList();
+                        }
+                        else if(Sort.orderBy=="desc")
+                        {
+                            jobs = jobs.OrderByDescending(m => pro.GetValue(m)).ToList();
+                        }
+                        
+                    }
+                }
+                return View(jobs.Skip((pagNum - 1) * pagSize).Take(pagSize).ToList());
+            } 
+            if (button > 0)
+            {
+                pagNum = button;
+                ViewBag.number = pagNum;
+                return View(jobs.Skip((button - 1) * pagSize).Take(pagSize).ToList());
+            }
             var tt = new ContentController();
             List<Job> list = new List<Job>();
             for (int i = 0; i < 4; i++)
@@ -105,17 +137,24 @@ namespace KL.Controllers
             var x = list[0].ThoiHanHoanThanh.CompareTo(t.fromdate.ToString("yyyy-MM-dd"));
             var c= list[0].ThoiHanHoanThanh.CompareTo(t.todate.ToString("yyyy-MM-dd"));
             list = list.Where(m => m.ThoiHanHoanThanh.CompareTo(t.fromdate.ToString("yyyy-MM-dd")) >=0 && m.ThoiHanHoanThanh.CompareTo(t.todate.ToString("yyyy-MM-dd"))<=0).ToList();
-            var count= list.Count;
-            var number = t.number == 0 ? 1 : t.number;
-            if (t.count < count) count = t.count;
-            if (t.count == 0) count = 5;
-            ViewBag.count = count;
-            ViewBag.number = t.number;
-            var search = t.search == null ? "" : t.search;
-            ViewBag.search = t.search==null?"":t.search;
-            ViewBag.pages = Math.Ceiling((decimal)list.Count / count);
             //list = list.Where(m => m.Ten.Contains(search)).ToList();
-            return View(list);
+            jobs = list;
+           
+            return  View(jobs.Skip(( pagNum- 1) * pagSize).Take(pagSize).ToList()); 
+        }
+        public ActionResult PageSort(SortModel sort)
+        {
+
+            return RedirectToAction("ShowThongKe",new { Sort = sort });
+        }
+        public ActionResult PageChange(string pagbutton)
+        {
+            return RedirectToAction("ShowThongKe", new { button = int.Parse(pagbutton) });
+        }
+        public ActionResult Paging()
+        {
+            int total= (int)Math.Ceiling((decimal)jobs.Count / (pagSize));
+            return View(new List<int> { total,pagNum });
         }
     }
 }

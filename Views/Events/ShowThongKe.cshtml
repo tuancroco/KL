@@ -3,81 +3,121 @@
 
 
 <style type="text/css">
-    .a1{
-        background-color:papayawhip;
+    .a1 {
+        background-color: papayawhip;
     }
-    .a2{
-        background-color:palegoldenrod;
+
+    .a2 {
+        background-color: palegoldenrod;
+    }
+    i {
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+    }
+
+    .right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    }
+
+    .left {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+    }
+
+    .up {
+        transform: rotate(-135deg);
+        -webkit-transform: rotate(-135deg);
+    }
+
+    .down {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
     }
 </style>
+@{ 
+}
 <link href="~/Assets/dist/css/table.css" type="text/css" rel="stylesheet" />
 <div class="card mb-3">
     <div class="card-header">
         <i class="fas fa-table"></i>
-        Cong Viec Moi
+        Kết Quả Thống Kê @Model.Count
     </div>
     <div class="card-body " id="toggle-offtable">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
-                    <tr>
-                        <th>Stt</th>
-                        <th>Ten Cong Viec</th>
-                        <th>Noi Dung Tom Tat</th>
-                        <th>File Dinh Kem</th>
-                        <th>Thoi Gian Can Hoan Thanh</th>
-                        <th>Cong Viec Phong</th>
+                    <tr id="th">
+                        <th class=""><a href="#" class="0">Stt</a></th>
+                        <th><a href="#"class="1" id="ten">Ten Cong Viec</a></th>
+                        <th><a href="#" class="2" id="noidung">Noi Dung Tom Tat</a></th>
+                        <th><a href="#" class="3" id="file">Cong Van Dinh Kem</a></th>
+                        <th><a href="#" class="4" id="upload">File Dinh Kem</a></th>
+                        <th><a href="#" class="5" id="thoigian">Thoi Gian Hoan Thanh</a></th>
+                        <th><a href="#" class="6" id="thoihan">Thoi Han Hoan Thanh</a></th>
                     </tr>
                 </thead>
                 <tbody id="cvcn">
-                    @foreach (var cv in Model)
-                    {
+                    @{
+                        foreach (var cv in Model)
+                        {
 
-                        <tr id="@cv.ID" class="@('a'+cv.vitriCv.ToString())">
-                            <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                            <td>@cv.Ten</td>
-                            <td>@cv.NoiDungCongViec</td>
-                            <td>@cv.File</td>
-                            <td>@cv.ThoiHanHoanThanh</td>
-                            <td>@cv.IDkhac</td>
-
-                        </tr>
+                            <tr id="@cv.ID" class="@('a' + cv.vitriCv.ToString())">
+                                <td>@(((int)ViewBag.number-1)*(int)ViewBag.pagsize+Model.IndexOf(cv)+1)</td>
+                                <td>@cv.Ten</td>
+                                <td>@cv.NoiDungCongViec</td>
+                                <td>@cv.File</td>
+                                <td>@cv.upload</td>
+                                <td>@cv.ThoiGianHoanThanh</td>
+                                <td>@cv.ThoiHanHoanThanh</td>
+                            </tr>
+                        }
                     }
                 </tbody>
 
 
             </table>
-            
+
         </div>
 
     </div>
     <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 </div>
-<div class="row">
-    <div class="col-lg-6 col-lg-offset-6" style="text-align:right;">
-        <ul class="pagination">
-            @for (int i = 1; i < (int)ViewBag.pages; i++)
-            {
-                <li>
-                    <a class="pp" id="@i">@i</a>
-                </li>
-
-            }
-        </ul>
-        
-    </div>
-</div>
-
 <script>
-    $('a.pp').click(function () {
-        var t = this;
-        var pagnum = $(t).val();
-
+    var clicks = [0,0,0,0,0,0,0];
+    var order = "none";
+    var cols = "";
+    $('a').click(function () {
+        var index = $(this).attr('class');
+        clicks[index]++;
+        var click = clicks[index];
+        var tr = $(this).closest('i');
+        cols = $(this).attr('id');
+        if (click % 3 == 1) {
+            order = "asc";
+            $(this).find('i').remove();
+            $(this).append('<i class="up"></i>')
+        } else if (click % 3 == 2) {
+            order = "desc";
+            $(this).find('i').remove();
+            $(this).append('<i class="down"></i>')
+        } else {
+            order = "none";
+            $(this).find('i').remove();
+        }
+        var sort = new Object();
+        sort.col = cols;
+        sort.orderBy = order;
+        $.ajax({
+            url: "/Events/ShowThongKe/",
+            data: { Sort: sort },
+            type: "POST",
+            success: function (data) {
+                $('#cvcn').replaceWith($(data).find("tbody"));
+            }
+        });
     });
 </script>
-<link href="~/Assets/dist/css/Style.css" rel="stylesheet" />
-<div id="myModal" class="modal">
 
-
-</div>
-<!-- Modal content -->
