@@ -57,12 +57,17 @@ namespace KL.Models.DatabaseModels
 
         public string upload { get; set; }
 
+        [StringLength(128)]
+        public string IDLoaiCv { get; set; }
+
         public virtual CongViec CongViec { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CongViecCaNhan> CongViecCaNhans { get; set; }
 
         public virtual HoSoNhanSu HoSoNhanSu { get; set; }
+
+        public virtual LoaiCongViec LoaiCongViec { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhanHoiCV> PhanHoiCVs { get; set; }

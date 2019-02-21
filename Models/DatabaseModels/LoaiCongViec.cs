@@ -13,6 +13,7 @@ namespace KL.Models.DatabaseModels
         public LoaiCongViec()
         {
             CongViecs = new HashSet<CongViec>();
+            CongViecPhongs = new HashSet<CongViecPhong>();
         }
 
         public string ID { get; set; }
@@ -25,5 +26,8 @@ namespace KL.Models.DatabaseModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CongViec> CongViecs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CongViecPhong> CongViecPhongs { get; set; }
     }
 }

@@ -30,8 +30,17 @@ namespace KL.Controllers
             {
                 
                 {
-                    var t1 = new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && m.TrangThai == i) };
-                    list.Add(t1);
+                    if (i == 2)
+                    {
+                        var t1 = new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && (m.TrangThai == 2||m.TrangThai==5)) };
+                        list.Add(t1);
+                    }
+                    else
+                    {
+                        var t1 = new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && m.TrangThai == i) };
+                        list.Add(t1);
+                    }
+                    
                 }
             }
             List<int> id = new List<int> { int.Parse(Id) };
@@ -46,8 +55,17 @@ namespace KL.Controllers
             List<List<int>> list = new List<List<int>>();
             for(int i = 0; i < 5; i++)
             {
-                var t1=new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && m.TrangThai == i), truongphong.Count(m=>m.TrangThai==1&&m.CongViecCaNhans.Any(n=>n.TrangThai==2)) };
-                list.Add(t1);
+                if (i == 2)
+                {
+                    var t1 = new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && (m.TrangThai == 2 || m.TrangThai == 5)), truongphong.Count(m => m.TrangThai == 1 && m.CongViecCaNhans.Any(n => n.TrangThai == 2)) };
+                    list.Add(t1);
+                }
+                else
+                {
+                    var t1 = new List<int> { truongphong.Count(m => m.TrangThai == i), truongphong.Count(m => m.New == 0 && m.TrangThai == i), truongphong.Count(m => m.TrangThai == 1 && m.CongViecCaNhans.Any(n => n.TrangThai == 2)) };
+                    list.Add(t1);
+                }
+               
             }
             List<int> id = new List<int> { int.Parse(Id) };
             list.Add(id);

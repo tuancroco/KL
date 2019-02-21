@@ -64,15 +64,39 @@
                         foreach (var cv in Model)
                         {
 
-                            <tr id="@cv.ID" class="@('a' + cv.vitriCv.ToString())">
-                                <td>@(((int)ViewBag.number-1)*(int)ViewBag.pagsize+Model.IndexOf(cv)+1)</td>
-                                <td>@cv.Ten</td>
-                                <td>@cv.NoiDungCongViec</td>
-                                <td>@cv.File</td>
-                                <td>@cv.upload</td>
-                                <td>@cv.ThoiGianHoanThanh</td>
-                                <td>@cv.ThoiHanHoanThanh</td>
-                            </tr>
+                    <tr id="@cv.ID" class="@('a' + cv.vitriCv.ToString())">
+                        <td>@(((int)ViewBag.number - 1) * (int)ViewBag.pagsize + Model.IndexOf(cv) + 1)</td>
+                        <td>@cv.Ten</td>
+                        <td>@cv.NoiDungCongViec</td>
+                        @if (cv.File != "")
+                        {
+
+                            <td><a href="@("\\Uploads\\"+cv.File)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.File</p></a></td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (cv.upload != "")
+                        {
+
+                            <td><a href="@("\\Uploads\\" + cv.upload)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.upload</p></a></td>
+                        }
+                        else if (cv.vitriCv != 4)
+                        {
+                            <td>
+                                <span>File</span>
+                                <input type="file" class="file" name="file" size="10" />
+                                <input class="uploadbutton btn btn-warning" type="button" value="Upload" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>@cv.ThoiGianHoanThanh</td>
+                        <td>@cv.ThoiHanHoanThanh</td>
+                    </tr>
                         }
                     }
                 </tbody>

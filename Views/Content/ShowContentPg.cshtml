@@ -37,16 +37,24 @@
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
-                                    <tr class="@cv.ID">
-                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                        <td>@cv.Ten</td>
-                                        <td>@cv.NoiDungCongViec</td>
-                                        <td>@cv.File</td>
-                                        <td>@cv.ThoiHanHoanThanh</td>
-                                        <td>@cv.IDkhac</td>
+                                <tr class="@cv.ID">
+                                    <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                    <td>@cv.Ten</td>
+                                    <td>@cv.NoiDungCongViec</td>
+                                    @if (cv.File != "")
+                                    {
 
-                                        <td><button id="add">add plan</button></td>
-                                    </tr>
+                                        <td><a href="@("\\Uploads\\"+cv.File)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.File</p></a></td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td>@cv.ThoiHanHoanThanh</td>
+                                    <td>@cv.IDkhac</td>
+
+                                    <td><button id="add">add plan</button></td>
+                                </tr>
                                 }
                             </tbody>
 
@@ -91,7 +99,7 @@
                                 <td><input type="text" id="tenCv" class="ten" /></td>
                                 <td><input type="text" id="noidung" class="nd" /></td>
                                 <td id="dropdownlist"> @Html.DropDownList("employee", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "select one")</td>
-                                <td><input type="text" id="tgian" class="nd" /></td>
+                                <td><input type="date" id="tgian" class="tgian" /></td>
                             </tr>
                         </tbody>
 
@@ -111,7 +119,7 @@
 
         $('#addTask').click(function () {
             var data1 = "<td>" + $('#dropdownlist').clone().html() + "</td>";
-            var data = "<tr><td></td><td><input type='text'class='ten'/></td><td><input type='text'  class='nd'/></td>" + data1 + "<td>2011/04/25</td>" + "/<tr>";
+            var data = "<tr><td></td><td><input type='text'class='ten'/></td><td><input type='text'  class='nd'/></td>" + data1 + "<td><input type='date' class='tgian' /></td>" + "/<tr>";
             $('#myModal tbody').append(data);
 
 

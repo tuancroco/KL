@@ -29,6 +29,8 @@ namespace KL.Models
         public int slrequest { get; set; }
         public List<CongViecCaNhan> jobcn { get; set; }
         public List<CongViecPhong> jobpg { get; set; }
+        public string canhan { get; set; }
+        public double Cldl { get; set; }
     }
     public class PhanHoiRequest
     {

@@ -1,11 +1,12 @@
 ﻿@model List<KL.Models.DatabaseModels.CongViecCaNhan>
-
-@{ 
+@using System.Globalization;
+@{
     var tx = 1;
     var t = "";
-    if (Model.Count > 0) {
+    if (Model.Count > 0)
+    {
         tx = Model.Count;
-        t = Model.First().IDHoSoNhanSu;
+        t = ViewBag.Id;
     }
 
 
@@ -15,11 +16,11 @@
     <div class="modal-content">
         <div class="modal-header">
             <span id="chutri" class="close">&times;</span>
-            
+
         </div>
         <div class="modal-body">
             <div class="card-body toggle-on" id="0">
-                <h1 style="color:green;">Da xong @(Model.Count(m => m.TrangThai == 3)*100 / tx )%</h1>
+                <h1 style="color:green;">Da xong @(Model.Count(m => m.TrangThai == 3) * 100 / tx )%</h1>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -39,36 +40,50 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr class="@item.ID">
-                                <td></td>
-                                <td>@item.Ten</td>
-                                <td>@item.NoiDungCongViec</td>
-                                <td>@item.HoSoNhanSu.TenNhanSu</td>
-                                <td>@item.CongVanDinhKemCaNhan</td>
+                                <tr class="@item.ID">
+                                    <td></td>
+                                    <td class="ten">@item.Ten</td>
+                                    <td class="nd">@item.NoiDungCongViec</td>
+                                    <td class="canhan">@item.HoSoNhanSu.TenNhanSu</td>
+                                    <td class="file">@item.CongVanDinhKemCaNhan</td>
 
-                                <td>@item.ThoiHanHoanThanh</td>
-                                <td>@item.upload</td>
-                                <td>@item.ThoiGianHoanThanh</td>
-                                <td>
-                                    @{
-                                        if (item.TrangThai == 2)
-                                        {
-                                            <button class="request btn btn-success">Request</button>
-                                            <button class="reject btn btn-danger">Reject</button>
-                                        }
-                                        else if (item.TrangThai == 3)
-                                        {
-                                            <p>Done</p>
-                                        }
+                                    @if (item.ThoiHanHoanThanh != null)
+                                    {
+                                        <td class="tgian">@item.ThoiHanHoanThanh.Value.ToString("yyyy-MM-dd")</td>
                                     }
+                                    else
+                                    {
+                                        <td></td>}
+                                    <td>@item.upload</td>
+                                    @if (item.ThoiGianHoanThanh != null)
+                                    {
+                                        <td class="">@item.ThoiGianHoanThanh.Value.ToString("yyyy-MM-dd")</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>}
+                                    <td>
+                                        @{
+                                            if (item.TrangThai == 2)
+                                            {
+                                                <button class="request btn btn-success">Request</button>
+                                                <button class="reject btn btn-danger">Reject</button>
+                                            }
+                                            else if (item.TrangThai == 3 || (item.TrangThai == 5 && item.NoiDungPhanHoi == "Done"))
+                                            {
+                                                <p>Done</p>
+                                            }
+                                        }
 
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td><button class="btn btn-success delete">delete</button></td>
+                                    <td><button class="btn btn-success edit">edit</button></td>
+                                </tr>
                             }
                             <tr class="addMore">
                                 <td></td>
                                 <td><input type="text" class="ten" /></td>
-                                <td><input type="text"  class="nd" /></td>
+                                <td><input type="text" class="nd" /></td>
                                 <td id="dropdownlist"> @Html.DropDownList("employee", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "select one")</td>
                                 <td>
                                     <span>File</span>
@@ -101,21 +116,13 @@
         $('span#chutri').click(function () {
             $('#myModal').hide();
         });
-        @{ 
-            
+        @{
+
         }
         $('button#savePlan').click(function () {
             var data = []; var i = 0;
-            var x = refresh();
-            $.ajax({
-                                type: "POST",
 
-                                url: "/Content/ShowWorkingPg?hosoId=@t",
-                                success: function (data) {
-                                    $('#tab').empty();
-                                    $('#tab').append($(data));
-                                }
-                            });
+            alert(JSON.stringify(kh));
             $('#myModal').hide();
             $('#myModal tbody .addMore').each(function () {
                 var dropList = $(this).find('option:selected').val();
@@ -129,59 +136,63 @@
                     };
                     i++;
                 }
-                
-               
+
+
             });
+
             var kh = new Object();
             kh.ID = planIndex;
             kh.newPlans = data;
             var fileUpload = $(".file").get(0);
             var files = fileUpload.files[0];
             var fileData = new FormData();
-            fileData.append(files.name, files);
+            fileData.append($(files).val().split('\\').pop(), files);
             fileData.append('jobId', "");
             fileData.append('congvan', "");
-            if (data.length > 0 ) {
+            {
+                
                 $.ajax({
                     url: '/Job/SaveNew',
                     type: 'POST',
                     data: { kh: kh },
 
                     success: function (response) {
-                        alert("Data Uploaded: ");
                         $.ajax({
                             type: "POST",
                             url: "/Job/UploadFile/",
                             enctype: 'multipart/form-data',
-                            contentType: false, // Not to set any content header  
-                            processData: false, // Not to process data  
+                            contentType: false, // Not to set any content header
+                            processData: false, // Not to process data
                             data: fileData,
                             success: function () {
-                                
+
                             }
                         });
                     }
-                }).then(function () {
-                    
-
-
-                    
                 });
-                
-            }
 
+            }
+            $.ajax({
+                                type: "POST",
+
+                                url: "/Content/ShowWorkingPg?hosoId=@t",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
 
         });
         $('#addTask').click(function () {
             var data1 = "<td>" + $('#dropdownlist').clone().html() + "</td>";
-            var data = "<tr class='addMore'><td></td><td><input type='text'class='ten'/></td><td><input type='text'  class='nd'/></td>" + data1 + "<td>2011/04/25</td>" + "/<tr>";
+            var data = "<tr class='addMore'><td></td><td><input type='text'class='ten' required/></td><td><input type='text'  class='nd'/></td>" + data1 + "<td><input type='date' class='tgian' /></td>" + "/<tr>";
             $('#myModal tbody').append(data);
 
 
         });
         $(".uploadbutton").click(function () {
             var idrows = $(this).closest('tr').attr('class');
-            
+
         });
         var t = 1;
         $(".reject").click(function () {
@@ -198,7 +209,7 @@
                 type: "POST",
                 success: function () {
                     $('#phanHoi').hide();
-                    
+
                 }
             });
         });
@@ -225,7 +236,7 @@
                     $('#phanHoi').hide();
                 }
             });
-        });    
+        });
     </script>
 </div>
 <div id="phanHoi" class="modal1">
@@ -243,8 +254,8 @@
                     </thead>
                     <tbody>
                         <tr class="">
-                            <td><textarea rows="4" cols="50"></textarea></td>
-                            
+                            <td><textarea rows="4" cols="50" required></textarea></td>
+
                         </tr>
                     </tbody>
                 </table>
@@ -255,6 +266,69 @@
         </div>
     </div>
     <script>
-        
+
     </script>
 </div>
+<div class="modal" id="edit">
+    <div class="card-body " id="toggle-ontable">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Ten Cong Viec</th>
+                        <th>Noi Dung Tom Tat</th>
+                        <th>Nguoi Tham Gia</th>
+                        <th>Cong Van Dinh Kem</th>
+                        <th>Thoi Han Hoan Thanh</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td><input type="text" class="ten" id="ten" /></td>
+                        <td><input type="text" class="nd" id="nd" /></td>
+                        <td id="dropdown"> @Html.DropDownList("employee", (IEnumerable<SelectListItem>)ViewBag.CategoryList, "select one")</td>
+                        <td>
+                            <span>File</span>
+                            <input type="file" class="file" name="file" size="10" id="file" />
+                        </td>
+                        <td><input type="date" class="tgian" id="tgian" /></td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+            <button class="saveEdit">Save</button>
+        </div>
+    </div>
+</div>
+<script>
+    $('.edit').click(function () {
+        var tr = $(this).closest('tr');
+
+        $('#edit').show();
+        $("#ten").val($(tr).find(".ten").text());
+        $("#nd").val($(tr).find(".nd").text());
+        $("#file").val($(tr).find(".file").text());
+        $("#tgian").val($(tr).find(".tgian").text());
+        var canhan = $(tr).find(".canhan").text();
+        $('#dropdown').find('option').each(function () {
+            if ($(this).text() == canhan) {
+                $(this).prop("selected", true);
+            }
+        });
+        $('.saveEdit').click(function () {
+            $('#edit').hide();
+            $(tr).find(".ten").text($("#ten").val());
+            $(tr).find(".nd").text($("#nd").val());
+            $(tr).find(".tgian").text($("#tgian").val());
+            $(tr).find(".file").text($("#file").val());
+
+            $.ajax({
+                url: "/Job/Edit",
+                type: "POST",
+                data: { id: tr.attr("class"), ten: $("#ten").val(), nd: $("#nd").val(), tgian: $("#tgian").val(), canhan: $("#dropdown").find("option:selected").attr('value') }
+            });
+        });
+    });
+</script>

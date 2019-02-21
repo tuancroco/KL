@@ -12,6 +12,7 @@ namespace KL.Controllers
     public class ContentController : Controller
     {
         // GET: Content
+        public static string hId = "";
         public ActionResult ShowContent(string hosoId,int ma)
         {
             var db = new Smof();
@@ -238,11 +239,20 @@ namespace KL.Controllers
         }
         public ActionResult ShowWorkingPg(string hosoId)
         {
+            if (hosoId != "") hId = hosoId;
+            else hosoId=hId;
             var db = new Smof();
             var hoso = db.HoSoNhanSus.ToList().Find(m => m.ID == hosoId);
             var Cv = MakeJobModel(1, hoso, 2);
             SaveData(2, hosoId, 1);
             db.SaveChanges();
+            List<HoSoNhanSu> dsPhong = db.HoSoNhanSus.ToList().FindAll(m => m.IDPhongBan == hoso.IDPhongBan).ToList();
+
+            // Tạo SelectList
+            SelectList cateList = new SelectList(dsPhong, "ID", "TenNhanSu");
+
+            // Set vào ViewBag
+            ViewBag.CategoryList = cateList;
             return View(Cv);
         }
         public ActionResult ShowCommitPg(string hosoId)
@@ -260,6 +270,14 @@ namespace KL.Controllers
         
         public ActionResult CreateJobPg(string hosoId)
         {
+            var db = new Smof();
+            List<LoaiCongViec> dsPhong = db.LoaiCongViecs.ToList();
+
+            // Tạo SelectList
+            SelectList cateList = new SelectList(dsPhong, "ID", "TenLoaiCongViec");
+
+            // Set vào ViewBag
+            ViewBag.CategoryList = cateList;
 
             return View();
         }
@@ -276,6 +294,7 @@ namespace KL.Controllers
 
             // Set vào ViewBag
             ViewBag.CategoryList = cateList;
+            ViewBag.Id = hoso.ID;
             return View(cvCn.ToList());
         }
         public ActionResult ShowCommitld(string jobId)
@@ -355,7 +374,9 @@ namespace KL.Controllers
                         TrangThaiPh = th,
                         IDB=cv.IDCongViecPhong,
                         vitriCv=1,
-                        upload=upload
+                        upload=upload,
+                        canhan=cv.HoSoNhanSu.TenNhanSu,
+                        Cldl=(DateTime.Now-cv.ThoiHanHoanThanh.Value).TotalDays
                     });
                     cv.New = 1;
                 }
@@ -397,7 +418,9 @@ namespace KL.Controllers
                         IDB = cv.IDCongViec,
                         vitriCv = 2,
                         slrequest=slrequest,
-                        jobcn=cv.CongViecCaNhans.ToList()
+                        jobcn=cv.CongViecCaNhans.ToList(),
+                        canhan = cv.HoSoNhanSu.TenNhanSu,
+                        Cldl = (DateTime.Now - cv.ThoiHanHoanThanh.Value).TotalDays
                     };
                     cv.New = 1;
                     List<Job> jobs = new List<Job>();
@@ -445,7 +468,9 @@ namespace KL.Controllers
                         TrangThai = cv.TrangThai.ToString(),
                         TrangThaiPh = th,
                         vitriCv = 4,
-                        jobpg=cv.CongViecPhongs.ToList()
+                        jobpg=cv.CongViecPhongs.ToList(),
+                        canhan = cv.HoSoNhanSu.TenNhanSu,
+                        Cldl = (DateTime.Now - cv.NgayHoanThanh.Value).TotalDays
                     });
                     cv.New = 1;
                 }
@@ -455,7 +480,7 @@ namespace KL.Controllers
             List<Job> Cv = new List<Job>();
             if (maChucvu == 1) Cv = CvCn;
             else if (maChucvu == 2) Cv = CvPg;
-            else if (maChucvu == 4) Cv = CvVt;
+            else if (maChucvu == 4) Cv = CvPg;
             return Cv;
         }
     }

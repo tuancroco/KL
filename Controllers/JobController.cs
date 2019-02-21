@@ -47,6 +47,7 @@ namespace KL.Controllers
                     NoiDungCongViec = item.Noidung,
                     IDHoSoNhanSu=hoSoNhanSu.ID,
                     Datecreate=DateTime.Now,
+                    New=0,
                     TrangThai=0
                 };
                 db.CongViecCaNhans.Add(CvCanhan);
@@ -185,7 +186,7 @@ namespace KL.Controllers
             return RedirectToAction("Login", "Login");
         }
         [HttpPost]
-        public ActionResult UploadFile()
+        public ActionResult UploadFile(string tuan)
         {
             // Checking no of files injected in Request object  
             
@@ -255,6 +256,30 @@ namespace KL.Controllers
             {
                 return Json("No files selected.");
             }
+        }
+        public ActionResult Delete(string id)
+        {
+            var db = new Smof();
+            return RedirectToAction("Login", "Login");
+        }
+        public ActionResult Edit(string nd,string ten,string id,string tgian,string canhan)
+        {
+            var db = new Smof();
+            var t=db.CongViecCaNhans.Where(m => m.ID == id).First();
+            t.NoiDungCongViec = nd;
+            t.Ten = ten;
+            if (t.IDHoSoNhanSu != canhan)
+            {
+                t.TrangThai = 0;
+               
+            }
+           
+            t.IDHoSoNhanSu = canhan;
+            t.ThoiHanHoanThanh = DateTime.ParseExact(tgian, "yyyy-MM-dd", CultureInfo.CurrentCulture);
+            t.New = 0;
+           
+            db.SaveChanges();
+            return RedirectToAction("Login","Login");
         }
         public ActionResult Downloads()
         {

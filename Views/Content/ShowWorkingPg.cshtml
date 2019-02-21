@@ -4,7 +4,15 @@
     .a0 {
         background-color: peachpuff;
     }
-    
+    .ko{
+        background-color:lightcoral;
+    }
+    .mot{
+        background-color:yellow;
+    }
+    .hai{
+        background-color:aquamarine;
+    }
 </style>
 <link href="~/Assets/dist/css/table.css"  type="text/css" rel="stylesheet"/>
 <div id="page-wrapper">
@@ -26,10 +34,13 @@
                                     <th>Stt</th>
                                     <th>Ten Cong Viec</th>
                                     <th>Noi Dung Tom Tat</th>
+                                    <th>Ca Nhan Tham Gia</th>
                                     <th>Cong Van Dinh Kem</th>
                                     <th>File Dinh Kem</th>
+
                                     <th>Thoi Han Hoan Thanh</th>
                                     <th>Thuoc Cong Viec</th>
+
                                     <th>% Hoan thanh</th>
                                 </tr>
                             </thead>
@@ -42,69 +53,73 @@
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
+                                    string mau = "ko";
+                                    if (cv.Cldl > 5) { mau = "mot"; }
+                                    if (cv.Cldl > 15) { mau = "hai"; }
+                                <tr class="@cv.ID @("a"+cv.New) @mau">
+                                    <td>@(Model.ToList().IndexOf(cv) + 1)</td>
+                                    <td class="ten">@cv.Ten</td>
+                                    <td class="nd">@cv.NoiDungCongViec</td>
+                                    <td class="canhan">@cv.canhan</td>
+                                    @if (cv.File != "")
+                                    {
 
-                                    <tr class="@cv.ID @("a"+cv.New)">
-                                        <td>@(Model.ToList().IndexOf(cv) + 1)</td>
-                                        <td>@cv.Ten</td>
-                                        <td>@cv.NoiDungCongViec</td>
+                                        <td><a href="@("\\Uploads\\"+cv.File)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.File</p></a></td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    @if (cv.upload != "")
+                                    {
 
-                                        @if (cv.File != "")
-                                        {
+                                        <td><a href="@("\\Uploads\\"+cv.upload)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.upload</p></a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <span>File</span>
+                                            <input type="file" class="file" name="file" size="10" />
+                                            <input class="uploadbutton" type="button" value="Upload" />
+                                        </td>
+                                    }
+                                    <td class="tgian">@cv.ThoiHanHoanThanh</td>
+                                    <td>@cv.IDkhac</td>
+                                    @{
+                                        var tf = cv.jobcn.Count;
+                                        if (cv.jobcn.Count == 0) { tf = 1; }
 
-                                            <td><a href="@("\\Uploads\\"+cv.File)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.File</p></a></td>
-                                        }
-                                        else
-                                        {
-                                            <td></td>
-                                        }
-                                        @if (cv.upload != "")
-                                        {
-
-                                            <td><a href="@("\\Uploads\\"+cv.upload)" download=""><img width="20" height="20" src="~/Assets/file.png" /><p>@cv.upload</p></a></td>
-                                        }
-                                        else
-                                        {
-                                            <td>
-                                                <span>File</span>
-                                                <input type="file" class="file" name="file" size="10" />
-                                                <input class="uploadbutton" type="button" value="Upload" />
-                                            </td>
-                                        }
-                                        <td>@cv.ThoiHanHoanThanh</td>
-                                        <td>@cv.IDkhac</td>
-                                        @{
-                                            var tf = cv.jobcn.Count;
-                                            if (cv.jobcn.Count == 0) { tf = 1; }
-
-                                            <td>
-                                                @{
-                                                    var f = cv.jobcn.Count(m => m.TrangThai == 3) * 100 / tf;
-                                                    var t = "progress-bar-success";
-                                                    if (f <= 60) { t = "progress-bar-warning"; }
-                                                    if (f <= 40) { t = "progress-bar-info"; }
-                                                    if (f <= 20) { t = "progress-bar-danger"; }
-                                                    <div>
-                                                        <p>
-                                                            <span class="pull-right text-muted">@f %</span>
-                                                        </p>
-                                                        <div class="progress progress-striped active">
-                                                            <div class="progress-bar @t" role="progressbar" aria-valuenow="@f" aria-valuemin="0" aria-valuemax="100" style="width: @f%">
-                                                                <span class="sr-only">@f % </span>
-                                                            </div>
+                                        <td>
+                                            @{
+                                                var ff = cv.jobcn.Count(m => m.TrangThai == 3 || (m.PhanHoi == 0 && m.NoiDungPhanHoi == "Done"));
+                                                var f = ff * 100 / tf;
+                                                var t = "progress-bar-success";
+                                                if (f <= 60) { t = "progress-bar-warning"; }
+                                                if (f <= 40) { t = "progress-bar-info"; }
+                                                if (f <= 20) { t = "progress-bar-danger"; }
+                                                <div>
+                                                    <p>
+                                                        <span class="pull-right text-muted">@f %</span>
+                                                    </p>
+                                                    <div class="progress progress-striped active">
+                                                        <div class="progress-bar @t" role="progressbar" aria-valuenow="@f" aria-valuemin="0" aria-valuemax="100" style="width: @f%">
+                                                            <span class="sr-only">@f % </span>
                                                         </div>
                                                     </div>
-                                                }
-                                            </td>
-                                            <td></td>
-                                        }
+                                                </div>
+                                            }
+                                        </td>
+                                        <td></td>
+                                    }
 
-                                        
-                                        <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest request(s)"><span class="button"><button class="btn btn-success" id="add">see/add plan</button><span class="button__badge">@cv.slrequest</span></span> </td>
-                                        @if (cv.jobcn.Count(m => m.TrangThai == 3) == tf)
-                                        {
-                                            <td><button class="btn btn-danger report">Report</button></td>
-                                        }
-                                    </tr>
+
+                                    <td data-toggle="tooltip" data-placement="top" title="@cv.slrequest request(s)"><span class="button"><button class="btn btn-success" id="add">see/add plan</button><span class="button__badge">@cv.slrequest</span></span> </td>
+                                    @if (ff == tf)
+                                    {
+                                        <td><button class="btn btn-danger report">Report</button></td>
+                                    }
+                                   
+                                </tr>
                                 }
                             </tbody>
 
@@ -142,7 +157,8 @@
         @db.SaveChanges();
         <script>
             $(".uploadbutton").click(function () {
-                var idrows = $(this).closest('tr').attr('class')[0];
+                var idrows = $(this).closest('tr').attr('class').split(' ')[0];
+                var ffff = $(".file");
                 var fileUpload = $(".file").get(0);
                 var files = fileUpload.files[0];
                 var fileData = new FormData();
@@ -159,7 +175,7 @@
                     processData: false, // Not to process data
                     data: fileData,
                     success: function () {
-                        alert("Data Uploaded: ");
+                        
                     }
                 });
             });
@@ -169,7 +185,7 @@
 
                 $(idrow).remove();
                 $.ajax({
-                    url: "/Job/Report?idJob=" + idrow.attr('class')[0] + "&ma=2",
+                    url: "/Job/Report?idJob=" + idrow.attr('class').split(' ')[0] + "&ma=2",
                     type: "POST",
                     success: function () {
                         tt = refresh();
@@ -184,7 +200,7 @@
             var modal = document.getElementById('myModal');
             $('button#add').click(function () {
 
-                planIndex = $(this).closest('tr').attr('class')[0];
+                planIndex = $(this).closest('tr').attr('class').split(' ')[0];
                 $.ajax({
                     url: "/Content/Modal?jobId=" + planIndex,
                     type: "POST",
@@ -199,7 +215,21 @@
             });
 
 
-
+            $('.delete').click(function () {
+                var t = confirm("Are you sure?");
+                var dat = $(this).closest('tr');
+                if (t) {
+                    $.ajax({
+                        url: "/Job/Delete",
+                        type: "POST",
+                        data: $(dat).attr('id').split(' ')[0],
+                        success: function () {
+                            $(dat).hide();
+                        }
+                    });
+                }
+            });
+            
         </script>
     </div>
     <div id="tt"></div>
@@ -209,4 +239,8 @@
 
 
 </div>
+
+<script>
+    
+</script>
 <!-- Modal content -->

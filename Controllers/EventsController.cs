@@ -81,6 +81,7 @@ namespace KL.Controllers
             return View();
         }
         public static List<Job> jobs=new List<Job>();
+        public static List<string> listSort = new List<string>();
         public static int pagSize=5;
         public static int pagNum=1;
         public ActionResult ShowThongKe(ThongKe t, SortModel Sort,int button=0)

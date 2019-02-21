@@ -16,6 +16,15 @@
     
 
     /* Define what each icon button should look like */
+    .numberCircle {
+        width: 20px;
+        background-color: #00FF00;
+        line-height: 20px;
+        border-radius: 30%;
+        text-align: center;
+        font-size: 15px;
+        border: 2px solid #ffd800;
+    }
     .button {
         color: white;
         display: inline-block; /* Inline elements with width and height. TL;DR they make the icon buttons stack from left-to-right instead of top-to-bottom */
@@ -43,20 +52,20 @@
     <li>
 
         <a href="#" id="newCn" class="@("left"+Model[0][1].ToString())">
-            Công Việc Mới <span class="button">@Model[0][0] <span class="button__badge">@Model[0][1]</span></span> 
+            Công Việc Mới <span class="numberCircle">@Model[0][0]</span> <span class="button">@Model[0][0] <span class="button__badge">@Model[0][1]</span></span> 
                 
         </a>
 
     </li>
     <li>
-        <a href="#" id="inPro" class="@("left"+Model[1][1].ToString())">Công Việc Đang Làm <span class="button">@Model[1][1] <span class="button__badge">@Model[1][1]</span></span></a>
+        <a href="#" id="inPro" class="@("left"+Model[1][1].ToString())">Công Việc Đang Làm <span class="numberCircle">@Model[1][0]</span> <span class="button">@Model[1][1] <span class="button__badge">@Model[1][1]</span></span></a>
     </li>
     <li>
-        <a href="#" id="request" class="@("left"+Model[2][1].ToString())">Công Việc Cho Request <span class="button">@Model[2][1] <span class="button__badge">@Model[2][1]</span></span></a>
+        <a href="#" id="request" class="@("left"+Model[2][1].ToString())">Công Việc Cho Request <span class="numberCircle">@Model[2][0]</span> <span class="button">@Model[2][1] <span class="button__badge">@Model[2][1]</span></span></a>
     </li>
 
     <li>
-        <a href="#" id="done" class="@("left"+Model[3][1].ToString())">Công Việc Đã Hoàn Thành <span class="button">@Model[3][1] <span class="button__badge">@Model[3][1]</span></span></a>
+        <a href="#" id="done" class="@("left"+Model[3][1].ToString())">Công Việc Đã Hoàn Thành <span class="numberCircle">@Model[3][0]</span> <span class="button">@Model[3][1] <span class="button__badge">@Model[3][1]</span></span></a>
     </li>
 </ul>
 @{

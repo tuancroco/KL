@@ -1,13 +1,46 @@
 ﻿@model List<List<int>>
+<style>
+
+
+    /* Define what each icon button should look like */
+    .numberCircle {
+        width: 20px;
+        background-color: #00FF00;
+        line-height: 20px;
+        border-radius: 30%;
+        text-align: center;
+        font-size: 15px;
+        border: 2px solid #ffd800;
+    }
+
+    .button {
+        color: white;
+        display: inline-block; /* Inline elements with width and height. TL;DR they make the icon buttons stack from left-to-right instead of top-to-bottom */
+        position: relative; /* All 'absolute'ly positioned elements are relative to this one */
+        padding: 2px 5px; /* Add some padding so it looks nice */
+    }
+
+    /* Make the badge float in the top right corner of the button */
+    .button__badge {
+        background-color: #fa3e3e;
+        border-radius: 2px;
+        color: white;
+        padding: 1px 3px;
+        font-size: 10px;
+        position: absolute; /* Position the badge within the relatively positioned button */
+        top: 0;
+        right: 0;
+    }
+</style>
 <a href="#"><i class="fa fa-files-o fa-fw"></i> Xac Nhan Cong Viec<span class="fa arrow"></span></a>
 <ul class="nav nav-second-level">
 
 
     <li>
-        <a href="#" id="commitld">Công Việc Cho Xac Nhan @Model[2][0] (@Model[2][1])</a>
+        <a href="#" id="commitld">Công Việc Cho Xac Nhan <span class="numberCircle">@Model[2][0]</span><span class="button">@Model[2][0] <span class="button__badge">@Model[2][1]</span></span></a>
     </li>
     <li>
-        <a href="#" id="doneld">Công Việc Đã Hoàn Thành @Model[3][0] (@Model[3][1])</a>
+        <a href="#" id="doneld">Công Việc Đã Hoàn Thành <span class="numberCircle">@Model[3][0]</span><span class="button">@Model[3][0] <span class="button__badge">@Model[3][1]</span></span></a>
     </li>
 </ul>
 @{
@@ -20,6 +53,18 @@
                             $.ajax({
                                 type: "POST",
                                 url: "/Content/ShowCommitld?hosoId=@t",
+                                success: function (data) {
+                                    $('#tab').empty();
+                                    $('#tab').append($(data));
+                                }
+                            });
+        var tld = refreshld();
+    });
+    $("#doneld").click(function () {
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/Content/ShowDone?hosoId=@t",
                                 success: function (data) {
                                     $('#tab').empty();
                                     $('#tab').append($(data));

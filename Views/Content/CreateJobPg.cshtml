@@ -4,6 +4,7 @@
     var db = new Smof();
     var pban = db.PhongBans.ToList();
     var tphong = db.HoSoNhanSus.Where(m => m.ChucVu.MaChucVu == "2").ToList();
+    var loaiCv = db.LoaiCongViecs.ToList();
 }
 <link href="~/Assets/dist/css/table.css" type="text/css" rel="stylesheet" />
 <div id="myModal" class="modal">
@@ -24,6 +25,7 @@
                                 <th>Noi yeu cau</th>
                                 <th>Phong Ban</th>
                                 <th>Nguoi Phu trach</th>
+                                <th>Loai Cong Viec</th>
                                 <th>Thoi Han Hoan Thanh</th>
                                 <th>Cong Van dinh kem</th>
                             </tr>
@@ -50,6 +52,16 @@
                                         @foreach (var tp in tphong)
                                         {
                                             <option value="@tp.ID">@tp.TenNhanSu</option>
+
+                                        }
+                                    </select>
+
+                                </td>
+                                <td>
+                                    <select name="tp" id="tp">
+                                        @foreach (var tp in loaiCv)
+                                        {
+                                            <option value="@tp.ID">@tp.TenLoaiCongViec</option>
 
                                         }
                                     </select>

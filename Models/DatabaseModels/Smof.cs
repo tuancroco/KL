@@ -8,7 +8,7 @@ namespace KL.Models.DatabaseModels
     public partial class Smof : DbContext
     {
         public Smof()
-            : base("name=Smof8")
+            : base("name=Smof9")
         {
         }
 
@@ -17,6 +17,7 @@ namespace KL.Models.DatabaseModels
         public virtual DbSet<CongViecCaNhan> CongViecCaNhans { get; set; }
         public virtual DbSet<CongViecPhong> CongViecPhongs { get; set; }
         public virtual DbSet<DonVi> DonVis { get; set; }
+        public virtual DbSet<FormCv> FormCvs { get; set; }
         public virtual DbSet<HoSoNhanSu> HoSoNhanSus { get; set; }
         public virtual DbSet<LoaiCongViec> LoaiCongViecs { get; set; }
         public virtual DbSet<PhanHoi> PhanHois { get; set; }
@@ -98,6 +99,11 @@ namespace KL.Models.DatabaseModels
                 .HasMany(e => e.CongViecs)
                 .WithOptional(e => e.LoaiCongViec)
                 .HasForeignKey(e => e.IDLoaiCongViec);
+
+            modelBuilder.Entity<LoaiCongViec>()
+                .HasMany(e => e.CongViecPhongs)
+                .WithOptional(e => e.LoaiCongViec)
+                .HasForeignKey(e => e.IDLoaiCv);
 
             modelBuilder.Entity<PhongBan>()
                 .HasMany(e => e.HoSoNhanSus)

@@ -41,7 +41,8 @@
                             <tbody>
                                 @foreach (var cv in Model)
                                 {
-                                <tr class="@cv.ID @("f"+cv.New)">
+                                  
+                                <tr class="@cv.ID @("f"+cv.New) ">
                                     <td>@(Model.ToList().IndexOf(cv) + 1)</td>
                                     <td>@cv.Ten</td>
                                     <td>@cv.NoiDungCongViec</td>
@@ -109,14 +110,13 @@
     </div>
     <script>
         $(".uploadbutton").click(function () {
-            var idrows = $(this).closest('tr').attr('class')[0];
+            var idrows = $(this).closest('tr').attr('class').split(' ')[0];
             var fileUpload = $(".file").get(0);
             var files = fileUpload.files[0];
             var fileData = new FormData();
-            fileData.append(files.name, files);
+            fileData.append($(files).val().split('\\').pop(), files);
             fileData.append('jobId', idrows);
             fileData.append('ma', "1");
-
 
             $.ajax({
                 type: "POST",
@@ -136,7 +136,7 @@
 
             $(idrow).remove();
             $.ajax({
-                url: "/Job/Report?idJob=" + idrow.attr('class')[0] + "&ma=1",
+                url: "/Job/Report?idJob=" + idrow.attr('class').split(' ')[0] + "&ma=1",
                 type: "POST",
                 success: function () {
                 }
@@ -145,7 +145,7 @@
         $('.pHoi').click(function () {
             var idrow = $(this).closest('tr');
             $.ajax({
-                url: "/Job/GetPHoi?idJob=" + idrow.attr('class')[0],
+                url: "/Job/GetPHoi?idJob=" + idrow.attr('class').split(' ')[0],
                 type: "POST",
                 success: function (data) {
                     $("#phoicn").replaceWith($(data));
